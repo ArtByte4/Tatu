@@ -1,62 +1,46 @@
 # 📌 Proyecto Tatu
 
-Este repositorio contiene tanto el **frontend** como el **backend** del proyecto Tatu. Es importante seguir correctamente los pasos de instalación para evitar errores.
+Este repositorio contiene el proyecto **Tatu**, desarrollado con **Vite** y **React**.
 
-## 🚀 Clonación del repositorio
+⚠ **IMPORTANTE:** Antes de clonar el proyecto, cada desarrollador debe realizar un **fork** del repositorio y trabajar sobre su propio fork.
 
-1. Abre una terminal y clona el repositorio con:
+## 📂 Estructura del Proyecto
+```
+/tatu_project
+│── frontend/
+│   ├── tatu/
+│   │   ├── .nvmrc  ← Archivo con la versión de Node.js
+│   │   ├── package.json
+│   │   ├── src/
+│   │   ├── public/
+│── .gitignore
+│── README.md
+```
 
-   ```sh
-   git clone https://github.com/tu-usuario/tatu.git
-   ```
+## 🚀 Instalación
+Sigue estos pasos para clonar y configurar el proyecto correctamente.
 
-2. Accede al directorio del proyecto:
-
-   ```sh
-   cd tatu
-   ```
-
-## 🛠 Configuración del entorno
-
-### 1️⃣ Configurar la versión de Node.js
-
-Este proyecto usa una versión específica de **Node.js**, definida en el archivo `.nvmrc`. Para asegurarte de usar la versión correcta:
-
-- Si tienes `nvm` instalado, ejecuta:
-  ```sh
-  nvm use
-  ```
-  Si no tienes `nvm`, instala Node.js manualmente en la versión indicada en `.nvmrc`.
-
-### 2️⃣ Instalar dependencias del **Frontend**
-
-El frontend se encuentra en la carpeta `frontend`, por lo que debes moverte a esa carpeta antes de instalar las dependencias:
-
+### 1️⃣ Clonar el repositorio
 ```sh
-cd frontend
+git clone https://github.com/ArtByte4/Tatu.git
+cd Tatu/frontend/tatu
+```
+
+### 2️⃣ Configurar la versión de Node.js
+Asegúrate de usar la versión correcta de Node.js con **NVM**.
+Si tienes `nvm` instalado, ejecuta:
+```sh
+nvm use
+```
+Si no tienes `nvm`, instala la versión de Node indicada en `.nvmrc` manualmente.
+
+### 3️⃣ Instalar dependencias
+```sh
 npm install
 ```
 
-Esto instalará todas las dependencias definidas en `frontend/package.json`.
-
-### 3️⃣ Volver a la raíz del proyecto
-
-Después de instalar las dependencias del frontend, puedes volver a la raíz del proyecto si es necesario:
-
+### 4️⃣ Ejecutar el entorno de desarrollo
 ```sh
-cd ..
-```
-
-## 🏗 Uso del proyecto
-
-### 📌 Iniciar el **Frontend**
-
-Para ejecutar el frontend en modo desarrollo:
-
-```sh
-cd frontend
 npm run dev
 ```
-
-Esto iniciará el servidor de desarrollo de Vite.
 
