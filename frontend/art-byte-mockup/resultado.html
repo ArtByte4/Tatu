@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado de la Consulta</title>
+</head>
+<body>
+    <h1>Resultados de la Consulta</h1>
+    {% if resultado %}
+        <ul>
+            {% for fila in resultado %}
+                <li>{{ fila }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron resultados.</p>
+    {% endif %}
+    <a href="/">Volver al formulario</a>
+</body>
+</html>
