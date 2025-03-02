@@ -1,0 +1,103 @@
+.bg-autform {
+    min-height: 120vh;
+    display: flex;
+    position: relative;
+    background-image: url('../../../public/img/bg-autform.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    
+}
+
+.bg-autform::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgb(59,255,131);
+    background: radial-gradient(circle, rgba(59,255,131, 0.8) 0%, rgba(3,13,51,1) 100%);
+}
+
+.form-autform{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid #ffffff67;
+    padding: 30px;
+    border-radius: 20px;
+    width: 600px;
+    gap: 20px;
+}
+
+.form-autform img{
+    max-width: 200px;
+}
+
+.form-autform input[type="text"], .form-autform input[type="password"]{
+    width: 90%;
+    padding: 10px;
+    border: 2px solid #ffffff86;
+    background-color: transparent;
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+}
+
+.form-autform input[type="submit"]{
+    width: 90%;
+    padding: 10px;
+    background-color: var(--morado);
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+    cursor: pointer;
+}
+
+
+.form-autform input[type="submit"]:hover{
+    background-color: #4901ad;
+}
+
+.form-autform a{
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-register-authform{
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid #ffffff67;
+    padding: 30px;
+    border-radius: 20px;
+    width: 600px;
+}
+
+.btn-register-authform p{
+    font-size: 17px;
+}
+.btn-register-authform a{
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 800;
+}
