@@ -1,0 +1,18 @@
+
+@import url('../styles/variables.css');
+
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+  } 
+  
+  @font-face {
+    font-family: 'Phenomen';
+    src: url('../../../public/fuentes/Phenomena-Light.woff') format('woff');
+  }
+  
+  body{
+    font-family: 'Phenomen';
+  }
