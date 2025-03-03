@@ -1,6 +1,9 @@
 .bg-autform {
-    min-height: 120vh;
+    min-height: 100vh;
+    /* min-width: 100vw; */
     display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     background-image: url('../../../public/img/bg-autform.jpg');
     background-size: cover;
@@ -20,12 +23,16 @@
     background: rgb(59,255,131);
     background: radial-gradient(circle, rgba(59,255,131, 0.8) 0%, rgba(3,13,51,1) 100%);
 }
-
+.container-autform{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    gap: 20px;
+    width: min(90%, 1200px);
+}
 .form-autform{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
     color: white;
     text-align: center;
     z-index: 2;
@@ -36,16 +43,16 @@
     border: 2px solid #ffffff67;
     padding: 30px;
     border-radius: 20px;
-    width: 600px;
+    width: min(90%, 600px);
     gap: 20px;
 }
 
 .form-autform img{
-    max-width: 200px;
+    max-width: 150px;
 }
 
-.form-autform input[type="text"], .form-autform input[type="password"]{
-    width: 90%;
+.form-autform input[type="text"], .form-autform input[type="password"], .form-autform input[type="email"]{
+    width: 100%;
     padding: 10px;
     border: 2px solid #ffffff86;
     background-color: transparent;
@@ -54,8 +61,8 @@
     color: var(--blanco);
 }
 
-.form-autform input[type="submit"]{
-    width: 90%;
+.form-autform button[type="submit"]{
+    width: 100%;
     padding: 10px;
     background-color: var(--morado);
     border-radius: 10px;
@@ -69,6 +76,26 @@
     background-color: #4901ad;
 }
 
+.next-step{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--morado);
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+    cursor: pointer;
+}
+
+.prev-step{
+    color: var(--morado);
+    background-color: transparent;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+
 .form-autform a{
     color: var(--blanco);
     text-decoration: none;
@@ -76,10 +103,7 @@
 }
 
 .btn-register-authform{
-    position: absolute;
-    top: 85%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
     color: white;
     text-align: center;
     z-index: 2;
@@ -88,9 +112,9 @@
     align-items: center;
     flex-direction: column;
     border: 2px solid #ffffff67;
-    padding: 30px;
+    padding: 20px;
     border-radius: 20px;
-    width: 600px;
+    width: min(90%, 600px)
 }
 
 .btn-register-authform p{
