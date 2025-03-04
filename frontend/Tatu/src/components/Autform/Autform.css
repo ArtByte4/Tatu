@@ -86,6 +86,16 @@
     cursor: pointer;
 }
 
+.next-step-invalid{
+    width: 100%;
+    padding: 10px;
+    background-color: #30056d62;
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+    cursor:not-allowed;
+}
+
 .prev-step{
     color: var(--morado);
     background-color: transparent;

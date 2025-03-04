@@ -53,7 +53,7 @@ function StepTwo({formData, setFormData, nexStep, prevStep}) {
         value={localData.password}
         
       />
-       <button className="next-step" disabled={!isValid} onClick={handleNext}>
+       <button className={isValid ? "next-step" : "next-step-invalid"} disabled={!isValid} onClick={handleNext}>
         Siguiente
       </button>
       <button className="prev-step" onClick={prevStep}>
