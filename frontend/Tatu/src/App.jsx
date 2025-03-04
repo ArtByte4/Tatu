@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import Autform from "./components/Autform/Autform";
-// import Regisform from "./components/Regisform/Regisform";
 import StepsRegister from "./components/StepsRegister/StepsRegister";
+import Nav from "./components/Nav/Nav";
 
 function App() {
   return (
@@ -11,11 +11,11 @@ function App() {
       <Routes>
         <Route path="/login" element={<Autform />} />
       </Routes>
-      {/* <Routes>
-        <Route path="/register" element={<Regisform />} />
-      </Routes> */}
       <Routes>
         <Route path="/steps" element={<StepsRegister />} />
+      </Routes>
+      <Routes>
+        <Route path="/" element={<Nav />} />
       </Routes>
     </Router>
   );

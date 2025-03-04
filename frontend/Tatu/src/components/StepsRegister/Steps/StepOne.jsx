@@ -55,7 +55,7 @@ function StepOne({ formData, setFormData, nexStep }) {
         value={localData.emailAdress}
         required
       />
-      <button className="next-step" disabled={!isValid} onClick={handleNext}>
+      <button className={isValid ? "next-step" : "next-step-invalid"} disabled={!isValid} onClick={handleNext}>
         Siguiente
       </button>
     </>
