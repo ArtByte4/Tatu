@@ -4,7 +4,7 @@ import "./App.css";
 import Autform from "./components/Autform/Autform";
 import StepsRegister from "./components/StepsRegister/StepsRegister";
 import Nav from "./components/Nav/Nav";
-
+import UserSuggested from "./components/UserSuggested/UserSuggested";
 function App() {
   return (
     <Router>
@@ -16,6 +16,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/" element={<Nav />} />
+      </Routes>
+      <Routes>
+        <Route path="/user" element={<UserSuggested />} />
       </Routes>
     </Router>
   );
