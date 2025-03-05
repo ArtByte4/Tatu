@@ -4,7 +4,7 @@ import "./App.css";
 import Autform from "./components/Autform/Autform";
 import StepsRegister from "./components/StepsRegister/StepsRegister";
 import Nav from "./components/Nav/Nav";
-
+import CardUser from "./components/CardUser/CardUser";
 function App() {
   return (
     <Router>
@@ -17,6 +17,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Nav />} />
       </Routes>
+      <Routes>
+        <Route path="/CardUser" element={<CardUser />} />
+      </Routes>
+      
     </Router>
   );
 }
