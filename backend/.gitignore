@@ -1,0 +1,34 @@
+### Node.js ###
+node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn.lock
+
+### Logs ###
+logs
+*.log
+logs/*
+
+### Editor Config ###
+.vscode/
+.idea/
+.DS_Store
+
+### Environment Variables ###
+.env
+.env.local
+.env.*.local
+
+### Build Files ###
+dist/
+build/
+out/
+
+### Cache Files ###
+.cache/
+.nyc_output/
+coverage/
+
+### Misc ###
+*.swp
+*.swo
