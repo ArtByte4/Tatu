@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function StepThree({ formData, setFormData, prevStep }) {
+function StepThree({ formData, setFormData, prevStep, registerUser }) {
   const [localData, setLocalData] = useState({
     dateBirth: formData.dateBirth || "",
   });
@@ -19,15 +19,8 @@ function StepThree({ formData, setFormData, prevStep }) {
 
   const userRegist = () => {
     setFormData({ ...formData, ...localData });
-    console.log(
-      formData.firstName,
-      formData.lastName,
-      formData.emailAdress,
-      formData.phoneNumber,
-      formData.userHandle,
-      formData.password,
-      formData.dateBirth
-    );
+    registerUser();
+
   };
   return (
     <>
