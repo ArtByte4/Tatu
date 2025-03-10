@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers } from "./consulta.js";
+import { getComments, getUsers } from "./consulta.js";
 import { addUser } from "./insertarDatos.js";
 import cors from "cors";
 
@@ -43,6 +43,18 @@ app.get("/users", (req, res) => {
     res.json(users);
   });
 });
+
+app.get("/superus", (req, res) => {
+ 
+  getComments((err, comments) => {
+      if (err) {
+          return res.status(500).json({ error: "Error al obtener comentarios" });
+      }
+      res.json({comments});
+  });
+});
+
+
 
 app.post("/insertarUser", (req, res) => {
   const {
