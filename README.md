@@ -15,11 +15,9 @@ Tatu está construido con una arquitectura moderna para garantizar una experienc
 
 ### **Frontend:**
 - React.js
-- Tailwind CSS
-- Redux
 
 ### **Backend:**
-- Flask (Python)
+- NodeJs
 - MySQL
 - JWT para autenticación
 
