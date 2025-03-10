@@ -2,7 +2,7 @@
 -- Generated: 2025-02-17 12:12
 -- Model: New Model
 -- Version: 1.0
--- Project: Name of the project
+-- Project: Tatu
 -- Author: mike
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
