@@ -1,46 +1,36 @@
-# 📌 Proyecto Tatu
+# Tatu
 
-Este repositorio contiene el proyecto **Tatu**, desarrollado con **Vite** y **React**.
+## 🎨 ¿Qué es Tatu?
+**Tatu** es una plataforma innovadora diseñada para conectar a entusiastas del arte corporal con tatuadores profesionales. A través de nuestra aplicación, los usuarios pueden explorar diseños, reservar citas y previsualizar tatuajes en su piel utilizando tecnologías avanzadas como realidad aumentada.
 
-⚠ **IMPORTANTE:** Antes de clonar el proyecto, cada desarrollador debe realizar un **fork** del repositorio y trabajar sobre su propio fork.
+## 🚀 Características principales
+- 🔍 **Exploración de diseños**: Encuentra inspiración con una amplia galería de tatuajes.
+- 🎨 **Realidad aumentada**: Prueba tatuajes en tu piel antes de decidirte.
+- 📅 **Reserva de citas**: Conéctate con tatuadores y agenda tu sesión fácilmente.
+- 🏆 **Perfil personalizado**: Guarda tus tatuajes favoritos y sigue a tus artistas preferidos.
+- 💬 **Chat en tiempo real**: Comunícate con tatuadores dentro de la plataforma.
 
-## 📂 Estructura del Proyecto
-```
-/tatu_project
-│── frontend/
-│   ├── tatu/
-│   │   ├── .nvmrc  ← Archivo con la versión de Node.js
-│   │   ├── package.json
-│   │   ├── src/
-│   │   ├── public/
-│── .gitignore
-│── README.md
-```
+## 🛠️ Tecnologías utilizadas
+Tatu está construido con una arquitectura moderna para garantizar una experiencia fluida y segura:
 
-## 🚀 Instalación
-Sigue estos pasos para clonar y configurar el proyecto correctamente.
+### **Frontend:**
+- React.js
+- Tailwind CSS
+- Redux
 
-### 1️⃣ Clonar el repositorio
-```sh
-git clone https://github.com/ArtByte4/Tatu.git
-cd Tatu/frontend/tatu
-```
+### **Backend:**
+- Flask (Python)
+- MySQL
+- JWT para autenticación
 
-### 2️⃣ Configurar la versión de Node.js
-Asegúrate de usar la versión correcta de Node.js con **NVM**.
-Si tienes `nvm` instalado, ejecuta:
-```sh
-nvm use
-```
-Si no tienes `nvm`, instala la versión de Node indicada en `.nvmrc` manualmente.
+### **Infraestructura:**
+- AWS para despliegue
+- Nginx como servidor proxy
+- Docker para contenedorización
 
-### 3️⃣ Instalar dependencias
-```sh
-npm install
-```
+## 📦 Instalación y ejecución
+Para conocer los pasos detallados sobre cómo instalar y ejecutar Tatu en tu entorno local, consulta la [documentación oficial](./DOCUMENTACION.md).
 
-### 4️⃣ Ejecutar el entorno de desarrollo
-```sh
-npm run dev
-```
+
+💡 **Síguenos en nuestras redes sociales y mantente al tanto de las novedades de Tatu!** 🎨🔥
 

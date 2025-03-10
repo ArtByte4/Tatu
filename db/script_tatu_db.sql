@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `tatu_db`.`users` (
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role_id` INT(11) NOT NULL,
   `password_hash` VARCHAR(255) NOT NULL,
+  `birth_day` DATE NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_handle_UNIQUE` (`user_handle` ASC) VISIBLE,
   UNIQUE INDEX `email_address_UNIQUE` (`email_address` ASC) VISIBLE,
