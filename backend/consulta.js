@@ -7,7 +7,20 @@ const getUsers = (callback) => {
             return callback(err, null);
         }
         callback(null, results);
-    });
+    }); 
 };
 
 export { getUsers };
+
+
+const getComments = (callback) =>{
+    connection.query("call getComments();",(err, results) => {
+    if (err) {
+        console.error("❌ Error al llamar la función:", err);
+        return callback(err, null);
+    }
+    callback(null, results);
+}   );
+}
+export {getComments};
+
