@@ -11,10 +11,9 @@ const app = express();
 
 
 const corsOptions = {
-  // origin: "http://localhost:5173", // Permite solicitudes desde el frontend en localhost:3000
-  origin: "*",
-  methods: ["GET", "POST"], // Métodos permitidos
-  allowedHeaders: ["Content-Type", "Authorization"], // Headers permitidos
+  origin: "http://localhost:5173", // Permite solicitudes desde el frontend en localhost:3000
+  methods: ["GET", "POST"], // Métodos permitidos 
+  //allowedHeaders: ["Content-Type", "Authorization"], // Headers permitidos
 };
 app.use(cors(corsOptions)); // Habilitar CORS con las opciones configuradas
 
@@ -57,6 +56,7 @@ app.get("/superus", (req, res) => {
 
 
 app.post("/insertarUser", (req, res) => {
+
   const {
     user_handle,
     email_address,
@@ -72,12 +72,13 @@ app.post("/insertarUser", (req, res) => {
     !email_address ||
     !first_name ||
     !last_name ||
+    !phonenumber ||
     !password_hash ||
     !birth_day
   ) {
-    return res.status(400).json({ message: "Todos los campos son necesarios" });
+    return res.status(400).json({ message: "Todos los campos son necesarios"});
   }
-
+  
   const role_id = 1;
 
   addUser(

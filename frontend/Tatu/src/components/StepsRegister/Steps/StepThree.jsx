@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 
 function StepThree({ formData, setFormData, prevStep, registerUser }) {
   const [localData, setLocalData] = useState({
-    dateBirth: formData.dateBirth || "",
+    birth_day: formData.birth_day || "",
   });
   const [isValid, setIsValid] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const { dateBirth } = localData;
-    const isFormValid = dateBirth !== "" // fecha seleccionada
+    const { birth_day } = localData;
+    const isFormValid = birth_day !== "" // fecha seleccionada
 
     setIsValid(isFormValid);
   }, [localData]);
@@ -18,15 +19,26 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
   };
 
   const userRegist = () => {
-    setFormData({ ...formData, ...localData });
-    registerUser();
-
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, ...localData };
+      return updatedData;
+    });
+  
+    setIsReady(true); // Marca que los datos están listos para enviarse
   };
+  useEffect(() => {
+    if (isReady) {
+      registerUser(formData);
+      setIsReady(false); // Resetea la bandera para evitar reenvíos
+    }
+  }, [formData, isReady]);
+
   return (
     <>
       <input
         type="date"
-        name="dateBirth"
+        name="birth_day"
+        value={localData.birth_day}
         placeholder="Fecha de nacimiento"
         onChange={handleChange}
         required

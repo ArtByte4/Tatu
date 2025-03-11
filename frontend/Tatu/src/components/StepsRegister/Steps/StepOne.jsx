@@ -3,17 +3,17 @@ import { useState, useEffect } from "react";
 function StepOne({ formData, setFormData, nexStep }) {
 
   const [localData, setLocalData] = useState({
-    firstName: formData.firstName || "",
-    lastName: formData.lastName || "",
-    emailAdress: formData.emailAdress || "",
+    first_name: formData.first_name || "",
+    last_name: formData.last_name || "",
+    email_address: formData.email_address || "",
   });
 
   useEffect(() => {
-    const { firstName, lastName, emailAdress } = localData;
+    const { first_name, last_name, email_address } = localData;
     const isFormValid =
-    firstName.trim().length > 2 && // Mínimo 3 caracteres en el nombre
-      lastName.trim().length > 5 && // Mínimo 3 caracteres en el usuario
-      emailAdress.trim().length >= 10; // emial mínimo 6 caracteres
+    first_name.trim().length > 2 && // Mínimo 3 caracteres en el nombre
+    last_name.trim().length > 5 && // Mínimo 3 caracteres en el usuario
+    email_address.trim().length >= 10; // emial mínimo 6 caracteres
 
     setIsValid(isFormValid);
   }, [localData]);
@@ -33,26 +33,26 @@ function StepOne({ formData, setFormData, nexStep }) {
     <>
       <input
         type="text"
-        name="firstName"
+        name="first_name"
         placeholder="Nombres"
         onChange={handleChange}
-        value={localData.firstName}
+        value={localData.first_name}
         required
       />
       <input
         type="text"
-        name="lastName"
+        name="last_name"
         placeholder="Apellidos"
         onChange={handleChange} 
-        value={localData.lastName}
+        value={localData.last_name}
         required
       />
       <input
         type="email"
         placeholder="Correo electrónico"
-        name="emailAdress"
+        name="email_address"
         onChange={handleChange}
-        value={localData.emailAdress}
+        value={localData.email_address}
         required
       />
       <button className={isValid ? "next-step" : "next-step-invalid"} disabled={!isValid} onClick={handleNext}>

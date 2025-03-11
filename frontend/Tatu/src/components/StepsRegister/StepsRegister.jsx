@@ -8,18 +8,18 @@ function StepsRegister() {
   const steps = [StepOne, StepTwo, StepThree];
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    emailAdress: "",
-    phoneNumber: "",
-    userHandle: "",
-    password: "",
-    dateBirth: "",
+    user_handle: "",
+    email_address: "",
+    first_name: "",
+    last_name: "",
+    phonenumber: "",
+    password_hash: "",
+    birth_day: "",
   });
 
-  const registerUser = () => {
+  const registerUser = (updatedData) => {
     axios
-      .post("http://localhost:3000/insertarUser", formData)
+      .post("http://localhost:3000/insertarUser", updatedData)
       .then((response) => {
         console.log("Usuario registrado:", response.data);
       })

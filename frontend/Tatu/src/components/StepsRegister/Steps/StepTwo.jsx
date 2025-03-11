@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 
 function StepTwo({formData, setFormData, nexStep, prevStep}) {
   const [localData, setLocalData] = useState({
-    phoneNumber: formData.phoneNumber || "",
-    userHandle: formData.userHandle || "",
-    password: formData.password || "",
+    phonenumber: formData.phonenumber || "",
+    user_handle: formData.user_handle || "",
+    password_hash: formData.password_hash || "",
   });
 
   useEffect(() => {
-    const { phoneNumber, userHandle, password } = localData;
+    const { phonenumber, user_handle, password_hash } = localData;
     const isFormValid =
-      phoneNumber.trim().length > 8 && // Mínimo 7 caracteres en el telefono
-      userHandle.trim().length > 3 && // Mínimo 2 caracteres en el usuario
-      password.trim().length >= 6; // password mínimo 6 caracteres
+      phonenumber.trim().length > 8 && // Mínimo 7 caracteres en el telefono
+      user_handle.trim().length > 3 && // Mínimo 2 caracteres en el usuario
+      password_hash.trim().length >= 6; // password mínimo 6 caracteres
 
     setIsValid(isFormValid);
   }, [localData]);
@@ -31,26 +31,26 @@ function StepTwo({formData, setFormData, nexStep, prevStep}) {
     <>
       <input
         type="text"
-        name="phoneNumber"
+        name="phonenumber"
         placeholder="Número de teléfono"
         onChange={handleChange}
-        value={localData.phoneNumber}
+        value={localData.phonenumber}
         
       />
       <input
         type="text"
-        name="userHandle"
+        name="user_handle"
         placeholder="Nombre de usuario"
         onChange={handleChange}
-        value={localData.userHandle}
+        value={localData.user_handle}
         
       />
       <input
         type="password"
-        name="password"
+        name="password_hash"
         placeholder="contraseña"
         onChange={handleChange}
-        value={localData.password}
+        value={localData.password_hash}
         
       />
        <button className={isValid ? "next-step" : "next-step-invalid"} disabled={!isValid} onClick={handleNext}>
