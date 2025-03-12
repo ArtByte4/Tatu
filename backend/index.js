@@ -11,7 +11,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Permite solicitudes desde el frontend en localhost:3000
+  origin: "http://localhost:5173",
   methods: ["GET", "POST"], // Métodos permitidos 
   //allowedHeaders: ["Content-Type", "Authorization"], // Headers permitidos
 };
