@@ -104,11 +104,9 @@ Tatu/db/funciones.sql  # Cargar funciones y procedimientos almacenados
 
 ## 📌 Conectar la base de datos con el backend
 
-1️⃣ Asegurar que **dotenv** esté instalado:
+1️⃣ Asegurar que todas las dependecias esten instaladas en el backend
 
-```bash
-npm install dotenv
-```
+---
 
 2️⃣ Crear un archivo **.env** en `Tatu/backend/.env` con la siguiente configuración:
 
@@ -149,6 +147,8 @@ node index.js
 ```
 
 ---
+
+** Asegurate que ambos servidores esten encendidos para que todo funcione correctamente
 
 🎯 **¡Listo! Ahora el proyecto está en ejecución.**
 
