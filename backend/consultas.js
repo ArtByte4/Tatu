@@ -24,3 +24,17 @@ const getComments = (callback) =>{
 }
 export {getComments};
 
+
+
+const getUserByUserHandle = (user_handle, callback) => {
+    const query = 'SELECT * FROM users where user_handle = ?'
+
+    connection.query(query, [user_handle], (err, results) => {
+        if (err) {
+            console.error("❌ Error en la consulta:", err);
+            return callback(err, null);
+        }
+        callback(null, results);
+    })
+}
+export {getUserByUserHandle};

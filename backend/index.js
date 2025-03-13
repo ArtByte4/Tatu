@@ -1,5 +1,6 @@
 import express from "express";
-import { getComments, getUsers } from "./consulta.js";
+import { getComments, getUsers } from "./consultas.js";
+import {getUserByUserHandle} from "./consultas.js"
 import { addUser } from "./insertarDatos.js";
 import cors from "cors";
 
@@ -42,6 +43,17 @@ app.get("/users", (req, res) => {
     res.json(users);
   });
 });
+
+app.get('/user/:user_handle', (req, res) => {
+  const userHandle = req.params.user_handle
+  getUserByUserHandle(userHandle, (err, user) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al obtene usuario" });
+    }
+    res.json(user);
+  })
+})
+
 
 app.get("/superus", (req, res) => {
  
