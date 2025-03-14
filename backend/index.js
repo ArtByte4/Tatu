@@ -2,6 +2,7 @@ import express from "express";
 import { getComments, getUsers } from "./consultas.js";
 import { getUserByUserHandle } from "./consultas.js";
 import { addUser } from "./models/insertarDatos.js";
+import { createUser } from "./services/userServiceRegister.js"
 import cors from "cors";
 
 import bodyParser from "body-parser";
@@ -85,7 +86,7 @@ app.post("/insertarUser", async (req, res) => {
   
     const role_id = 1;
   
-    addUser({
+    createUser({
       user_handle,
       email_address,
       first_name,
