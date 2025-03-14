@@ -1,19 +1,16 @@
 import express from "express";
 import { getComments, getUsers } from "./consultas.js";
-import {getUserByUserHandle} from "./consultas.js"
-import { addUser } from "./insertarDatos.js";
+import { getUserByUserHandle } from "./consultas.js";
+import { addUser } from "./models/insertarDatos.js";
 import cors from "cors";
 
 import bodyParser from "body-parser";
 
-
-
 const app = express();
-
 
 const corsOptions = {
   origin: "http://localhost:5173",
-  methods: ["GET", "POST"], // Métodos permitidos 
+  methods: ["GET", "POST"], // Métodos permitidos
   //allowedHeaders: ["Content-Type", "Authorization"], // Headers permitidos
 };
 app.use(cors(corsOptions)); // Habilitar CORS con las opciones configuradas
@@ -21,7 +18,6 @@ app.use(cors(corsOptions)); // Habilitar CORS con las opciones configuradas
 // Middleware para poder leer JSON
 app.use(bodyParser.json());
 app.use(express.json());
-
 
 app.get("/", (req, res) => {
   res.send("Hola, Express con ESM!");
@@ -44,57 +40,52 @@ app.get("/users", (req, res) => {
   });
 });
 
-app.get('/user/:user_handle', (req, res) => {
-  const userHandle = req.params.user_handle
+app.get("/user/:user_handle", (req, res) => {
+  const userHandle = req.params.user_handle;
   getUserByUserHandle(userHandle, (err, user) => {
     if (err) {
       return res.status(500).json({ error: "Error al obtene usuario" });
     }
     res.json(user);
-  })
-})
-
-
-app.get("/superus", (req, res) => {
- 
-  getComments((err, comments) => {
-      if (err) {
-          return res.status(500).json({ error: "Error al obtener comentarios" });
-      }
-      res.json({comments});
   });
 });
 
+app.get("/superus", (req, res) => {
+  getComments((err, comments) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al obtener comentarios" });
+    }
+    res.json({ comments });
+  });
+});
 
-
-app.post("/insertarUser", (req, res) => {
-
-  const {
-    user_handle,
-    email_address,
-    first_name,
-    last_name,
-    phonenumber,
-    password_hash,
-    birth_day,
-  } = req.body;
-
-  if (
-    !user_handle ||
-    !email_address ||
-    !first_name ||
-    !last_name ||
-    !phonenumber ||
-    !password_hash ||
-    !birth_day
-  ) {
-    return res.status(400).json({ message: "Todos los campos son necesarios"});
-  }
+app.post("/insertarUser", async (req, res) => {
+  try {
+    const {
+      user_handle,
+      email_address,
+      first_name,
+      last_name,
+      phonenumber,
+      password_hash,
+      birth_day,
+    } = req.body;
   
-  const role_id = 1;
-
-  addUser(
-    {
+    if (
+      !user_handle ||
+      !email_address ||
+      !first_name ||
+      !last_name ||
+      !phonenumber ||
+      !password_hash ||
+      !birth_day
+    ) {
+      return res.status(400).json({ message: "Todos los campos son necesarios" });
+    }
+  
+    const role_id = 1;
+  
+    addUser({
       user_handle,
       email_address,
       first_name,
@@ -103,19 +94,11 @@ app.post("/insertarUser", (req, res) => {
       role_id,
       password_hash,
       birth_day,
-    },
-    (err, results) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Error al registrar el usuario" });
-      }
-      res
-        .status(201)
-        .json({
-          message: "Usuario registrado exitosamente",
-          userId: results.insertId,
-        });
-    }
-  );
+    });
+    res.status(201).json({ message: "Usuario registrado" });
+  } catch (error) {
+    console.error("Error en /insertarUser:", error);
+    res.status(500).json({ error: "Error al registrar usuario" });
+  }
+  
 });

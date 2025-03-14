@@ -67,6 +67,7 @@
 .user_handle{
     font-weight: 800;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .describe_item_suggested{

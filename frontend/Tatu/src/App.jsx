@@ -4,7 +4,7 @@ import "./App.css";
 import Autform from "./components/Autform/Autform";
 import StepsRegister from "./components/StepsRegister/StepsRegister";
 import UserSuggested from "./components/UserSuggested/UserSuggested";
-import Explore from "./views/Explore";
+import Explore from "./views/Explore/Explore";
 function App() {
   return (
     <Router>

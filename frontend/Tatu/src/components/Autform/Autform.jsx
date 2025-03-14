@@ -6,7 +6,7 @@ function Autform() {
   return (
     <div className="bg-autform">
       <div className="container-autform">
-        <form action="" className="form-autform">
+        <form action="" className="form-autform" onSubmit={(e) => {e.preventDefault}}>
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
           <input type="text" placeholder="usuario o correo electrónico" />
           <input type="password" placeholder="contraseña" />
