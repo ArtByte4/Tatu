@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
@@ -8,20 +8,21 @@ function StepsRegister() {
   const steps = [StepOne, StepTwo, StepThree];
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    emailAdress: "",
-    phoneNumber: "",
-    userHandle: "",
-    password: "",
-    dateBirth: "",
+    user_handle: "",
+    email_address: "",
+    first_name: "",
+    last_name: "",
+    phonenumber: "",
+    password_hash: "",
+    birth_day: "",
   });
-
-  const registerUser = () => {
+  const navigate = useNavigate();
+  const registerUser = (updatedData) => {
     axios
-      .post("http://localhost:3000/insertarUser", formData)
+      .post("http://localhost:3000/api/users", updatedData)
       .then((response) => {
         console.log("Usuario registrado:", response.data);
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error al registrar usuario:", error);
