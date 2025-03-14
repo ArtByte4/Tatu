@@ -19,7 +19,7 @@ function StepsRegister() {
   const navigate = useNavigate();
   const registerUser = (updatedData) => {
     axios
-      .post("http://localhost:3000/insertarUser", updatedData)
+      .post("http://localhost:3000/api/users", updatedData)
       .then((response) => {
         console.log("Usuario registrado:", response.data);
         navigate("/");

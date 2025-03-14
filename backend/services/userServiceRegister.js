@@ -1,13 +1,10 @@
 
 
 import bcrypt from 'bcrypt';
-import { addUser } from '../models/insertarDatos.js';
 
 
-const createUser = async (dataUser) => {
-    dataUser.password_hash = await bcrypt.hash(dataUser.password_hash, 13);
-    return addUser(dataUser)
+export const encryptPassword = async (password) => {
+    const saltRounds = 13;
+    return bcrypt.hash(password, saltRounds);
 }
 
-
-export { createUser };

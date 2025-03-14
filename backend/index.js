@@ -1,9 +1,6 @@
 import express from "express";
-import { getComments } from "./consultas.js";
-import { getUserByUserHandle } from "./consultas.js";
-import { createUser } from "./services/userServiceRegister.js"
-import { getUsers } from "./models/getUser.js";
 import cors from "cors";
+import userRoutes from './routes/userRouters.js';
 
 import bodyParser from "body-parser";
 
@@ -20,88 +17,11 @@ app.use(cors(corsOptions)); // Habilitar CORS con las opciones configuradas
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hola, Express con ESM!");
-});
-app.get("/consulta", (req, res) => {
-  res.send("consulta");
-});
+
+app.use('/api', userRoutes);
+
 
 // Se crea un servidor en el puerto 3000
 app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
-});
-
-app.get("/users", async (req, res) => {
-  try{
-    const users = await getUsers();  // Espera el resultado de getUsers()
-    res.json(users);  
-  }
-  catch (err) {
-    console.log('Error en la consulata', err)
-  }
-  
-});
-
-app.get("/user/:user_handle", (req, res) => {
-  const userHandle = req.params.user_handle;
-  getUserByUserHandle(userHandle, (err, user) => {
-    if (err) {
-      return res.status(500).json({ error: "Error al obtene usuario" });
-    }
-    res.json(user);
-  });
-});
-
-app.get("/superus", (req, res) => {
-  getComments((err, comments) => {
-    if (err) {
-      return res.status(500).json({ error: "Error al obtener comentarios" });
-    }
-    res.json({ comments });
-  });
-});
-
-app.post("/insertarUser", async (req, res) => {
-  try {
-    const {
-      user_handle,
-      email_address,
-      first_name,
-      last_name,
-      phonenumber,
-      password_hash,
-      birth_day,
-    } = req.body;
-  
-    if (
-      !user_handle ||
-      !email_address ||
-      !first_name ||
-      !last_name ||
-      !phonenumber ||
-      !password_hash ||
-      !birth_day
-    ) {
-      return res.status(400).json({ message: "Todos los campos son necesarios" });
-    }
-  
-    const role_id = 1;
-  
-    createUser({
-      user_handle,
-      email_address,
-      first_name,
-      last_name,
-      phonenumber,
-      role_id,
-      password_hash,
-      birth_day,
-    });
-    res.status(201).json({ message: "Usuario registrado" });
-  } catch (error) {
-    console.error("Error en /insertarUser:", error);
-    res.status(500).json({ error: "Error al registrar usuario" });
-  }
-  
 });
