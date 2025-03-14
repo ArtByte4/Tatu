@@ -18,7 +18,7 @@ const addUser = async (userData) => {
     `;
 
   try {
-    const [result] = await connection.execute(query, [
+    const [result] = await connection.query(query, [
       user_handle,
       email_address,
       first_name,

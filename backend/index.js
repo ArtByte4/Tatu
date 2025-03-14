@@ -1,8 +1,8 @@
 import express from "express";
-import { getComments, getUsers } from "./consultas.js";
+import { getComments } from "./consultas.js";
 import { getUserByUserHandle } from "./consultas.js";
-import { addUser } from "./models/insertarDatos.js";
 import { createUser } from "./services/userServiceRegister.js"
+import { getUsers } from "./models/getUser.js";
 import cors from "cors";
 
 import bodyParser from "body-parser";
@@ -32,13 +32,15 @@ app.listen(3000, () => {
   console.log("Servidor corriendo en http://localhost:3000");
 });
 
-app.get("/users", (req, res) => {
-  getUsers((err, users) => {
-    if (err) {
-      return res.status(500).json({ error: "Error al obtener usuarios" });
-    }
-    res.json(users);
-  });
+app.get("/users", async (req, res) => {
+  try{
+    const users = await getUsers();  // Espera el resultado de getUsers()
+    res.json(users);  
+  }
+  catch (err) {
+    console.log('Error en la consulata', err)
+  }
+  
 });
 
 app.get("/user/:user_handle", (req, res) => {
