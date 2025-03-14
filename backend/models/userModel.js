@@ -21,12 +21,13 @@ export const getUserByUserHandle = async (user_handle) => {
 
     try{
         const [user] = await connection.query(query, user_handle);
-        return user;
+        return user[0];
     }
     catch (err){
         console.log('Error en la consulta', err)
     }
 }
+
 
 
 export const addUser = async (userData) => {

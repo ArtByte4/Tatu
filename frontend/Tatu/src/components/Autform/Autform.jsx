@@ -1,16 +1,51 @@
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Autform.css";
+import { useState } from "react";
 
 function Autform() {
+
+  const navigate = useNavigate();
+
+  const [dataLogin, setDataLogin] = useState({
+    user_handle: "",
+    password_hash: "",
+  });
+
+  const loginUser = () => {
+    axios
+    .post("http://localhost:3000/api/users/auth/login", dataLogin)
+    .then((response) => {
+      if (response.data.validation){
+        navigate("/");
+      }
+      
+    })
+    .catch((error) => {
+      console.error("Error al iniciar sesion:", error);
+    });
+  };
+
+  const handleChange = (e) => {
+    setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
+  }
+
+
+
   return (
     <div className="bg-autform">
       <div className="container-autform">
-        <form action="" className="form-autform" onSubmit={(e) => {e.preventDefault}}>
+        <form
+          action=""
+          className="form-autform"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
-          <input type="text" placeholder="usuario o correo electrónico" />
-          <input type="password" placeholder="contraseña" />
-          <button type="submit">Entrar</button>
+          <input type="text" placeholder="usuario o correo electrónico" name="user_handle" onChange={handleChange}/>
+          <input type="password" placeholder="contraseña" name="password_hash" onChange={handleChange} />
+          <button type="submit" onClick={loginUser}>
+            Entrar
+          </button>
           <a href="#">¿Olvidaste tu contraseña?</a>
         </form>
 
