@@ -17,15 +17,19 @@ Este repositorio contiene el proyecto **Tatu**, desarrollado con **Vite** y **Re
 │   │   ├── .nvmrc  ← Archivo con la versión de Node.js
 |   |   ├── .gitignore 
 │   │   ├── package.json
+│   │   ├── package-lock.lson
 │   │   ├── src/
 │   │   ├── public/
 │── backend/
 |   |   ├── .gitignore 
 |   |   ├── .env
 │   │   ├── package.json
-│   │   ├── src/
-│   │   ├── public/
+│   │   ├── package-lock.lson
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
 │── db/
+|   |   ├── function/
 |   |   ├── cargar_datos_prueba.sql
 |   |   ├── script_tatu_db.sql
 │── config.md
@@ -85,7 +89,9 @@ Ejecutar el siguiente código en **MySQL Workbench**:
 CREATE USER 'usuario'@'%' IDENTIFIED BY 'tu_contraseña_segura';
 
 -- Asignación de permisos
-GRANT SELECT, INSERT, UPDATE, ALTER ON tatu_db.* TO 'usuario'@'%';
+
+GRANT CREATE ROUTINE, EXECUTE, SELECT, INSERT, UPDATE, ALTER ON tatu_db.* TO 'usuario'@'localhost';
+
 
 -- Aplicar privilegios
 FLUSH PRIVILEGES;
@@ -113,7 +119,7 @@ Tatu/db/funciones.sql  # Cargar funciones y procedimientos almacenados
 ```bash
 DB_HOST=localhost
 DB_USER=nombre_usuario
-DB_PASSWORD=contraseña_usuario
+DB_PASSWORD=contraseña_usuario // con comillas la contraseña
 DB_NAME=tatu_db
 DB_PORT=3306
 ```
@@ -143,7 +149,7 @@ Tatu/backend/
 
 Ejecutar el siguiente comando:
 ```bash
-node index.js
+npm run dev 
 ```
 
 ---
