@@ -2,7 +2,6 @@ import { getUsers, getUserByUserHandle, addUser } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -118,16 +117,28 @@ export const loginUser = async (req, res) => {
       .status(200)
       .cookie('access_token', token,{
         httpOnly: true,
-        secure: false, //process.env.NODE_ENV == 'production',
+        secure: process.env.NODE_ENV === 'production', //process.env.NODE_ENV == 'production',
         sameSite: 'strict', // strict
         maxAge: 1000 * 60 * 60
       })
       .json({
       validation: true,
       message: "Usuario autenticado",
-      token: token,
       });
   } catch (error) {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+
+export const logOutUser = (req, res) => {
+  res
+    .clearCookie('access_token')
+    .json({message: 'Logout successful'})
+}
+
+export const Routesprotected = (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(403).send('Access not authorized')
+    res.json({message: 'authorized'})
+}
