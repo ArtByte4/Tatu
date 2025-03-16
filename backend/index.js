@@ -3,19 +3,22 @@ import cors from "cors";
 import userRoutes from './routes/userRouters.js';
 
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: ["GET", "POST"], // Métodos permitidos
-  //allowedHeaders: ["Content-Type", "Authorization"], // Headers permitidos
+  credentials: true,
 };
 app.use(cors(corsOptions)); // Habilitar CORS con las opciones configuradas
 
 // Middleware para poder leer JSON
 app.use(bodyParser.json());
 app.use(express.json());
+
+app.use(cookieParser())
 
 
 app.use('/api', userRoutes);

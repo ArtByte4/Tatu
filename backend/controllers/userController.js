@@ -1,5 +1,10 @@
 import { getUsers, getUserByUserHandle, addUser } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+
+dotenv.config();
 
 // Funcion para traer todos los usuarios
 export const getAllUsers = async (req, res) => {
@@ -68,7 +73,6 @@ export const createUser = async (req, res) => {
       .status(201)
       .json({ message: "Usuario registrado", userId: result.insertId });
   } catch (error) {
-    console.error("Error al crear usuario:", error);
     res.status(500).json({ error: "Error al registrar usuario" });
   }
 };
@@ -79,7 +83,9 @@ export const loginUser = async (req, res) => {
 
     // Validación de datos de entrada
     if (!user_handle || !password_hash) {
-      return res.status(400).json({ message: "Usuario y contraseña requeridos" });
+      return res
+        .status(400)
+        .json({ message: "Usuario y contraseña requeridos" });
     }
 
     // Buscar usuario en la base de datos
@@ -89,19 +95,39 @@ export const loginUser = async (req, res) => {
     }
 
     // Comparar contraseñas
-    const isValidPassword = await comparePassword(password_hash, user.password_hash);
-    
+    const isValidPassword = await comparePassword(
+      password_hash,
+      user.password_hash
+    );
+
     if (!isValidPassword) {
       return res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
-    // Autenticación exitosa
-    console.log("✅ Usuario autenticado:", user_handle);
-    return res.status(200).json({ validation: true, message: "Usuario autenticado" });
+    // JWT
+    const token = jwt.sign(
+      { id: user.user_id, username: user.user_handle },
+      process.env.SECRET_JWT_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
 
+    // Autenticación exitosa
+    return res
+      .status(200)
+      .cookie('access_token', token,{
+        httpOnly: true,
+        secure: false, //process.env.NODE_ENV == 'production',
+        sameSite: 'strict', // strict
+        maxAge: 1000 * 60 * 60
+      })
+      .json({
+      validation: true,
+      message: "Usuario autenticado",
+      token: token,
+      });
   } catch (error) {
-    console.error("❌ Error en login:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
-

@@ -4,7 +4,6 @@ import "./Autform.css";
 import { useState } from "react";
 
 function Autform() {
-
   const navigate = useNavigate();
 
   const [dataLogin, setDataLogin] = useState({
@@ -14,23 +13,26 @@ function Autform() {
 
   const loginUser = () => {
     axios
-    .post("http://localhost:3000/api/users/auth/login", dataLogin)
-    .then((response) => {
-      if (response.data.validation){
-        navigate("/");
-      }
-      
-    })
-    .catch((error) => {
-      console.error("Error al iniciar sesion:", error);
-    });
+      .post("http://localhost:3000/api/users/auth/login", dataLogin, {
+        withCredentials: true, // Permite que el navegador almacene la cookie
+        headers: {
+          "Content-Type": "application/json",
+        },
+        timeout: 5000, // Evita bloqueos por peticiones colgadas
+      })
+      .then((response) => {
+        if (response.data.validation) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al iniciar sesion:", error);
+      });
   };
 
   const handleChange = (e) => {
     setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
-  }
-
-
+  };
 
   return (
     <div className="bg-autform">
@@ -41,8 +43,18 @@ function Autform() {
           onSubmit={(e) => e.preventDefault()}
         >
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
-          <input type="text" placeholder="usuario o correo electrónico" name="user_handle" onChange={handleChange}/>
-          <input type="password" placeholder="contraseña" name="password_hash" onChange={handleChange} />
+          <input
+            type="text"
+            placeholder="usuario o correo electrónico"
+            name="user_handle"
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="contraseña"
+            name="password_hash"
+            onChange={handleChange}
+          />
           <button type="submit" onClick={loginUser}>
             Entrar
           </button>

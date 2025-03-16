@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 export const encryptPassword = async (password) => {
-  const saltRounds = 13;
+  const saltRounds = 10; // 13 salt lo ideal
   return bcrypt.hash(password, saltRounds);
 };
 
