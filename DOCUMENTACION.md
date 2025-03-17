@@ -122,6 +122,8 @@ DB_USER=nombre_usuario
 DB_PASSWORD=contraseña_usuario // con comillas la contraseña
 DB_NAME=tatu_db
 DB_PORT=3306
+
+SECRET_JWT_KEY=Clave_secreta_firma_token // con comillas
 ```
 
 ---
