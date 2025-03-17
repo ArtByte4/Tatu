@@ -1,7 +1,8 @@
 -- MySQL Workbench Synchronization
 -- Generated: 2025-02-17 12:12
+-- Ultima modificacion: 2025-03-17 11:29
 -- Model: New Model
--- Version: 1.0
+-- Version: 1.9
 -- Project: Tatu
 -- Author: mike
 
@@ -100,6 +101,24 @@ CREATE TABLE IF NOT EXISTS `tatu_db`.`users` (
     REFERENCES `tatu_db`.`roles` (`role_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+/* ==============================
+--      Tabla user_settings
+=================================*/
+CREATE TABLE IF NOT EXISTS `tatu_db`.`user_settings` (
+  `user_id` INT NOT NULL,
+  `settings` JSON NOT NULL,  -- Guardamos todas las configuraciones en formato JSON
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_user_settings_1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `tatu_db`.`users` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
