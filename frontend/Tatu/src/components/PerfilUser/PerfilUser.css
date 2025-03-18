@@ -1,0 +1,47 @@
+
+
+.container_perfilUser{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.content_perfilUser{
+    color: var(--blanco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 60px 0;
+}
+
+.seccion_info_perfilUser{
+    width: 80%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container_img_perfilUser{
+    padding: 10px;
+}
+
+.container_img_perfilUser img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.section_container_perfilUser{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.list_describe_perfilUser ul{
+    list-style: none;
+}
