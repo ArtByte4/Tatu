@@ -1,13 +1,16 @@
 import "./PerfilUser.css";
 import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 function PerfilUser() {
 
+  const [file, setFile] = useState(null);
+  const [upload, setUpload] = useState(false)
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
-    console.log(e.target.files)
+    console.log(e.target.files[0])
+    
   }
 
 
@@ -16,13 +19,14 @@ function PerfilUser() {
     fileInputRef.current.click();
   }
 
+
   return (
     <div className="container_perfilUser">
       <div className="content_perfilUser">
         <div className="seccion_info_perfilUser">
           <div className="container-img-perfilUser">
             <button onClick={handleUploadFile}>
-            <img src="./../../public/img/user_default2.png" alt="" />
+            <img src={upload ? file : './../../public/img/user_default2.png'} alt="" />
             <MdPhotoCamera className="img-photo" color="#fff" />
             </button>
             <form action="">
