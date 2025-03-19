@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./PeopleExplore.css";
 import axios from "axios";
 function PeopleExplore() {
@@ -45,7 +45,7 @@ function PeopleExplore() {
                   </div>
                   <div className="describe_item_suggested">
                     <span className="user_handle">{user.user_handle}</span>
-                    <span>Sugerencia para ti</span>
+                    <span className="text">Sugerencia para ti</span>
                   </div>
                 </div>
                 <button className="seguir_suggested">Seguir</button>

@@ -13,7 +13,18 @@
   padding: 60px 0;
 }
 
+.container-img-perfilUser-active-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container-img-perfilUser button{
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.container-img-perfilUser-active-img button{
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
@@ -31,9 +42,22 @@
   border-radius: 50%;
   opacity: 0.5;
 }
+
+.container-img-perfilUser-active-img img{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
 .container-img-perfilUser {
   padding: 10px;
   position: relative;
+}
+
+.container-img-perfilUser-active-img{
+  padding: 10px;
+  position: relative;
+
 }
 
 
