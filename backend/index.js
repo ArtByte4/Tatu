@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import userRoutes from './routes/userRouters.js';
-
+// import followersRoutes from './routes/followersRouters.js'
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
@@ -22,6 +22,8 @@ app.use(cookieParser())
 
 
 app.use('/api', userRoutes);
+
+// app.use('/api' followersRoutes);
 
 
 // Se crea un servidor en el puerto 3000
