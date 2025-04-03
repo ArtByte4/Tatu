@@ -45,13 +45,13 @@ function Autform() {
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
           <input
             type="text"
-            placeholder="usuario o correo electrónico"
+            placeholder="Usuario o correo electrónico"
             name="user_handle"
             onChange={handleChange}
           />
           <input
             type="password"
-            placeholder="contraseña"
+            placeholder="Contraseña"
             name="password_hash"
             onChange={handleChange}
           />
