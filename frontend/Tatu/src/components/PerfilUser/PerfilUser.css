@@ -61,7 +61,7 @@
 }
 
 
-input{
+input[type="file"] {
   display: none;
 }
 
