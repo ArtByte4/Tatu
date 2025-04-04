@@ -10,8 +10,8 @@ function StepTwo({formData, setFormData, nexStep, prevStep}) {
   useEffect(() => {
     const { phonenumber, user_handle, password_hash } = localData;
     const isFormValid =
-      phonenumber.trim().length > 8 && // Mínimo 7 caracteres en el telefono
-      user_handle.trim().length > 3 && // Mínimo 2 caracteres en el usuario
+      phonenumber.trim().length > 7 && // Mínimo 7 caracteres en el telefono
+      user_handle.trim().length > 2 && // Mínimo 2 caracteres en el usuario
       password_hash.trim().length >= 6; // password mínimo 6 caracteres
 
     setIsValid(isFormValid);

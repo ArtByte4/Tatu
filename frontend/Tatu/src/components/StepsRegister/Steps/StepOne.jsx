@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 function StepOne({ formData, setFormData, nexStep }) {
-
   const [localData, setLocalData] = useState({
     first_name: formData.first_name || "",
     last_name: formData.last_name || "",
@@ -11,13 +10,12 @@ function StepOne({ formData, setFormData, nexStep }) {
   useEffect(() => {
     const { first_name, last_name, email_address } = localData;
     const isFormValid =
-    first_name.trim().length > 2 && // Mínimo 3 caracteres en el nombre
-    last_name.trim().length > 4 && // Mínimo 3 caracteres en el usuario
-    email_address.trim().length >= 10; // emial mínimo 6 caracteres
+      first_name.trim().length > 2 && // Mínimo 3 caracteres en el nombre
+      last_name.trim().length > 4 && // Mínimo 3 caracteres en el usuario
+      email_address.trim().length >= 8; // emial mínimo 6 caracteres
 
     setIsValid(isFormValid);
   }, [localData]);
-
 
   const [isValid, setIsValid] = useState(false);
   const handleChange = (e) => {
@@ -27,8 +25,8 @@ function StepOne({ formData, setFormData, nexStep }) {
   const handleNext = () => {
     setFormData((prevData) => ({ ...prevData, ...localData }));
     nexStep();
-  }
-  
+  };
+
   return (
     <>
       <input
@@ -43,7 +41,7 @@ function StepOne({ formData, setFormData, nexStep }) {
         type="text"
         name="last_name"
         placeholder="Apellidos"
-        onChange={handleChange} 
+        onChange={handleChange}
         value={localData.last_name}
         required
       />
@@ -55,7 +53,11 @@ function StepOne({ formData, setFormData, nexStep }) {
         value={localData.email_address}
         required
       />
-      <button className={isValid ? "next-step" : "next-step-invalid"} disabled={!isValid} onClick={handleNext}>
+      <button
+        className={isValid ? "next-step" : "next-step-invalid"}
+        disabled={!isValid}
+        onClick={handleNext}
+      >
         Siguiente
       </button>
     </>
