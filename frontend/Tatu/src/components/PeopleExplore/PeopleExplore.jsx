@@ -36,7 +36,7 @@ function PeopleExplore() {
         </div>
 
         <div className="main_content">
-          {users.map((user, index) => {
+          {users.map((user) => {
             return (
               <div className="card_item_suggested" key={user.user_handle}>
                 <div className="card_user">

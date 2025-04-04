@@ -3,9 +3,13 @@ import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
+// Variables de entorno
 dotenv.config();
 
+
+// ==========================================
 // Funcion para traer todos los usuarios
+// ==========================================
 export const getAllUsers = async (req, res) => {
   try {
     const users = await getUsers();
@@ -15,7 +19,10 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-// Funcion para traer un usuario espesifico segun el user_handle
+
+// ==================================================
+// Funcion para traer un usuario segun el user_handle
+// ==================================================
 export const getOneUser = async (req, res) => {
   const userHandle = req.params.user_handle;
   try {
@@ -26,7 +33,10 @@ export const getOneUser = async (req, res) => {
   }
 };
 
+
+// ==========================================
 // Funcion para registrar un usuario nuevo
+// ==========================================
 export const createUser = async (req, res) => {
   try {
     const {
@@ -76,6 +86,10 @@ export const createUser = async (req, res) => {
   }
 };
 
+
+// =================================
+// Funcion para logear un usuario 
+// =================================
 export const loginUser = async (req, res) => {
   try {
     const { user_handle, password_hash } = req.body;
@@ -131,12 +145,19 @@ export const loginUser = async (req, res) => {
 };
 
 
+// =========================================
+// Funcion para cerrar sesion de un usuario 
+// =========================================
 export const logOutUser = (req, res) => {
   res
     .clearCookie('access_token')
     .json({message: 'Logout successful'})
 }
 
+
+// =================================
+// Funcion para proteger rutas 
+// =================================
 export const Routesprotected = (req, res) => {
     const { user } = req.session
     if (!user) return res.status(403).send('Access not authorized')

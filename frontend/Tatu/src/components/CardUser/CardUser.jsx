@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './CardUser.css';
 
 function CardUser() {
-  const [user, setUser] = useState([
+  const [user] = useState([
     { nombre: 'juan' },
     { nombre: 'mike' },
     { nombre: 'gerald' },

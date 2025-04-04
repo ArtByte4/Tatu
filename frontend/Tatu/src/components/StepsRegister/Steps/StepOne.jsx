@@ -1,4 +1,6 @@
+
 import { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
 function StepOne({ formData, setFormData, nexStep }) {
   const [localData, setLocalData] = useState({
@@ -63,5 +65,15 @@ function StepOne({ formData, setFormData, nexStep }) {
     </>
   );
 }
+
+StepOne.propTypes = {
+  formData: PropTypes.shape({
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    email_address: PropTypes.string,
+  }).isRequired,
+  setFormData: PropTypes.func.isRequired,
+  nexStep: PropTypes.func.isRequired,
+};
 
 export default StepOne;

@@ -1,10 +1,11 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
+
 import "./UserSuggested.css";
 
 function UserSuggested() {
 
-const [listUSerSuggested, setListUserSuggested] = useState([
+const [listUSerSuggested] = useState([
     {name: "mike"},
     {name: "cristian"},
     {name: "placo"},

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
 function StepThree({ formData, setFormData, prevStep, registerUser }) {
   const [localData, setLocalData] = useState({
@@ -31,7 +32,7 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
       registerUser(formData);
       setIsReady(false); // Resetea la bandera para evitar reenvíos
     }
-  }, [formData, isReady]);
+  }, [formData, isReady, registerUser]);
 
   return (
     <>
@@ -52,5 +53,14 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
     </>
   );
 }
+
+StepThree.propTypes = {
+  formData: PropTypes.shape({
+    birth_day: PropTypes.string,
+  }).isRequired,
+  setFormData: PropTypes.func.isRequired,
+  prevStep: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
+};
 
 export default StepThree;

@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import userRoutes from './routes/userRouters.js';
-// import followersRoutes from './routes/followersRouters.js'
+import followerdRoutes from './routes/followersRouters.js'
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
@@ -12,7 +12,8 @@ const corsOptions = {
   methods: ["GET", "POST"], // Métodos permitidos
   credentials: true,
 };
-app.use(cors(corsOptions)); // Habilitar CORS con las opciones configuradas
+app.use(cors(corsOptions));
+
 
 // Middleware para poder leer JSON
 app.use(bodyParser.json());
@@ -22,8 +23,8 @@ app.use(cookieParser())
 
 
 app.use('/api', userRoutes);
+app.use('/api', followerdRoutes);
 
-// app.use('/api' followersRoutes);
 
 
 // Se crea un servidor en el puerto 3000

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 
 function StepTwo({formData, setFormData, nexStep, prevStep}) {
   const [localData, setLocalData] = useState({
@@ -62,5 +63,16 @@ function StepTwo({formData, setFormData, nexStep, prevStep}) {
     </>
   );
 }
+
+StepTwo.propTypes = {
+  formData: PropTypes.shape({
+    phonenumber: PropTypes.string,
+    user_handle: PropTypes.string,
+    password_hash: PropTypes.string,
+  }).isRequired,
+  setFormData: PropTypes.func.isRequired,
+  nexStep: PropTypes.func.isRequired,
+  prevStep: PropTypes.func.isRequired,
+};
 
 export default StepTwo;
