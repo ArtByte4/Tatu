@@ -5,8 +5,8 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
-import logo from "../../../public/img/Logo _ ART BYTE_White.png";
-import "./Nav.css";
+import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
+import "../styles/Nav.css"
 function Nav() {
   return (
     <div className="container-item-nav">

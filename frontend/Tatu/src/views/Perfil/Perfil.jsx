@@ -1,5 +1,5 @@
-import Nav from '../../components/Nav/Nav';
-import PerfilUser from '../../components/PerfilUser/PerfilUser';
+import { Nav } from '@/features/navigation'
+import { PerfilUser } from '@/features/profile'
 import './Perfil.css'
 
 function Perfil() {

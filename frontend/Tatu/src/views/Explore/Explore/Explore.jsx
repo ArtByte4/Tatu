@@ -1,5 +1,6 @@
-import PeopleExplore from "../../../components/PeopleExplore/PeopleExplore";
-import Nav from "../../../components/Nav/Nav";
+import { PeopleExplore } from '@/features/explore'
+// import Nav from "../../../components/Nav/Nav";
+import { Nav } from "@/features/navigation"
 import "./Explore.css";
 function Explore() {
   return (

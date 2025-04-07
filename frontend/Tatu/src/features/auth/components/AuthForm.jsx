@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Autform.css";
+import '../styles/AuthForm.css';
 import { useState } from "react";
 
 function Autform() {

@@ -1,7 +1,8 @@
-import "./PerfilUser.css";
 import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
+import "../styles/PerfilUser.css"
+
 function PerfilUser() {
   const [file, setFile] = useState(null);
   const [upload, setUpload] = useState(false);

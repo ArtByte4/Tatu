@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-import "./UserSuggested.css";
+import "../styles/UserSuggested.css"
 
 function UserSuggested() {
 

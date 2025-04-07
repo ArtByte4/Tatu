@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./PeopleExplore.css";
+import "../styles/PeopleExplore.css"
 import axios from "axios";
 function PeopleExplore() {
   const [users, setUsers] = useState([]);
