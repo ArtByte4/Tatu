@@ -6,4 +6,5 @@ export const {
   DB_NAME,
   DB_PORT,
   SECRET_JWT_KEY,
+  REFRESH_JWT_KEY,
 } = process.env;
