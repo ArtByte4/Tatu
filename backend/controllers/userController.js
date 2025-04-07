@@ -1,11 +1,7 @@
+import { SECRET_JWT_KEY } from "../config.js";
 import { getUsers, getUserByUserHandle, addUser } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
-// Variables de entorno
-dotenv.config();
-
 
 // ==========================================
 // Funcion para traer todos los usuarios
@@ -120,7 +116,7 @@ export const loginUser = async (req, res) => {
     // JWT
     const token = jwt.sign(
       { id: user.user_id, username: user.user_handle },
-      process.env.SECRET_JWT_KEY,
+      SECRET_JWT_KEY,
       {
         expiresIn: "1h",
       }
