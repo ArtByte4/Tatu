@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./App.css";
+
 import { AuthForm } from '@/features/auth'
 import { StepsRegister } from "@/features/registration";
 import { UserSuggested } from "@/features/explore";
-import Explore from "./views/Explore/Explore/Explore";
-// import { Explore } from "@/views/Explore";
-import Perfil from "./views/Perfil/Perfil";
+import { Explore, Perfil } from "@/pages";
+
+import "./App.css";
+
 function App() {
   return (
     <Router>
