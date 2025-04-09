@@ -1,0 +1,137 @@
+.bg-autform {
+    min-height: 100vh;
+    /* min-width: 100vw; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* background-image: url('../../../public/img/bg-autform.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; */
+}
+
+.bg-autform::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* background: rgb(59,255,131);
+    background: radial-gradient(circle, rgba(59,255,131, 0.8) 0%, rgba(3,13,51,1) 100%); */
+    background-color: var(--negro);
+}
+.container-autform{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    gap: 20px;
+    width: min(90%, 1200px);
+}
+.form-autform{
+    margin: 0 auto;
+    color: white;
+    text-align: center;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid #ffffff67;
+    padding: 30px;
+    border-radius: 2px;
+    width: min(90%, 400px);
+    gap: 20px;
+}
+
+.form-autform img{
+    max-width: 155px;
+}
+
+.form-autform input[type="text"], .form-autform input[type="password"], .form-autform input[type="email"]{
+    width: min(100%, 90%);
+    padding: 10px;
+    border: 1px solid #ffffff86;
+    background-color: transparent;
+    border-radius: 2px;
+    outline: none;
+    color: var(--blanco);
+}
+
+.form-autform button[type="submit"]{
+    width: min(100%, 90%);
+    padding: 10px;
+    background-color: var(--morado);
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+    cursor: pointer;
+}
+
+
+.form-autform input[type="submit"]:hover{
+    background-color: #4901ad;
+}
+
+.next-step{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--morado);
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+    cursor: pointer;
+}
+
+.next-step-invalid{
+    width: 100%;
+    padding: 10px;
+    background-color: #30056d62;
+    border-radius: 10px;
+    outline: none;
+    color: var(--blanco);
+    cursor:not-allowed;
+}
+
+.prev-step{
+    color: var(--morado);
+    background-color: transparent;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+
+.form-autform a{
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-register-authform{
+    margin: 0 auto;
+    color: white;
+    text-align: center;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid #ffffff67;
+    padding: 20px;
+    border-radius: 2px;
+    width: min(90%, 400px)
+}
+
+.btn-register-authform p{
+    font-size: 14px;
+}
+.btn-register-authform a{
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 800;
+}
