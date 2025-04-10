@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.get("/users", getAllUsers);
+router.get("/users", verifyToken, getAllUsers);
 router.get("/users/:user_handle", verifyToken, getOneUser);
 router.post("/users", createUser);
 router.post("/users/auth/login", loginUser);

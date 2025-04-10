@@ -134,7 +134,7 @@ export const loginUser = async (req, res) => {
       .cookie('access_token', token,{
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict', // strict
+        sameSite: 'lax', // strict
         maxAge: 1000 * 60 * 60
       })
       .cookie('refresh_token', refreshToken, {
@@ -206,13 +206,3 @@ export const verifyToken = (req, res, next) => {
   });
 };
 
-
-
-// =================================
-// Funcion para proteger rutas 
-// =================================
-export const Routesprotected = (req, res) => {
-    const { user } = req.session
-    if (!user) return res.status(403).send('Access not authorized')
-    res.json({message: 'authorized'})
-}
