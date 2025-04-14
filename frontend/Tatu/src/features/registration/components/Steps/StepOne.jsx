@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function StepOne({ formData, setFormData, nexStep }) {
   const [localData, setLocalData] = useState({
@@ -31,30 +30,39 @@ function StepOne({ formData, setFormData, nexStep }) {
 
   return (
     <>
-      <input
-        type="text"
-        name="first_name"
-        placeholder="Nombres"
-        onChange={handleChange}
-        value={localData.first_name}
-        required
-      />
-      <input
+      <label>
+        <span>Nombres</span>
+        <input
+          type="text"
+          name="first_name"
+          placeholder="Ingrese su nombre"
+          onChange={handleChange}
+          value={localData.first_name}
+          required
+        />
+      </label>
+      <label>
+        <span>Apellidos</span>
+        <input
         type="text"
         name="last_name"
-        placeholder="Apellidos"
+        placeholder="Ingrese sus apellidos"
         onChange={handleChange}
         value={localData.last_name}
         required
       />
+      </label>
+      <label >
+        <span>Correo electrónico</span>
       <input
         type="email"
-        placeholder="Correo electrónico"
+        placeholder="Ingrese correo electrónico"
         name="email_address"
         onChange={handleChange}
         value={localData.email_address}
         required
       />
+      </label>
       <button
         className={isValid ? "next-step" : "next-step-invalid"}
         disabled={!isValid}

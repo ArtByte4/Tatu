@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function StepThree({ formData, setFormData, prevStep, registerUser }) {
   const [localData, setLocalData] = useState({
@@ -10,7 +10,7 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
 
   useEffect(() => {
     const { birth_day } = localData;
-    const isFormValid = birth_day !== "" // fecha seleccionada
+    const isFormValid = birth_day !== ""; // fecha seleccionada
 
     setIsValid(isFormValid);
   }, [localData]);
@@ -24,7 +24,7 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
       const updatedData = { ...prevData, ...localData };
       return updatedData;
     });
-  
+
     setIsReady(true); // Marca que los datos están listos para enviarse
   };
   useEffect(() => {
@@ -36,14 +36,17 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
 
   return (
     <>
-      <input
-        type="date"
-        name="birth_day"
-        value={localData.birth_day}
-        placeholder="Fecha de nacimiento"
-        onChange={handleChange}
-        required
-      />
+      <label>
+        <span>Fecha de cumpleaños</span>
+        <input
+          type="date"
+          name="birth_day"
+          value={localData.birth_day}
+          placeholder="Fecha de nacimiento"
+          onChange={handleChange}
+          required
+        />
+      </label>
       <button type="submit" disabled={!isValid} onClick={userRegist}>
         Registrarse
       </button>
