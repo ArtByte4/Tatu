@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import '../styles/AuthForm.css';
+import "../styles/AuthForm.css";
 import { useState } from "react";
 
 function Autform() {
@@ -42,19 +42,29 @@ function Autform() {
           className="form-autform"
           onSubmit={(e) => e.preventDefault()}
         >
+
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
-          <input
-            type="text"
-            placeholder="Usuario o correo electrónico"
-            name="user_handle"
-            onChange={handleChange}
-          />
+          <p>Iniciar sesión</p>
+          <label >
+            <span>Nombre de usuario</span>
+            <input
+              type="text"
+              placeholder="Usuario o correo electrónico"
+              name="user_handle"
+              onChange={handleChange}
+            />
+          </label>
+
+          <label >
+            <span>Contraseña</span>
           <input
             type="password"
             placeholder="Contraseña"
             name="password_hash"
             onChange={handleChange}
           />
+          </label>
+          
           <button type="submit" onClick={loginUser}>
             Entrar
           </button>

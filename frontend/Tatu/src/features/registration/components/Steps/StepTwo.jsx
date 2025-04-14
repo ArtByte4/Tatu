@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-function StepTwo({formData, setFormData, nexStep, prevStep}) {
+function StepTwo({ formData, setFormData, nexStep, prevStep }) {
   const [localData, setLocalData] = useState({
     phonenumber: formData.phonenumber || "",
     user_handle: formData.user_handle || "",
@@ -30,31 +30,41 @@ function StepTwo({formData, setFormData, nexStep, prevStep}) {
 
   return (
     <>
-      <input
-        type="text"
-        name="phonenumber"
-        placeholder="Número de teléfono"
-        onChange={handleChange}
-        value={localData.phonenumber}
-        
-      />
-      <input
-        type="text"
-        name="user_handle"
-        placeholder="Nombre de usuario"
-        onChange={handleChange}
-        value={localData.user_handle}
-        
-      />
-      <input
-        type="password"
-        name="password_hash"
-        placeholder="contraseña"
-        onChange={handleChange}
-        value={localData.password_hash}
-        
-      />
-       <button className={isValid ? "next-step" : "next-step-invalid"} disabled={!isValid} onClick={handleNext}>
+      <label>
+        <span>Número de teléfono</span>
+        <input
+          type="text"
+          name="phonenumber"
+          placeholder="Ingrese número de teléfono"
+          onChange={handleChange}
+          value={localData.phonenumber}
+        />
+      </label>
+      <label>
+        <span>Nombre de usuario</span>
+        <input
+          type="text"
+          name="user_handle"
+          placeholder="Ingrese nombre de usuario"
+          onChange={handleChange}
+          value={localData.user_handle}
+        />
+      </label>
+      <label>
+        <span>Contraseña</span>
+        <input
+          type="password"
+          name="password_hash"
+          placeholder="Ingrese la contraseña"
+          onChange={handleChange}
+          value={localData.password_hash}
+        />
+      </label>
+      <button
+        className={isValid ? "next-step" : "next-step-invalid"}
+        disabled={!isValid}
+        onClick={handleNext}
+      >
         Siguiente
       </button>
       <button className="prev-step" onClick={prevStep}>

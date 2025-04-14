@@ -43,6 +43,7 @@ function StepsRegister() {
           onSubmit={(e) => e.preventDefault()}
         >
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
+          <p>Crea una cuenta</p>
           <StepComponent
             formData={formData}
             setFormData={setFormData}
