@@ -29,6 +29,10 @@ Tatu está construido con una arquitectura moderna para garantizar una experienc
 ## 📦 Instalación y ejecución
 Para conocer los pasos detallados sobre cómo instalar y ejecutar Tatu en tu entorno local, consulta la [documentación oficial](./DOCUMENTACION.md).
 
+## 🛡️ Licencia
+Este proyecto está licenciado bajo la licencia [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).  
+Artbyte Technology se reserva el derecho exclusivo de uso comercial.
+
 
 💡 **Síguenos en nuestras redes sociales y mantente al tanto de las novedades de Tatu!** 🎨🔥
 
