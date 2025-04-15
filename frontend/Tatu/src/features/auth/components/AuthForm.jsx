@@ -2,10 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/AuthForm.css";
 import { useState } from "react";
+import { useAuthStore } from "@/stores/authStore";
 
 function Autform() {
   const navigate = useNavigate();
-
+  const { login } = useAuthStore();
   const [dataLogin, setDataLogin] = useState({
     user_handle: "",
     password_hash: "",
@@ -22,6 +23,7 @@ function Autform() {
       })
       .then((response) => {
         if (response.data.validation) {
+          login(response.data.user); // Guardar el usuario en el store
           navigate("/");
         }
       })
@@ -73,7 +75,7 @@ function Autform() {
 
         <div className="btn-register-authform">
           <p>
-            ¿No tienes una cuenta? <Link to="/steps">Registrate</Link>
+            ¿No tienes una cuenta? <Link to="/register">Registrate</Link>
           </p>
         </div>
       </div>

@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/PeopleExplore.css"
+import "../styles/PeopleExplore.css";
+import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
 function PeopleExplore() {
 
-
+  const { logout } = useAuthStore();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true); // Estado para indicar carga
   const [error, setError] = useState(null); // Estado para manejar errores
+
   const navigate = useNavigate();
-
-
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/users", {withCredentials: true});
+      const response = await axios.get("http://localhost:3000/api/users", {
+        withCredentials: true,
+      });
       setUsers(response.data);
     } catch (err) {
       console.error("Error al obtener usuarios:", err);
@@ -23,12 +25,16 @@ function PeopleExplore() {
     }
   };
 
-  const logout = async () => {
-    const response = await axios.post("http://localhost:3000/api/users/auth/logout", {}, {withCredentials: true});
-    console.log(response)
+  const logoutClearCookies = async () => {
+    const response = await axios.post(
+      "http://localhost:3000/api/users/auth/logout",
+      {},
+      { withCredentials: true }
+    );
+    console.log(response);
+    logout();
     navigate("/login");
-
-}
+  };
 
   useEffect(() => {
     fetchUsers(); // Cargar datos al montar el componente
@@ -39,6 +45,7 @@ function PeopleExplore() {
 
   // Mensaje de error
   if (error) return <p>{error}</p>;
+  
   console.log(users);
   return (
     <div className="container_suggested">
@@ -48,7 +55,7 @@ function PeopleExplore() {
         </div>
 
         <div className="main_content">
-          <button onClick={logout}>Log out</button>
+          <button onClick={logoutClearCookies}>Log out</button>
           {users.map((user) => {
             return (
               <div className="card_item_suggested" key={user.user_handle}>
