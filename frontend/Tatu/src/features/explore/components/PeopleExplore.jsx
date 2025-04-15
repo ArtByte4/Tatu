@@ -1,29 +1,15 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/PeopleExplore.css";
-import { useAuthStore } from "@/stores/authStore";
 import axios from "axios";
-function PeopleExplore() {
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/stores/authStore";
+import { useExplore } from "../hooks/useExplore";
+import "../styles/PeopleExplore.css";
 
+function PeopleExplore() {
   const { logout } = useAuthStore();
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true); // Estado para indicar carga
-  const [error, setError] = useState(null); // Estado para manejar errores
+  const { users, loading, handleUsers } = useExplore();
 
   const navigate = useNavigate();
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/api/users", {
-        withCredentials: true,
-      });
-      setUsers(response.data);
-    } catch (err) {
-      console.error("Error al obtener usuarios:", err);
-      setError("Hubo un problema al cargar los usuarios.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const logoutClearCookies = async () => {
     const response = await axios.post(
@@ -37,15 +23,13 @@ function PeopleExplore() {
   };
 
   useEffect(() => {
-    fetchUsers(); // Cargar datos al montar el componente
-  }, []);
+    handleUsers(); // Cargar datos al montar el componente
+    console.log("Yeahhh");
+  }, [handleUsers]);
 
   // Mensaje de carga
   if (loading) return <p>Cargando usuarios...</p>;
 
-  // Mensaje de error
-  if (error) return <p>{error}</p>;
-  
   return (
     <div className="container_suggested">
       <div className="content_suggested">
