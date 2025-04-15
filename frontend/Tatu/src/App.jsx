@@ -4,7 +4,6 @@ import { AuthForm } from "@/features/auth";
 import { StepsRegister } from "@/features/registration";
 import { UserSuggested } from "@/features/explore";
 import { Explore, Perfil } from "@/pages";
-// import { useAuthStore } from "@/stores/authStore";
 import { PrivateRoute } from "@/components/PrivateRoute";
 
 import "./App.css";

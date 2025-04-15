@@ -1,41 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/AuthForm.css";
-import { useState } from "react";
-import { useAuthStore } from "@/stores/authStore";
+
 
 function Autform() {
-  const navigate = useNavigate();
-  const { login } = useAuthStore();
-  const [dataLogin, setDataLogin] = useState({
-    user_handle: "",
-    password_hash: "",
-  });
 
-  const loginUser = () => {
-    axios
-      .post("http://localhost:3000/api/users/auth/login", dataLogin, {
-        withCredentials: true, // Permite que el navegador almacene la cookie
-        headers: {
-          "Content-Type": "application/json",
-        },
-        timeout: 5000, // Evita bloqueos por peticiones colgadas
-      })
-      .then((response) => {
-        if (response.data.validation) {
-          login(response.data.user); // Guardar el usuario en el store
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        console.error("Error al iniciar sesion:", error);
-      });
-  };
-
-  const handleChange = (e) => {
-    setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
-  };
-
+  const { handleChange, handleSumbit } = useAuth();
+  
   return (
     <div className="bg-autform">
       <div className="container-autform">
@@ -67,7 +39,7 @@ function Autform() {
           />
           </label>
           
-          <button type="submit" onClick={loginUser}>
+          <button type="submit" onClick={handleSumbit}>
             Entrar
           </button>
           <a href="#">¿Olvidaste tu contraseña?</a>

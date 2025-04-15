@@ -46,7 +46,6 @@ function PeopleExplore() {
   // Mensaje de error
   if (error) return <p>{error}</p>;
   
-  console.log(users);
   return (
     <div className="container_suggested">
       <div className="content_suggested">

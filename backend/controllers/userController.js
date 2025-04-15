@@ -146,6 +146,7 @@ export const loginUser = async (req, res) => {
       .json({
       validation: true,
       message: "Usuario autenticado",
+      user: user.user_handle,
       });
   } catch (error) {
     return res.status(500).json({ message: "Error interno del servidor", error });
