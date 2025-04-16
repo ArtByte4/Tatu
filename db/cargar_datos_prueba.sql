@@ -113,3 +113,11 @@ VALUES
 (6, 9),
 (7, 10),
 (8, 1);
+
+
+
+INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Colombia');
+INSERT INTO `tatu_db`.`country` (country_name) VALUES ('México');
+INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Brasil');
+INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Argentina');
+INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Chile');
