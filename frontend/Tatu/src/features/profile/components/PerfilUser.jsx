@@ -1,28 +1,49 @@
 import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
-import "../styles/PerfilUser.css"
+import "../styles/PerfilUser.css";
+import { useAuthStore } from "@/stores/authStore";
+import axios from "axios";
 
 function PerfilUser() {
   const [file, setFile] = useState(null);
   const [upload, setUpload] = useState(false);
   const fileInputRef = useRef(null);
+  const { user } = useAuthStore();
+  const [ profile, setProfile ] = useState({});
 
   const handleFileChange = (e) => {
     // setFile();
     // if (!file) return;
     const url = URL.createObjectURL(e.target.files[0]);
-    setFile(url)
+    setFile(url);
     // setUpload(url);
     // console.log(url);
   };
 
-  useEffect (() => {
-    console.log(file)
-    if(file){
-      setUpload(true)
+  const handleUpload = async () => {
+    try{
+      axios
+      .get(`http://localhost:3000/api/users/profile/${user}`, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        timeout: 5000,
+      })
+      .then((response) => {setProfile(response.data), console.log(response.data.image)}) 
+    }catch (error) {
+      console.log('Error al traer el usuario', error)
     }
-  }, [file])
+  };
+
+  useEffect(() => {
+    console.log(user);
+    handleUpload()
+    if (file) {
+      setUpload(true);
+    }
+  }, [file, user]);
 
   const handleUploadFile = () => {
     console.log("yeah");
@@ -33,13 +54,23 @@ function PerfilUser() {
     <div className="container_perfilUser">
       <div className="content_perfilUser">
         <div className="seccion_info_perfilUser">
-          <div className={upload ? "container-img-perfilUser-active-img" : "container-img-perfilUser"}>
+          <div
+            className={
+              upload
+                ? "container-img-perfilUser-active-img"
+                : "container-img-perfilUser"
+            }
+          >
             <button onClick={handleUploadFile}>
               <img
-                src={upload ? file : "./../../public/img/user_default2.png"}
+                src={upload ? file : "../../../public/img/user_default2.png"}
                 alt=""
               />
-              <MdPhotoCamera className="img-photo" color="#fff" display={upload ? 'none' : 'flex'} />
+              <MdPhotoCamera
+                className="img-photo"
+                color="#fff"
+                display={upload ? "none" : "flex"}
+              />
             </button>
             <form action="">
               <input
@@ -54,7 +85,7 @@ function PerfilUser() {
             <div className="items_perfilUser">
               <div className="item">
                 <div className="btn-info-account">
-                  <span>mikeki</span>
+                  <span>{`${user}`}</span>
                 </div>
                 <div className="btn_edit_perfil">
                   <a href="#">Editar perfil</a>

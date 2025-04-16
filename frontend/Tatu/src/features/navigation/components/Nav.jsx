@@ -6,8 +6,10 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
-import "../styles/Nav.css"
+import "../styles/Nav.css";
+import { useAuthStore } from '@/stores/authStore';
 function Nav() {
+  const { user } = useAuthStore();
   return (
     <div className="container-item-nav">
       <div className="content-items-nav ">
@@ -45,12 +47,14 @@ function Nav() {
               <span>Crear</span>
             </div>
           </div>
-          <div className="item-nav">
-            <div className="item-nav-btn">
-              <FaRegUserCircle color="#fff" size={24} />
-              <span>Perfil</span>
+          <a href={`/${user}`}>
+            <div className="item-nav">
+              <div className="item-nav-btn">
+                <FaRegUserCircle color="#fff" size={24} />
+                <span>Perfil</span>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 

@@ -11,6 +11,11 @@
   
 }
 
+.container-item-nav a {
+  color: var(--blanco);
+  text-decoration: none;
+}
+
 
 
 .logo-tatu-nav img {

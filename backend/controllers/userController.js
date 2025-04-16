@@ -1,5 +1,5 @@
 import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "../config.js";
-import { getUsers, getUserByUserHandle, addUser } from "../models/userModel.js";
+import { getUsers, getUserByUserHandle, addUser, getUserProfile } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
 
@@ -29,6 +29,16 @@ export const getOneUser = async (req, res) => {
   }
 };
 
+export const getOneProfile = async (req, res) => {
+  const userHandle = req.params.user_handle;
+  try {
+    const user = await getUserProfile(userHandle);
+    res.json(user);
+  } catch (err) {
+    console.log("Error al obtener perfil de usuario", err);
+  }
+}
+
 
 // ==========================================
 // Funcion para registrar un usuario nuevo
@@ -44,6 +54,7 @@ export const createUser = async (req, res) => {
       password_hash,
       birth_day,
     } = req.body;
+    console.log(req.body)
 
     if (
       !user_handle ||
@@ -78,7 +89,7 @@ export const createUser = async (req, res) => {
       .status(201)
       .json({ message: "Usuario registrado", userId: result.insertId });
   } catch (error) {
-    res.status(500).json({ message: "Error al registrar usuario", error });
+    res.status(500).json({ message: "Error al registrar usuario backend", error });
   }
 };
 

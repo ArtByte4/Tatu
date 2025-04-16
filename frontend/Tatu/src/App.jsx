@@ -5,10 +5,12 @@ import { StepsRegister } from "@/features/registration";
 import { UserSuggested } from "@/features/explore";
 import { Explore, Perfil } from "@/pages";
 import { PrivateRoute } from "@/components/PrivateRoute";
+import { useAuthStore } from '@/stores/authStore';
 
 import "./App.css";
 
 function App() {
+  const { user } = useAuthStore();
   return (
     <Router>
       <Routes>
@@ -26,7 +28,7 @@ function App() {
           }
         />
         <Route
-          path="/perfil"
+          path={`/${user}`}
           element={
             <PrivateRoute>
               <Perfil />
