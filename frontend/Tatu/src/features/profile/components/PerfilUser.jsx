@@ -2,8 +2,7 @@ import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import "../styles/PerfilUser.css";
-import { useAuthStore } from "@/stores/authStore";
-import { useProfile  } from "@/stores";
+import { useAuthStore, useProfile } from "@/stores";
 import axios from "axios";
 
 function PerfilUser() {
@@ -103,11 +102,11 @@ function PerfilUser() {
             }
           >
             <button onClick={handleUploadFile}>
-              <img src={upload ? file : profile.image} alt="" />
+              <img src={profile.image} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
-                display={upload ? "none" : "flex"}
+                display={photo ? "none" : "flex"}
               />
             </button>
             <form action="">

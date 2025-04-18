@@ -7,9 +7,10 @@ import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
 import "../styles/Nav.css";
-import { useAuthStore } from '@/stores/authStore';
+import { useAuthStore, useProfile } from '@/stores';
 function Nav() {
   const { user } = useAuthStore();
+  const { photo } = useProfile();
   return (
     <div className="container-item-nav">
       <div className="content-items-nav ">
@@ -50,7 +51,8 @@ function Nav() {
           <a href={`/${user.user}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
-                <FaRegUserCircle color="#fff" size={24} />
+                <FaRegUserCircle color="#fff" size={24} display={photo ? 'none' : 'flex'}/>
+                <img src={photo} alt="" className="img-perfil-nav" />
                 <span>Perfil</span>
               </div>
             </div>
