@@ -20,20 +20,21 @@ function PerfilUser() {
     formData.append("file", inputFile);
     formData.append("fileName", `photoPerfil${user}`);
     formData.append("folder", "/Usuarios/Perfiles");
-    const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`); 
+    const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`);
     try {
-      const response = await axios.post(
-        "https://upload.imagekit.io/api/v1/files/upload",
-        formData,
-        {
-          headers: {
-            Authorization: `Basic ${encodedKey}`,
-          },
-        }
-      );
-      // console.log("✅ Imagen subida:", response.data);
-      setFile(response.data.url);
-    }  catch (error) {
+      // const response = await axios.post(
+      //   "https://upload.imagekit.io/api/v1/files/upload",
+      //   formData,
+      //   {
+      //     headers: {
+      //       Authorization: `Basic ${encodedKey}`,
+      //     },
+      //   }
+      // );
+      // setFile(response.data.url);
+      console.log(file)
+      handleUrlPhotoUpload();
+    } catch (error) {
       console.error("❌ Error subiendo imagen:", error);
     }
   };
@@ -41,7 +42,7 @@ function PerfilUser() {
   const handleUpload = async () => {
     try {
       axios
-        .get(`http://localhost:3000/api/users/profile/${user}`, {
+        .get(`http://localhost:3000/api/users/profile/${user.user}`, {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
@@ -53,6 +54,30 @@ function PerfilUser() {
         });
     } catch (error) {
       console.log("Error al traer el usuario", error);
+    }
+  };
+
+  const handleUrlPhotoUpload = async () => {
+    try {
+      // const response = axios.put(
+      //   `http://localhost:3000/api/users/profile/${user}/photo`,
+      //   { url: file, id: user.id},
+      //   {
+      //     withCredentials: true, 
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     timeout: 5000,
+      //   }
+      // );
+
+      // console.log("✅ Foto de perfil actualizada en la BD:", response.data);
+      console.log(file, user.id)
+    } catch (error) {
+      console.error(
+        "❌ Error actualizando en la base de datos:",
+        error.response?.data || error
+      );
     }
   };
 
@@ -100,7 +125,7 @@ function PerfilUser() {
             <div className="items_perfilUser">
               <div className="item">
                 <div className="btn-info-account">
-                  <span>{`${user}`}</span>
+                  <span>{`${user.user}`}</span>
                 </div>
                 <div className="btn_edit_perfil">
                   <a href="#">Editar perfil</a>

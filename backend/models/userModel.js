@@ -70,12 +70,13 @@ export const addUser = async (userData) => {
 
 
 
-export const uploadPhotoUser = async (url, user_id) => {
+export const uploadPhotoUser = async (userData) => {
+  const {url, id} = userData;
     const query = `
         update profile set image = ? where user_id = ?
     `
     try{
-      const [result] = await connection.query(query, [url, user_id])
+      const [result] = await connection.query(query, [url, id])
       return result;
     }catch (error){
       console.log('No fue posible subir la imagen', error)
