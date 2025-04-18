@@ -8,6 +8,7 @@ import {
   refreshToken,
   verifyToken,
   getOneProfile,
+  updatephotoPefil
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -15,10 +16,13 @@ const router = express.Router();
 router.get("/users", verifyToken, getAllUsers);
 router.get("/users/:user_handle", verifyToken, getOneUser);
 router.get("/users/profile/:user_handle", getOneProfile);
+router.get("/users/profile/:user_handle/foto", updatephotoPefil)
 
 router.post("/users", createUser);
 router.post("/users/auth/login", loginUser);
 router.post("/users/auth/refresh", refreshToken);
 router.post("/users/auth/logout", logOutUser);
+
+
 
 export default router;

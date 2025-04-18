@@ -67,3 +67,17 @@ export const addUser = async (userData) => {
     console.error("Error al insertar el usuario en la base de datos.");
   }
 };
+
+
+
+export const uploadPhotoUser = async (url, user_id) => {
+    const query = `
+        update profile set image = ? where user_id = ?
+    `
+    try{
+      const [result] = await connection.query(query, [url, user_id])
+      return result;
+    }catch (error){
+      console.log('No fue posible subir la imagen', error)
+    }
+}

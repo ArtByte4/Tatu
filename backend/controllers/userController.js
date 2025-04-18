@@ -1,5 +1,5 @@
 import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "../config.js";
-import { getUsers, getUserByUserHandle, addUser, getUserProfile } from "../models/userModel.js";
+import { getUsers, getUserByUserHandle, addUser, getUserProfile, uploadPhotoUser } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
 
@@ -158,6 +158,7 @@ export const loginUser = async (req, res) => {
       validation: true,
       message: "Usuario autenticado",
       user: user.user_handle,
+      id: user.user_id
       });
   } catch (error) {
     return res.status(500).json({ message: "Error interno del servidor", error });
@@ -218,3 +219,13 @@ export const verifyToken = (req, res, next) => {
   });
 };
 
+
+export const updatephotoPefil = async (req, res) => {
+  const [url, user_id] = req.body;
+  try{
+    const change = await uploadPhotoUser(url, user_id);
+  res.json({message: "Actualizado con exito", change})
+  }catch(error){
+    res.json({message: "Error al actualizar url de la base de datos", error})
+  }
+}

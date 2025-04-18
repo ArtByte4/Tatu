@@ -10,40 +10,58 @@ function PerfilUser() {
   const [upload, setUpload] = useState(false);
   const fileInputRef = useRef(null);
   const { user } = useAuthStore();
-  const [ profile, setProfile ] = useState({});
+  const [profile, setProfile] = useState({});
+  const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
-  const handleFileChange = (e) => {
-    // setFile();
-    // if (!file) return;
-    const url = URL.createObjectURL(e.target.files[0]);
-    setFile(url);
-    // setUpload(url);
-    // console.log(url);
+  const handleFileChange = async (e) => {
+    const inputFile = e.target.files[0];
+    // const url = URL.createObjectURL(inputFile);
+    const formData = new FormData();
+    formData.append("file", inputFile);
+    formData.append("fileName", `photoPerfil${user}`);
+    formData.append("folder", "/Usuarios/Perfiles");
+    const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`); 
+    try {
+      const response = await axios.post(
+        "https://upload.imagekit.io/api/v1/files/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Basic ${encodedKey}`,
+          },
+        }
+      );
+      // console.log("✅ Imagen subida:", response.data);
+      setFile(response.data.url);
+    }  catch (error) {
+      console.error("❌ Error subiendo imagen:", error);
+    }
   };
 
   const handleUpload = async () => {
-    try{
+    try {
       axios
-      .get(`http://localhost:3000/api/users/profile/${user}`, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        timeout: 5000,
-      })
-      .then((response) => {setProfile(response.data), console.log(response.data.image)}) 
-    }catch (error) {
-      console.log('Error al traer el usuario', error)
+        .get(`http://localhost:3000/api/users/profile/${user}`, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          timeout: 5000,
+        })
+        .then((response) => {
+          setProfile(response.data);
+        });
+    } catch (error) {
+      console.log("Error al traer el usuario", error);
     }
   };
 
   useEffect(() => {
-    console.log(user);
-    handleUpload()
+    handleUpload();
     if (file) {
       setUpload(true);
     }
-  }, [file, user]);
+  }, [file]);
 
   const handleUploadFile = () => {
     console.log("yeah");
@@ -62,10 +80,7 @@ function PerfilUser() {
             }
           >
             <button onClick={handleUploadFile}>
-              <img
-                src={upload ? file : "../../../public/img/user_default2.png"}
-                alt=""
-              />
+              <img src={upload ? file : profile.image} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
