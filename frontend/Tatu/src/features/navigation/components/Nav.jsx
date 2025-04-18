@@ -47,7 +47,7 @@ function Nav() {
               <span>Crear</span>
             </div>
           </div>
-          <a href={`/${user}`}>
+          <a href={`/${user.user}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
                 <FaRegUserCircle color="#fff" size={24} />

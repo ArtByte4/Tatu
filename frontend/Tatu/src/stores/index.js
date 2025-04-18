@@ -1,1 +1,2 @@
-export { default as useAuthStore } from './authStore.js'
+export { useAuthStore } from './authStore.js';
+export { useProfile } from './perfilStore.js';

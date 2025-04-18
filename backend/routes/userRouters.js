@@ -16,7 +16,8 @@ const router = express.Router();
 router.get("/users", verifyToken, getAllUsers);
 router.get("/users/:user_handle", verifyToken, getOneUser);
 router.get("/users/profile/:user_handle", getOneProfile);
-router.get("/users/profile/:user_handle/foto", updatephotoPefil)
+
+router.put("/users/profile/:user_handle/photo", updatephotoPefil);
 
 router.post("/users", createUser);
 router.post("/users/auth/login", loginUser);
