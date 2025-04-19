@@ -1,7 +1,21 @@
 import connection from "../db.js";
 
 export const getUsers = async () => {
-  const query = "SELECT * FROM users";
+  const query = `
+     select  
+      u.user_id,
+      u.user_handle, 
+      u.first_name, 
+      u.last_name, 
+      u.role_id, 
+      u.birth_day, 
+      p.gender, 
+      p.image, 
+      p.bio, 
+      p.follower_count 
+      from users u
+      join profile p on p.user_id = u.user_id;
+  `;
   try {
     const [users] = await connection.query(query);
     return users;
@@ -11,8 +25,7 @@ export const getUsers = async () => {
 };
 
 export const getUserByUserHandle = async (user_handle) => {
-  const query =
-    "select * from users where user_handle = ?";
+  const query = "select * from users where user_handle = ?";
 
   try {
     const [user] = await connection.query(query, user_handle);
@@ -68,17 +81,15 @@ export const addUser = async (userData) => {
   }
 };
 
-
-
 export const uploadPhotoUser = async (url, id) => {
-    const query = `
+  const query = `
         update profile set image = ? where user_id = ?
-    `
-    try{
-      const [result] = await connection.query(query, [url, id])
-      console.log(url, id)
-      return result;
-    }catch (error){
-      console.log('No fue posible subir la imagen', error)
-    }
-}
+    `;
+  try {
+    const [result] = await connection.query(query, [url, id]);
+    console.log(url, id);
+    return result;
+  } catch (error) {
+    console.log("No fue posible subir la imagen", error);
+  }
+};

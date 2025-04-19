@@ -44,7 +44,7 @@ function PeopleExplore() {
               <div className="card_item_suggested" key={user.user_handle}>
                 <div className="card_user">
                   <div className="conten-img">
-                    <img src="../../../public/img/maluma.jpg" alt="" />
+                    <img src={user.image} alt="" />
                   </div>
                   <div className="describe_item_suggested">
                     <span className="user_handle">{user.user_handle}</span>
