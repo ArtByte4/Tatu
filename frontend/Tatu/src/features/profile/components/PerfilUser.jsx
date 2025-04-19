@@ -2,15 +2,15 @@ import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import "../styles/PerfilUser.css";
-import { useAuthStore, useProfile } from "@/stores";
+import { useAuthStore } from "@/stores";
 import axios from "axios";
 
 function PerfilUser() {
   const [file, setFile] = useState();
   const [upload, setUpload] = useState(false);
   const fileInputRef = useRef(null);
-  const { user } = useAuthStore();
-  const { profileData, photo } = useProfile();
+  const { user, photo, profileData } = useAuthStore();
+  // const { profileData, photo } = useProfile();
   const [profile, setProfile] = useState({});
   const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
@@ -63,7 +63,7 @@ function PerfilUser() {
   const handleUrlPhotoUpload = async (url) => {
     try {
       const response = axios.put(
-        `http://localhost:3000/api/users/profile/${user.user}/photo`,
+        `http://localhost:3000/api/users/profile/${user.username}/photo`,
         { url: url, id: user.id}
       );
 
@@ -102,7 +102,7 @@ function PerfilUser() {
             }
           >
             <button onClick={handleUploadFile}>
-              <img src={profile.image} alt="" />
+              <img src={photo} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
@@ -122,7 +122,7 @@ function PerfilUser() {
             <div className="items_perfilUser">
               <div className="item">
                 <div className="btn-info-account">
-                  <span>{`${user.user}`}</span>
+                  <span>{`${user.username}`}</span>
                 </div>
                 <div className="btn_edit_perfil">
                   <a href="#">Editar perfil</a>
