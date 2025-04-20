@@ -47,7 +47,9 @@ function PeopleExplore() {
                     <img src={user.image} alt="" />
                   </div>
                   <div className="describe_item_suggested">
-                    <span className="user_handle">{user.user_handle}</span>
+                    <a href={`/profile/${user.user_handle}`}>
+                      <span className="user_handle">{user.user_handle}</span>
+                    </a>
                     <span className="text">Sugerencia para ti</span>
                   </div>
                 </div>

@@ -94,3 +94,11 @@
 .text{
     font-size: 13px;
 }
+
+.describe_item_suggested a{
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--blanco);
+    text-decoration: none;
+}

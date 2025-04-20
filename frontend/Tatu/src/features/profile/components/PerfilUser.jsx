@@ -1,17 +1,15 @@
 import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "../styles/PerfilUser.css";
-import { useAuthStore } from "@/stores";
-import axios from "axios";
 
+import axios from "axios";
+import { useParams } from 'react-router-dom';
+import { useProfile } from "../hooks/useProfile";
 function PerfilUser() {
-  const [file, setFile] = useState();
-  const [upload, setUpload] = useState(false);
+  const { username } = useParams();
+  const { user, photo, profile, profileData, handleProfile } = useProfile();
   const fileInputRef = useRef(null);
-  const { user, photo, profileData } = useAuthStore();
-  // const { profileData, photo } = useProfile();
-  const [profile, setProfile] = useState({});
   const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
   const handleFileChange = async (e) => {
@@ -19,7 +17,7 @@ function PerfilUser() {
     // const url = URL.createObjectURL(inputFile);
     const formData = new FormData();
     formData.append("file", inputFile);
-    formData.append("fileName", `photoPerfil${user.user}`);
+    formData.append("fileName", `photoPerfil${user.username}`);
     formData.append("folder", "/Usuarios/Perfiles");
     const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`);
     try {
@@ -33,30 +31,12 @@ function PerfilUser() {
         }
      );
      const uploadedUrl = response.data.url;
-     setFile(uploadedUrl); // Opcional si quieres mostrar la imagen
+    //  setFile(uploadedUrl); // Opcional si quieres mostrar la imagen
      console.log("✅ Imagen subida:", uploadedUrl);
      // 👉 Aquí la pasas directamente
      handleUrlPhotoUpload(uploadedUrl);
     } catch (error) {
       console.error("❌ Error subiendo imagen:", error);
-    }
-  };
-
-  const handleUpload = async () => {
-    try {
-      axios
-        .get(`http://localhost:3000/api/users/profile/${user.user}`, {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          timeout: 5000,
-        })
-        .then((response) => {
-          setProfile(response.data);
-        });
-    } catch (error) {
-      console.log("Error al traer el usuario", error);
     }
   };
 
@@ -78,15 +58,10 @@ function PerfilUser() {
   };
 
   useEffect(() => {
-    handleUpload();
-    if (file) {
-      setUpload(true);
-    }
-    console.log(photo)
-  }, [file]);
+    handleProfile(username);
+  }, [username]);
 
   const handleUploadFile = () => {
-    console.log("yeah");
     fileInputRef.current.click();
   };
 
@@ -102,7 +77,7 @@ function PerfilUser() {
             }
           >
             <button onClick={handleUploadFile}>
-              <img src={photo} alt="" />
+              <img src={profile.image} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
@@ -122,7 +97,7 @@ function PerfilUser() {
             <div className="items_perfilUser">
               <div className="item">
                 <div className="btn-info-account">
-                  <span>{`${user.username}`}</span>
+                  <span>{`${username}`}</span>
                 </div>
                 <div className="btn_edit_perfil">
                   <a href="#">Editar perfil</a>

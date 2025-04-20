@@ -7,7 +7,7 @@ import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
 import "../styles/Nav.css";
-import { useAuthStore } from '@/stores';
+import { useAuthStore } from "@/stores";
 function Nav() {
   const { user, photo } = useAuthStore();
   return (
@@ -17,12 +17,14 @@ function Nav() {
           <img src={logo} alt="Logo" />
         </div>
         <div className="list-items-nav">
-          <div className="item-nav">
-            <div className="item-nav-btn">
-              <IoHomeSharp color="#fff" size={24} />
-              <span>Inicio</span>
+          <a href="/">
+            <div className="item-nav">
+              <div className="item-nav-btn">
+                <IoHomeSharp color="#fff" size={24} />
+                <span>Inicio</span>
+              </div>
             </div>
-          </div>
+          </a>
           <div className="item-nav">
             <div className="item-nav-btn">
               <IoSearch color="#fff" size={24} />
@@ -50,7 +52,11 @@ function Nav() {
           <a href={`/profile/${user.username}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
-                <FaRegUserCircle color="#fff" size={24} display={photo ? 'none' : 'flex'}/>
+                <FaRegUserCircle
+                  color="#fff"
+                  size={24}
+                  display={photo ? "none" : "flex"}
+                />
                 <img src={photo} alt="" className="img-perfil-nav" />
                 <span>Perfil</span>
               </div>
