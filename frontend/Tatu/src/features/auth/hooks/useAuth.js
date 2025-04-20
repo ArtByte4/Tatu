@@ -20,7 +20,7 @@ export const useAuth = () => {
     try {
       const response = await loginUser(dataLogin);
       if (response.validation) {
-        console.log(response.user, response.id)
+        // console.log(response.user, response.id)
         login(response.user,  response.id); // Guardar el usuario en el store
         navigate("/");
       }

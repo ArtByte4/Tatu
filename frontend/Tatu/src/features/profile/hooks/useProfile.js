@@ -15,6 +15,7 @@ export const useProfile = () => {
     try {
       const response = await getProfile(username);
       setProfile(response.data);
+      return response.data
     } catch (error) {
       console.error("Error al traer usuario", error);
       throw error;

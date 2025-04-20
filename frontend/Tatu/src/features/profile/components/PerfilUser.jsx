@@ -1,11 +1,15 @@
 import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/PerfilUser.css";
 import { useParams } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
+
+
 function PerfilUser() {
+
   const { username } = useParams();
+  const [ownPerfil, setOwnPerfil] = useState(false);
   const {
     user,
     photo,
@@ -40,8 +44,11 @@ function PerfilUser() {
     const fetchProfileData = async () => {
       setLoading(true);
       try {
-        await handleGetProfile(username);
+        const response = await handleGetProfile(username);
         setDataFetched(true);
+        if (user.id === response.user_id && user.username == response.user_handle){
+          setOwnPerfil(true)
+        }
       } catch (error) {
         console.error("Error al obtener los datos del perfil", error);
         // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje de error
@@ -60,11 +67,19 @@ function PerfilUser() {
   }
 
   if (!dataFetched) {
-    return <div className="error"><p>No se pudo obtener los datos del perfil <br /> {username}</p></div>;
+    return (
+      <div className="error">
+        <p>
+          No se pudo obtener los datos del perfil <br /> {username}
+        </p>
+      </div>
+    );
   }
 
   const handleUploadFile = () => {
-    fileInputRef.current.click();
+    if(ownPerfil){
+      fileInputRef.current.click();
+    }
   };
 
   return (

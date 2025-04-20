@@ -37,7 +37,7 @@ export const getUserByUserHandle = async (user_handle) => {
 
 export const getUserProfile = async (user_handle) => {
   const query =
-    "select u.user_handle, p.image, p.bio, u.first_name from users u join profile p on p.user_id = u.user_id where user_handle = ?";
+    "select u.user_id, u.user_handle, p.image, p.bio, u.first_name from users u join profile p on p.user_id = u.user_id where user_handle = ?";
 
   try {
     const [user] = await connection.query(query, user_handle);
