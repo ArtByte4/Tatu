@@ -169,3 +169,29 @@ input[type="file"] {
 .describe_item span:hover{
   color: var(--blanco);
 }
+
+.error{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error p{
+  color: var(--blanco);
+  font-size: 25px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.loading{
+  background-color: var(--negro);
+  width: 100%;
+  height: 100%;
+  color: var(--blanco);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

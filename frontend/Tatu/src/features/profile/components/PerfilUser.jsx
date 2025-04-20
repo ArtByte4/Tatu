@@ -2,13 +2,21 @@ import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
 import { useEffect, useRef } from "react";
 import "../styles/PerfilUser.css";
-
-import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
 function PerfilUser() {
   const { username } = useParams();
-  const { user, photo, profile, profileData, handleProfile } = useProfile();
+  const {
+    user,
+    photo,
+    profile,
+    loading,
+    dataFetched,
+    setLoading,
+    setDataFetched,
+    handleGetProfile,
+    handleUploadPhotoProfile,
+  } = useProfile();
   const fileInputRef = useRef(null);
   const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
@@ -21,45 +29,39 @@ function PerfilUser() {
     formData.append("folder", "/Usuarios/Perfiles");
     const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`);
     try {
-      const response = await axios.post(
-        "https://upload.imagekit.io/api/v1/files/upload",
-        formData,
-        {
-          headers: {
-            Authorization: `Basic ${encodedKey}`,
-          },
-        }
-     );
-     const uploadedUrl = response.data.url;
-    //  setFile(uploadedUrl); // Opcional si quieres mostrar la imagen
-     console.log("✅ Imagen subida:", uploadedUrl);
-     // 👉 Aquí la pasas directamente
-     handleUrlPhotoUpload(uploadedUrl);
-    } catch (error) {
-      console.error("❌ Error subiendo imagen:", error);
-    }
-  };
-
-  const handleUrlPhotoUpload = async (url) => {
-    try {
-      const response = axios.put(
-        `http://localhost:3000/api/users/profile/${user.username}/photo`,
-        { url: url, id: user.id}
-      );
-
-      // console.log("✅ Foto de perfil actualizada en la BD:", response.data);
-      console.log(url, user.id, response)
-      profileData(url)
-    } catch (error) {
-      console.error(
-        "❌ Error actualizando en la base de datos:", error
-      );
+      await handleUploadPhotoProfile(formData, encodedKey, username);
+      // await handleGetProfile(username)
+    } catch (err) {
+      console.error("Error al subir imagen o actualizar perfil", err);
     }
   };
 
   useEffect(() => {
-    handleProfile(username);
-  }, [username]);
+    const fetchProfileData = async () => {
+      setLoading(true);
+      try {
+        await handleGetProfile(username);
+        setDataFetched(true);
+      } catch (error) {
+        console.error("Error al obtener los datos del perfil", error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje de error
+      } finally {
+        setLoading(false); // Una vez que la carga finaliza, desactiva el estado de loading
+      }
+    };
+
+    if (username) {
+      fetchProfileData(); // Solo realiza la petición si se tiene un username
+    }
+  }, [username]); // Agrega 'setProfile' como dependencia si lo estás usando desde el store
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (!dataFetched) {
+    return <div className="error"><p>No se pudo obtener los datos del perfil <br /> {username}</p></div>;
+  }
 
   const handleUploadFile = () => {
     fileInputRef.current.click();
@@ -77,7 +79,7 @@ function PerfilUser() {
             }
           >
             <button onClick={handleUploadFile}>
-              <img src={profile.image} alt="" />
+              <img src={`${profile.image}?${new Date().getTime()}`} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
