@@ -9,10 +9,31 @@ import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
 import { MoreOptions } from "./index.js";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+
 function Nav() {
   const { user, photo } = useAuthStore();
   const [showOptions, setShowOptions] = useState(false);
+  const optionClick = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (optionClick.current && !optionClick.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    }
+
+    // Escucha el evento solo si el menú está abierto
+    if (showOptions) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Limpieza del evento
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOptions]);
+
   return (
     <div className="container-item-nav">
       <div className="content-items-nav ">
@@ -68,7 +89,7 @@ function Nav() {
         </div>
       </div>
 
-      <div className="btn-menu-nav">
+      <div className="btn-menu-nav" ref={optionClick}>
         {showOptions && <MoreOptions />}
         <div
           className="item-nav"
