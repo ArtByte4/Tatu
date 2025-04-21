@@ -6,10 +6,13 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
+import { MoreOptions } from "./index.js";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
+import { useState } from "react";
 function Nav() {
   const { user, photo } = useAuthStore();
+  const [showOptions, setShowOptions] = useState(false);
   return (
     <div className="container-item-nav">
       <div className="content-items-nav ">
@@ -66,7 +69,13 @@ function Nav() {
       </div>
 
       <div className="btn-menu-nav">
-        <div className="item-nav">
+        {showOptions && <MoreOptions />}
+        <div
+          className="item-nav"
+          onClick={() => {
+            showOptions ? setShowOptions(false) : setShowOptions(true);
+          }}
+        >
           <div className="item-nav-btn">
             <IoMenu color="#fff" size={24} />
             <span>Más</span>

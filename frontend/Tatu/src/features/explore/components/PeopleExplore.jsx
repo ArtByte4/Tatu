@@ -1,30 +1,12 @@
-import axios from "axios";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/authStore";
 import { useExplore } from "../hooks/useExplore";
 import "../styles/PeopleExplore.css";
 
 function PeopleExplore() {
-  const { logout } = useAuthStore();
   const { users, loading, handleUsers } = useExplore();
-
-  const navigate = useNavigate();
-
-  const logoutClearCookies = async () => {
-    const response = await axios.post(
-      "http://localhost:3000/api/users/auth/logout",
-      {},
-      { withCredentials: true }
-    );
-    console.log(response);
-    logout();
-    navigate("/login");
-  };
 
   useEffect(() => {
     handleUsers(); // Cargar datos al montar el componente
-    console.log("Yeahhh");
   }, [handleUsers]);
 
   // Mensaje de carga
@@ -38,7 +20,7 @@ function PeopleExplore() {
         </div>
 
         <div className="main_content">
-          <button onClick={logoutClearCookies}>Log out</button>
+          {/* <button onClick={logoutClearCookies}>Log out</button> */}
           {users.map((user) => {
             return (
               <div className="card_item_suggested" key={user.user_handle}>

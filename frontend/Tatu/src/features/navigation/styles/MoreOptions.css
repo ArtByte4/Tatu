@@ -1,0 +1,34 @@
+
+
+.options {
+    width: 300px;
+    padding: 15px;
+    background-color: rgb(39, 39, 39);
+    border-radius: var(--border-radius-extra);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    position: fixed;
+    bottom: 12%;
+    overflow: visible;
+}
+
+.container-options{
+    width: 100%;
+    color: var(--blanco);
+    
+}
+
+.item-options{
+    padding: 10px 0;
+    cursor: pointer;
+    border-radius: var(--border-radius-estandar);
+    margin: 5px 0;
+    padding: 15px 10px;
+}
+
+.item-options:hover{
+    background-color: #606060b8;
+}
