@@ -5,14 +5,13 @@ import "../styles/PerfilUser.css";
 import { useParams } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
 
-
 function PerfilUser() {
 
   const { username } = useParams();
   const [ownPerfil, setOwnPerfil] = useState(false);
+  const [fileName, setFileName] = useState('');
   const {
     user,
-    photo,
     profile,
     loading,
     dataFetched,
@@ -48,6 +47,8 @@ function PerfilUser() {
         setDataFetched(true);
         if (user.id === response.user_id && user.username == response.user_handle){
           setOwnPerfil(true)
+          setFileName(response.image.split('?')[0].substring(response.image.split('?')[0].lastIndexOf('/') + 1));
+
         }
       } catch (error) {
         console.error("Error al obtener los datos del perfil", error);
@@ -88,9 +89,9 @@ function PerfilUser() {
         <div className="seccion_info_perfilUser">
           <div
             className={
-              photo
-                ? "container-img-perfilUser-active-img"
-                : "container-img-perfilUser"
+              fileName=='user_default2.png' && ownPerfil
+                ? "container-img-perfilUser"
+                : "container-img-perfilUser-active-img"
             }
           >
             <button onClick={handleUploadFile}>
@@ -98,7 +99,7 @@ function PerfilUser() {
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
-                display={photo ? "none" : "flex"}
+                display={fileName=='user_default2.png'&&ownPerfil ? "flex" : "none"}
               />
             </button>
             <form action="">
