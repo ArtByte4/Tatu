@@ -4,13 +4,12 @@ interface LoginResponse {
   validation: boolean;
   message: string;
   user: string;
-  id: string;
+  id: number;
 }
 
 export const loginUser = async (dataUser: { user_handle: string, password_hash: string}): Promise<LoginResponse> => {
   try {
     const response = await instance.post<LoginResponse>("/api/users/auth/login", dataUser);
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
