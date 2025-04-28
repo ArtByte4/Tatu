@@ -16,7 +16,7 @@ app.use(cors(corsOptions));
 
 
 // Middleware para poder leer JSON
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(express.json());
 
 app.use(cookieParser())

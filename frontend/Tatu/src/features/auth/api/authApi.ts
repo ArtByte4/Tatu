@@ -1,20 +1,16 @@
 import { instance } from "@/lib/axiosConfig";
 
-interface LoginUserData {
-  user_handle: string;
-  password_hash: string;
-}
-
 interface LoginResponse {
   validation: boolean;
   message: string;
   user: string;
-  id: number;
+  id: string;
 }
 
-export const loginUser = async (dataUser: LoginUserData): Promise<LoginResponse> => {
+export const loginUser = async (dataUser: { user_handle: string, password_hash: string}): Promise<LoginResponse> => {
   try {
-    const response = await instance.post("/api/users/auth/login", dataUser);
+    const response = await instance.post<LoginResponse>("/api/users/auth/login", dataUser);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error al iniciar sesión:", error);

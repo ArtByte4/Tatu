@@ -1,3 +1,3 @@
 
-export { default as AuthForm } from './AuthForm.jsx';
+export { default as AuthForm } from './AuthForm';
 

@@ -12,9 +12,8 @@ function Autform() {
     <div className="bg-autform">
       <div className="container-autform">
         <form
-          action=""
           className="form-autform"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSumbit}
         >
 
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
@@ -39,7 +38,7 @@ function Autform() {
           />
           </label>
           
-          <button type="submit" onClick={handleSumbit}>
+          <button type="submit">
             Entrar
           </button>
           <a href="#">¿Olvidaste tu contraseña?</a>

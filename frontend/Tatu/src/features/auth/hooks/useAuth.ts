@@ -8,16 +8,11 @@ interface LoginFormData {
   password_hash: string;
 }
 
-interface LoginResponse {
-  validation: boolean;
-  user: any; // Puedes definir un tipo más específico si lo conoces, como `User`
-  id: string;
-}
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
-  const [dataLogin, setDataLogin] = useState({
+  const [dataLogin, setDataLogin] = useState<LoginFormData>({
     user_handle: "",
     password_hash: "",
   });
@@ -26,12 +21,12 @@ export const useAuth = () => {
     setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
   };
 
-  const handleSumbit = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSumbit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await loginUser(dataLogin);
       if (response.validation) {
-        login(response.user,  response.id); // Guardar el usuario en el store
+        login(response.user,  response.id);
         navigate("/");
       }
     } catch (error) {
