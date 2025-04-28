@@ -1,3 +1,17 @@
+interface User {
+  user_id: number;
+  user_handle: string;
+  first_name: string;
+  last_name: string;
+  bio: string;
+  birth_day: string; 
+  follower_count: number;
+  gender: string;
+  image: string;
+  role_id: number;
+}
+
+
 import { useEffect } from "react";
 import { useExplore } from "../hooks/useExplore";
 import "../styles/PeopleExplore.css";
@@ -20,8 +34,7 @@ function PeopleExplore() {
         </div>
 
         <div className="main_content">
-          {/* <button onClick={logoutClearCookies}>Log out</button> */}
-          {users.map((user) => {
+          {users.map((user: User) => {
             return (
               <div className="card_item_suggested" key={user.user_handle}>
                 <div className="card_user">
