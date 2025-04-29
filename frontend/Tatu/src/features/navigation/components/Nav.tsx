@@ -13,15 +13,17 @@ import { useState, useRef, useEffect } from "react";
 
 function Nav() {
   const { user, photo } = useAuthStore();
-  const [showOptions, setShowOptions] = useState(false);
-  const optionClick = useRef(null);
+  const [showOptions, setShowOptions] = useState<boolean>(false);
+  const optionClick = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (optionClick.current && !optionClick.current.contains(event.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        optionClick.current && 
+        !optionClick.current.contains(e.target as Node)) {
         setShowOptions(false);
       }
-    }
+    };
 
     // Escucha el evento solo si el menú está abierto
     if (showOptions) {
@@ -73,15 +75,11 @@ function Nav() {
               <span>Crear</span>
             </div>
           </div>
-          <a href={`/profile/${user.username}`}>
+          <a href={`/profile/${user?.username}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
-                <FaRegUserCircle
-                  color="#fff"
-                  size={24}
-                  display={photo ? "none" : "flex"}
-                />
-                <img src={photo} alt="" className="img-perfil-nav" />
+              {!photo && <FaRegUserCircle color="#fff" size={24} />}
+              {photo && <img src={photo} alt="Perfil" className="img-perfil-nav" />}
                 <span>Perfil</span>
               </div>
             </div>
@@ -94,7 +92,7 @@ function Nav() {
         <div
           className="item-nav"
           onClick={() => {
-            showOptions ? setShowOptions(false) : setShowOptions(true);
+            setShowOptions(prev => !prev);
           }}
         >
           <div className="item-nav-btn">
