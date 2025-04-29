@@ -1,3 +1,3 @@
-export { getProfile } from './getProfile.js';
-export { updateProfile } from './updateProfile.js';
-export { uploadPhotoProfile } from './uploadPhotoProfile.js'
+export { getProfile } from './getProfile';
+export { updateProfile } from './updateProfile';
+export { uploadPhotoProfile } from './uploadPhotoProfile'

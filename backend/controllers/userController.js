@@ -228,6 +228,6 @@ export const updatephotoPefil = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error al actualizar url de la base de datos", error });
+      .json({ succes: true, message: "Error al actualizar url de la base de datos", error });
   }
 };

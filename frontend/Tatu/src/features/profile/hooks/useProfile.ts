@@ -2,6 +2,7 @@ import { getProfile, updateProfile, uploadPhotoProfile } from "../api";
 import { useAuthStore } from "@/stores";
 import { useState, useCallback } from "react";
 
+
 export const useProfile = () => {
   // const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
@@ -10,12 +11,12 @@ export const useProfile = () => {
   const [profile, setProfile] = useState({});
   const [dataFetched, setDataFetched] = useState(false); // Estado para indicar que los datos fueron cargados
 
-  const handleGetProfile = useCallback(async (username) => {
+  const handleGetProfile = useCallback(async (username: string) => {
     setLoading(true);
     try {
       const response = await getProfile(username);
-      setProfile(response.data);
-      return response.data
+      setProfile(response);
+      return response
     } catch (error) {
       console.error("Error al traer usuario", error);
       throw error;
@@ -24,7 +25,7 @@ export const useProfile = () => {
     }
   }, []);
 
-  const handlePutProfile = useCallback(async (url) => {
+  const handlePutProfile = useCallback(async (url: string) => {
     setLoading(true);
     try {
       await updateProfile(user, url) // Actualiza base de datos
@@ -38,7 +39,7 @@ export const useProfile = () => {
   }, [user, profileData]);
 
 
-  const handleUploadPhotoProfile = useCallback(async (formData, encodedKey, username) => {
+  const handleUploadPhotoProfile = useCallback(async (formData:FormData, encodedKey: string, username: string) => {
     setLoading(true);
     try {
       const response = await uploadPhotoProfile(formData, encodedKey);

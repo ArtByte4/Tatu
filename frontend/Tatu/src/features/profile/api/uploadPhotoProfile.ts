@@ -1,9 +1,31 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-export const uploadPhotoProfile = async (formData, encodedKey) => {
-    console.log(formData, encodedKey, 'A la verga')
+interface ImageKitResponse {
+  fileId: string;
+  name: string;
+  url: string;
+  size: number;
+  filePath: string;
+  height: number;
+  width: number;
+  fileType: string;
+  thumbnailUrl: string;
+}
+
+/**
+ * Sube una imagen de perfil a ImageKit.
+ *
+ * @param formData - FormData con la imagen y metadatos necesarios.
+ * @param encodedKey - Clave codificada en base64 para autorización básica.
+ * @returns Respuesta de ImageKit con la información del archivo subido.
+ */
+
+export const uploadPhotoProfile = async (
+  formData: FormData , 
+  encodedKey: string
+):Promise<AxiosResponse<ImageKitResponse>> => {
     try {
-      const response = await axios.post(
+      const response = await axios.post<ImageKitResponse>(
         `https://upload.imagekit.io/api/v1/files/upload`,
         formData,
         {

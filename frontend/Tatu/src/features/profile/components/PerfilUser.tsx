@@ -1,15 +1,28 @@
 import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ChangeEvent } from "react";
 import "../styles/PerfilUser.css";
 import { useParams } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
 
+
+interface UserProfile {
+  user_id: number;
+  user_handle: string;
+  image: string;
+  bio: string;
+  first_name: string;
+}
+
+
 function PerfilUser() {
 
-  const { username } = useParams();
-  const [ownPerfil, setOwnPerfil] = useState(false);
-  const [fileName, setFileName] = useState('');
+  const { username } = useParams<string> ();
+  const [ownPerfil, setOwnPerfil] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
+
   const {
     user,
     profile,
@@ -22,20 +35,19 @@ function PerfilUser() {
   } = useProfile();
 
   
-  const fileInputRef = useRef(null);
-  const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
+  
 
-  const handleFileChange = async (e) => {
-    const inputFile = e.target.files[0];
-    // const url = URL.createObjectURL(inputFile);
-    const formData = new FormData();
-    formData.append("file", inputFile);
-    formData.append("fileName", `photoPerfil${user.username}`);
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const inputFile = e.target.files[0] ;
+
+    const formData: FormData = new FormData();
+    formData.append("file", inputFile );
+    formData.append("fileName", `photoPerfil${user?.username}`);
     formData.append("folder", "/Usuarios/Perfiles");
     const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`);
+    
     try {
       await handleUploadPhotoProfile(formData, encodedKey, username);
-      // await handleGetProfile(username)
     } catch (err) {
       console.error("Error al subir imagen o actualizar perfil", err);
     }
@@ -45,16 +57,16 @@ function PerfilUser() {
     const fetchProfileData = async () => {
       setLoading(true);
       try {
-        const response = await handleGetProfile(username);
+        const response: UserProfile = await handleGetProfile(username);
         setDataFetched(true);
-        if (user.id === response.user_id && user.username == response.user_handle){
+        if (user?.id === response.user_id && user?.username == response.user_handle){
           setOwnPerfil(true)
           setFileName(response.image.split('?')[0].substring(response.image.split('?')[0].lastIndexOf('/') + 1));
 
         }
       } catch (error) {
         console.error("Error al obtener los datos del perfil", error);
-        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje de error
+       
       } finally {
         setLoading(false); // Una vez que la carga finaliza, desactiva el estado de loading
       }
@@ -64,6 +76,12 @@ function PerfilUser() {
       fetchProfileData(); // Solo realiza la petición si se tiene un username
     }
   }, [username]); // Agrega 'setProfile' como dependencia si lo estás usando desde el store
+
+  const handleUploadFile = () => {
+    if(ownPerfil && fileInputRef.current){
+      fileInputRef.current.click();
+    }
+  };
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -78,20 +96,13 @@ function PerfilUser() {
       </div>
     );
   }
-
-  const handleUploadFile = () => {
-    if(ownPerfil){
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div className="container_perfilUser">
       <div className="content_perfilUser">
         <div className="seccion_info_perfilUser">
           <div
             className={
-              fileName=='user_default2.png' && ownPerfil
+              fileName ==='user_default2.png' && ownPerfil
                 ? "container-img-perfilUser"
                 : "container-img-perfilUser-active-img"
             }
