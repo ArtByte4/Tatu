@@ -5,7 +5,6 @@ import "../styles/PerfilUser.css";
 import { useParams } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
 
-
 interface UserProfile {
   user_id: number;
   user_handle: string;
@@ -14,12 +13,13 @@ interface UserProfile {
   first_name: string;
 }
 
-
 function PerfilUser() {
-
-  const { username } = useParams<string> ();
+  const { username } = useParams<{username: string}>();
+  if (!username) {
+    return <div className="error">No se ha proporcionado un nombre de usuario</div>;
+  }
   const [ownPerfil, setOwnPerfil] = useState<boolean>(false);
-  const [fileName, setFileName] = useState<string>('');
+  const [fileName, setFileName] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
@@ -34,39 +34,52 @@ function PerfilUser() {
     handleUploadPhotoProfile,
   } = useProfile();
 
-  
-  
-
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const inputFile = e.target.files[0] ;
-
-    const formData: FormData = new FormData();
-    formData.append("file", inputFile );
-    formData.append("fileName", `photoPerfil${user?.username}`);
-    formData.append("folder", "/Usuarios/Perfiles");
-    const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`);
+    const files = e.target.files;
     
-    try {
-      await handleUploadPhotoProfile(formData, encodedKey, username);
-    } catch (err) {
-      console.error("Error al subir imagen o actualizar perfil", err);
+    if (files && files.length > 0 && user?.username) {
+      const inputFile = files[0];
+      const formData = new FormData();
+      formData.append("file", inputFile);
+      formData.append("fileName", `photoPerfil${user.username}`);
+      formData.append("folder", "/Usuarios/Perfiles");
+  
+      const encodedKey = btoa(`${PRIVATE_KEY_IMAGEKIT}:`);
+  
+      try {
+        await handleUploadPhotoProfile(formData, encodedKey, username);
+      } catch (err) {
+        console.error("Error al subir imagen o actualizar perfil", err);
+      }
+    } else {
+      console.warn("Archivo no seleccionado o usuario no definido");
     }
   };
+
 
   useEffect(() => {
     const fetchProfileData = async () => {
       setLoading(true);
       try {
         const response: UserProfile = await handleGetProfile(username);
+        if(response.user_handle != username){
+          setDataFetched(false);
+          return;
+        }
         setDataFetched(true);
-        if (user?.id === response.user_id && user?.username == response.user_handle){
-          setOwnPerfil(true)
-          setFileName(response.image.split('?')[0].substring(response.image.split('?')[0].lastIndexOf('/') + 1));
-
+        if (
+          user?.id === response.user_id &&
+          user?.username == response.user_handle
+        ) {
+          setOwnPerfil(true);
+          setFileName(
+            response.image
+              .split("?")[0]
+              .substring(response.image.split("?")[0].lastIndexOf("/") + 1)
+          );
         }
       } catch (error) {
         console.error("Error al obtener los datos del perfil", error);
-       
       } finally {
         setLoading(false); // Una vez que la carga finaliza, desactiva el estado de loading
       }
@@ -78,7 +91,7 @@ function PerfilUser() {
   }, [username]); // Agrega 'setProfile' como dependencia si lo estás usando desde el store
 
   const handleUploadFile = () => {
-    if(ownPerfil && fileInputRef.current){
+    if (ownPerfil && fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
@@ -102,7 +115,7 @@ function PerfilUser() {
         <div className="seccion_info_perfilUser">
           <div
             className={
-              fileName ==='user_default2.png' && ownPerfil
+              fileName === "user_default2.png" && ownPerfil
                 ? "container-img-perfilUser"
                 : "container-img-perfilUser-active-img"
             }
@@ -112,7 +125,9 @@ function PerfilUser() {
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
-                display={fileName=='user_default2.png'&&ownPerfil ? "flex" : "none"}
+                display={
+                  fileName == "user_default2.png" && ownPerfil ? "flex" : "none"
+                }
               />
             </button>
             <form action="">

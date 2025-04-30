@@ -17,8 +17,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const fetchProfile = async () => {
       try {
         if (isAuthenticated && user?.username) {
-          const res = await instance.get<ProfileData>(`/api/users/profile/${user.username}`);
-          profileData(res.data.image);
+          const response = await instance.get<ProfileData>(`/api/users/profile/${user.username}`);
+          profileData(response.data.image);
         }
       } catch (err) {
         console.error('Error cargando perfil:', err);

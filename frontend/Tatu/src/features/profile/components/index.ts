@@ -1,1 +1,1 @@
-export { default as PerfilUser } from "./PerfilUser.jsx";
+export { default as PerfilUser } from "./PerfilUser";
