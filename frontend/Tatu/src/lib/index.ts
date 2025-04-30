@@ -1,1 +1,1 @@
-export {default as axios} from "./axiosConfig.js"
+export {default as axios} from "./axiosConfig"

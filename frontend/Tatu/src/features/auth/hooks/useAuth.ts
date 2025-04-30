@@ -21,10 +21,9 @@ export const useAuth = () => {
     setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
   };
 
-  const handleSumbit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const performLogin = async (credentials: LoginFormData) => {
     try {
-      const response = await loginUser(dataLogin);
+      const response = await loginUser(credentials);
       if (response.validation) {
         login(response.user,  response.id);
         navigate("/");
@@ -34,8 +33,15 @@ export const useAuth = () => {
     }
   };
 
+  const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    performLogin(dataLogin);
+  };
+
+
   return {
     handleChange,
+    performLogin,
     handleSumbit,
   };
 };

@@ -1,8 +1,34 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect, ChangeEvent } from "react";
 
-function StepTwo({ formData, setFormData, nexStep, prevStep }) {
-  const [localData, setLocalData] = useState({
+
+interface FormData {
+  user_handle: string;
+  email_address: string;
+  first_name: string;
+  last_name: string;
+  phonenumber: string;
+  password_hash: string;
+  birth_day: string;
+}
+
+interface LocalData {
+  phonenumber: string;
+  user_handle: string;
+  password_hash: string;
+}
+
+interface StepTwoProps {
+  formData: FormData; 
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  nexStep: () => void;
+  prevStep: () => void;
+}
+
+
+
+
+function StepTwo({ formData, setFormData, nexStep, prevStep }: StepTwoProps) {
+  const [localData, setLocalData] = useState<LocalData>({
     phonenumber: formData.phonenumber || "",
     user_handle: formData.user_handle || "",
     password_hash: formData.password_hash || "",
@@ -19,7 +45,7 @@ function StepTwo({ formData, setFormData, nexStep, prevStep }) {
   }, [localData]);
 
   const [isValid, setIsValid] = useState(false);
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalData({ ...localData, [e.target.name]: e.target.value });
   };
 
@@ -73,16 +99,5 @@ function StepTwo({ formData, setFormData, nexStep, prevStep }) {
     </>
   );
 }
-
-StepTwo.propTypes = {
-  formData: PropTypes.shape({
-    phonenumber: PropTypes.string,
-    user_handle: PropTypes.string,
-    password_hash: PropTypes.string,
-  }).isRequired,
-  setFormData: PropTypes.func.isRequired,
-  nexStep: PropTypes.func.isRequired,
-  prevStep: PropTypes.func.isRequired,
-};
 
 export default StepTwo;

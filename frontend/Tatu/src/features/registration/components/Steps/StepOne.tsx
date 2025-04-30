@@ -1,8 +1,32 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect, ChangeEvent } from "react";
 
-function StepOne({ formData, setFormData, nexStep }) {
-  const [localData, setLocalData] = useState({
+
+interface FormData {
+  user_handle: string;
+  email_address: string;
+  first_name: string;
+  last_name: string;
+  phonenumber: string;
+  password_hash: string;
+  birth_day: string;
+}
+
+interface LocalData {
+  first_name: string;
+  last_name: string;
+  email_address: string;
+}
+
+
+interface StepOneProps {
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  nexStep: () => void;
+}
+
+
+function StepOne({ formData, setFormData, nexStep }: StepOneProps) {
+  const [localData, setLocalData] = useState<LocalData>({
     first_name: formData.first_name || "",
     last_name: formData.last_name || "",
     email_address: formData.email_address || "",
@@ -19,7 +43,7 @@ function StepOne({ formData, setFormData, nexStep }) {
   }, [localData]);
 
   const [isValid, setIsValid] = useState(false);
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalData({ ...localData, [e.target.name]: e.target.value });
   };
 
@@ -73,15 +97,5 @@ function StepOne({ formData, setFormData, nexStep }) {
     </>
   );
 }
-
-StepOne.propTypes = {
-  formData: PropTypes.shape({
-    first_name: PropTypes.string,
-    last_name: PropTypes.string,
-    email_address: PropTypes.string,
-  }).isRequired,
-  setFormData: PropTypes.func.isRequired,
-  nexStep: PropTypes.func.isRequired,
-};
 
 export default StepOne;

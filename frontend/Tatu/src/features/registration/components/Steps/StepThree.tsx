@@ -1,12 +1,33 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect, ChangeEvent } from "react";
 
-function StepThree({ formData, setFormData, prevStep, registerUser }) {
-  const [localData, setLocalData] = useState({
+interface FormData {
+  user_handle: string;
+  email_address: string;
+  first_name: string;
+  last_name: string;
+  phonenumber: string;
+  password_hash: string;
+  birth_day: string;
+}
+
+interface LocalData {
+  birth_day: string;
+}
+
+interface StepThreeProps {
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  prevStep: () => void;
+  registerUser: (data: FormData) => void; // Cambiado a FormData
+}
+
+
+function StepThree({ formData, setFormData, prevStep, registerUser }: StepThreeProps) {
+  const [localData, setLocalData] = useState<LocalData>({
     birth_day: formData.birth_day || "",
   });
-  const [isValid, setIsValid] = useState(false);
-  const [isReady, setIsReady] = useState(false);
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
     const { birth_day } = localData;
@@ -15,7 +36,7 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
     setIsValid(isFormValid);
   }, [localData]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLocalData({ ...localData, [e.target.name]: e.target.value });
   };
 
@@ -57,13 +78,5 @@ function StepThree({ formData, setFormData, prevStep, registerUser }) {
   );
 }
 
-StepThree.propTypes = {
-  formData: PropTypes.shape({
-    birth_day: PropTypes.string,
-  }).isRequired,
-  setFormData: PropTypes.func.isRequired,
-  prevStep: PropTypes.func.isRequired,
-  registerUser: PropTypes.func.isRequired,
-};
 
 export default StepThree;

@@ -1,4 +1,4 @@
-export { default as StepsRegister } from "./StepsRegister.jsx"
+export { default as StepsRegister } from "./StepsRegister"
 export * from './Steps'
 
 
