@@ -112,12 +112,14 @@ export const loginUser = async (req, res) => {
         .status(400)
         .json({ message: "Usuario y contraseña requeridos" });
     }
-
+    
     // Buscar usuario en la base de datos
     const user = await getUserByUserHandle(user_handle);
+    console.log(user)
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
+
 
     // Comparar contraseñas
     const isValidPassword = await comparePassword(

@@ -2,18 +2,19 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/AuthForm.css";
-
-
+import { useActionState } from 'react';
+import { login } from "../actions/login";
 function Autform() {
 
   const { handleChange, handleSumbit } = useAuth();
-  
+  const [state, action, pending] = useActionState(login, undefined);
+
   return (
     <div className="bg-autform">
       <div className="container-autform">
         <form
           className="form-autform"
-          onSubmit={handleSumbit}
+          action={action}
         >
 
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />

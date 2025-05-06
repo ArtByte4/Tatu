@@ -26,7 +26,6 @@ export const getUsers = async () => {
 
 export const getUserByUserHandle = async (user_handle) => {
   const query = "select * from users where user_handle = ?";
-
   try {
     const [user] = await connection.query(query, user_handle);
     return user[0];
