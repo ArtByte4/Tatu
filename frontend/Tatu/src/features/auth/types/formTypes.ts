@@ -10,5 +10,6 @@ export type FormState =
         user_handle: string;
         password_hash: string;
       };
+      formError?: string;
     }
   | undefined;

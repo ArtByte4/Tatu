@@ -14,12 +14,33 @@ export const login = async (_state: FormState, formData: FormData): Promise<Form
     };
   }
 
-  const response = await loginUser(validatedFields.data);
 
+  // return {
+  //   message: "OK",
+  //   userData: validatedFields.data,
+  //   userId: response.id,
+  // };
+  try {
+    const response = await loginUser(validatedFields.data);
 
-  return {
-    message: "OK",
-    userData: validatedFields.data,
-    userId: response.id,
-  };
+    if (response.validation) {
+      return {
+        message: "OK",
+        userData: {
+          user_handle: response.user,
+          password_hash: validatedFields.data.password_hash, // Opcional: solo si la necesitas después
+        },
+        userId: response.id,
+      };
+    } else {
+      return {
+        formError: response.message,
+      };
+    }
+
+  } catch (error: any) {
+    return {
+      formError: error.response?.data?.message || "Error inesperado al iniciar sesión",
+    };
+  }
 };
