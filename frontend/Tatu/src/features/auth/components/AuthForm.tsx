@@ -1,13 +1,23 @@
 
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import "../styles/AuthForm.css";
-import { useActionState } from 'react';
+import { useActionState , useEffect} from 'react';
+import { useAuthStore } from "@/stores/authStore";
 import { login } from "../actions/login";
+import { useNavigate } from "react-router-dom";
 function Autform() {
 
-  const { handleChange, handleSumbit } = useAuth();
+  const navigate = useNavigate();
+  const { login: loginToStore } = useAuthStore();
   const [state, action, pending] = useActionState(login, undefined);
+
+  useEffect(() => {
+    if (state?.message === "OK" && state?.userData && state?.userId) {
+      loginToStore(state.userData.user_handle, state.userId);
+      navigate("/");
+    }
+  }, [state])
+  
 
   return (
     <div className="bg-autform">
@@ -25,8 +35,10 @@ function Autform() {
               type="text"
               placeholder="Usuario o correo electrónico"
               name="user_handle"
-              onChange={handleChange}
             />
+            {state?.errors?.user_handle?.[0] && (
+              <span className="error">{state.errors.user_handle[0]}</span>
+            )}
           </label>
 
           <label >
@@ -35,12 +47,14 @@ function Autform() {
             type="password"
             placeholder="Contraseña"
             name="password_hash"
-            onChange={handleChange}
           />
+          {state?.errors?.password_hash?.[0] && (
+              <span className="error">{state.errors.password_hash[0]}</span>
+            )}
           </label>
           
-          <button type="submit">
-            Entrar
+          <button type="submit" disabled={pending}>
+          {pending ? "Entrando..." : "Entrar"}
           </button>
           <a href="#">¿Olvidaste tu contraseña?</a>
         </form>
