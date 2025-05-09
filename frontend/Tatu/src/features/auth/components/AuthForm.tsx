@@ -35,7 +35,7 @@ function Autform() {
               className={state?.errors?.user_handle?.[0] && "input-error"}
             />
             {state?.errors?.user_handle?.[0] && (
-              <span className="error">{state.errors.user_handle[0]}</span>
+              <span className="error-auth">{state.errors.user_handle[0]}</span>
             )}
           </label>
 
@@ -48,7 +48,7 @@ function Autform() {
               className={state?.errors?.password_hash?.[0] && "input-error"}
             />
             {state?.errors?.password_hash?.[0] && (
-              <span className="error">{state.errors.password_hash[0]}</span>
+              <span className="error-auth">{state.errors.password_hash[0]}</span>
             )}
           </label>
 

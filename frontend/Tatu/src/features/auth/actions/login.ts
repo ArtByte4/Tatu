@@ -14,12 +14,6 @@ export const login = async (_state: FormState, formData: FormData): Promise<Form
     };
   }
 
-
-  // return {
-  //   message: "OK",
-  //   userData: validatedFields.data,
-  //   userId: response.id,
-  // };
   try {
     const response = await loginUser(validatedFields.data);
 
@@ -28,7 +22,7 @@ export const login = async (_state: FormState, formData: FormData): Promise<Form
         message: "OK",
         userData: {
           user_handle: response.user,
-          password_hash: validatedFields.data.password_hash, // Opcional: solo si la necesitas después
+          password_hash: validatedFields.data.password_hash,
         },
         userId: response.id,
       };

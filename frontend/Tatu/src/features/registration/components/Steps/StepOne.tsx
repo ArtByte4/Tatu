@@ -36,7 +36,7 @@ function StepOne({ formData, setFormData, nexStep }: StepOneProps) {
     const { first_name, last_name, email_address } = localData;
     const isFormValid =
       first_name.trim().length > 2 && // Mínimo 3 caracteres en el nombre
-      last_name.trim().length > 4 && // Mínimo 3 caracteres en el usuario
+      last_name.trim().length > 2 && // Mínimo 3 caracteres en el usuario
       email_address.trim().length >= 8; // emial mínimo 6 caracteres
 
     setIsValid(isFormValid);
