@@ -50,3 +50,47 @@ export const SignupStepTwoSchema = z.object({
 });
 
 export type SignupStepTwoSchema = z.infer<typeof SignupStepTwoSchema>;
+
+export const SignupStepThreeSchema = z.object({
+  birth_day: z.string().superRefine((value, ctx) => {
+    const date = new Date(value);
+    const now = new Date();
+
+    if (isNaN(date.getTime())) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "La fecha ingresada no es válida.",
+      });
+      return;
+    }
+
+    // Quitar parte horaria para comparar fechas exactas
+    const dateOnly = new Date(date.toDateString());
+    const todayOnly = new Date(now.toDateString());
+
+    if (dateOnly >= todayOnly) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "La fecha de nacimiento no puede ser hoy ni en el futuro.",
+      });
+      return;
+    }
+
+    const age = now.getFullYear() - date.getFullYear();
+    const monthDiff = now.getMonth() - date.getMonth();
+    const dayDiff = now.getDate() - date.getDate();
+
+    const isOldEnough =
+      age > 13 ||
+      (age === 13 && (monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0)));
+
+    if (!isOldEnough) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Debes tener al menos 13 años.",
+      });
+    }
+  }),
+});
+
+export type SignupStepThreeSchema = z.infer<typeof SignupStepThreeSchema>;

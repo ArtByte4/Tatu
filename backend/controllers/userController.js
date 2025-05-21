@@ -58,7 +58,7 @@ export const createUser = async (req, res) => {
       password_hash,
       birth_day,
     } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     if (
       !user_handle ||
@@ -72,6 +72,28 @@ export const createUser = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Todos los campos son necesarios" });
+    }
+
+    const isNewUser = await getUserByUserHandle(user_handle);
+    if (isNewUser.user_handle === user_handle) {
+      return res.status(401).json({
+        message: "Este nombre de usuario ya está en uso.",
+        field: "user_handle",
+      });
+    }
+
+    if (isNewUser.email_address === email_address) {
+      return res.status(402).json({
+        message: "Este correo electronico ya está en uso.",
+        field: "email_address",
+      });
+    }
+
+    if (isNewUser.phonenumber === phonenumber) {
+      return res.status(402).json({
+        message: "Este número de celular ya esta en uso.",
+        field: "phonenumber",
+      });
     }
 
     const role_id = 1;
@@ -112,19 +134,18 @@ export const loginUser = async (req, res) => {
         .status(400)
         .json({ message: "Usuario y contraseña requeridos" });
     }
-    
+
     // Buscar usuario en la base de datos
     const user = await getUserByUserHandle(user_handle);
-    console.log(user)
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-
     // Comparar contraseñas
     const isValidPassword = await comparePassword(
       password_hash,
-      user.password_hash
+      user.password_hash,
     );
 
     if (!isValidPassword) {
@@ -137,7 +158,7 @@ export const loginUser = async (req, res) => {
       SECRET_JWT_KEY,
       {
         expiresIn: "1h",
-      }
+      },
     );
 
     const refreshToken = jwt.sign({ id: user.user_id }, REFRESH_JWT_KEY, {
@@ -228,8 +249,10 @@ export const updatephotoPefil = async (req, res) => {
     const change = await uploadPhotoUser(url, id);
     res.json({ message: "Actualizado con exito", change });
   } catch (error) {
-    res
-      .status(500)
-      .json({ succes: true, message: "Error al actualizar url de la base de datos", error });
+    res.status(500).json({
+      succes: true,
+      message: "Error al actualizar url de la base de datos",
+      error,
+    });
   }
 };

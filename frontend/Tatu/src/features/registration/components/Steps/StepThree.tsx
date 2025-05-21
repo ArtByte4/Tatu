@@ -1,60 +1,90 @@
 import { useState, useEffect, ChangeEvent } from "react";
-
-interface FormData {
-  user_handle: string;
-  email_address: string;
-  first_name: string;
-  last_name: string;
-  phonenumber: string;
-  password_hash: string;
-  birth_day: string;
-}
-
+import { SignupStepThreeSchema } from "../../validation/registerValidation.ts";
+//
+// interface FormData {
+//   user_handle: string;
+//   email_address: string;
+//   first_name: string;
+//   last_name: string;
+//   phonenumber: string;
+//   password_hash: string;
+//   birth_day: string;
+// }
+//
 interface LocalData {
   birth_day: string;
 }
 
 interface StepThreeProps {
-  formData: FormData;
+  formData: LocalData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   prevStep: () => void;
   registerUser: (data: FormData) => void; // Cambiado a FormData
 }
 
-
-function StepThree({ formData, setFormData, prevStep, registerUser }: StepThreeProps) {
-  const [localData, setLocalData] = useState<LocalData>({
-    birth_day: formData.birth_day || "",
+function StepThree({
+  formData,
+  setFormData,
+  prevStep,
+  registerUser,
+}: StepThreeProps) {
+  const [errors, setErrors] = useState<
+    | {
+        birth_day: string[];
+      }
+    | undefined
+  >({
+    birth_day: [],
   });
-  const [isValid, setIsValid] = useState<boolean>(false);
+
+  // const [localData, setLocalData] = useState<LocalData>({
+  //   birth_day: formData.birth_day || "",
+  // });
+  // // const [isValid, setIsValid] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
-
-  useEffect(() => {
-    const { birth_day } = localData;
-    const isFormValid = birth_day !== ""; // fecha seleccionada
-
-    setIsValid(isFormValid);
-  }, [localData]);
+  //
+  // useEffect(() => {
+  //   const { birth_day } = localData;
+  //   const isFormValid = birth_day !== ""; // fecha seleccionada
+  //
+  //   setIsValid(isFormValid);
+  // }, [localData]);
+  //
+  const isFormValid = formData.birth_day !== "";
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLocalData({ ...localData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const userRegist = () => {
-    setFormData((prevData) => {
-      const updatedData = { ...prevData, ...localData };
-      return updatedData;
+    const validatedFields = SignupStepThreeSchema.safeParse({
+      birth_day: formData.birth_day ?? [],
     });
-
-    setIsReady(true); // Marca que los datos están listos para enviarse
-  };
-  useEffect(() => {
-    if (isReady) {
-      registerUser(formData);
-      setIsReady(false); // Resetea la bandera para evitar reenvíos
+    if (!validatedFields.success) {
+      const fieldErrors = validatedFields.error.flatten().fieldErrors;
+      setErrors({
+        birth_day: fieldErrors.birth_day ?? [],
+      });
+      return;
     }
-  }, [formData, isReady, registerUser]);
 
+    setErrors({ birth_day: [] });
+
+    // setFormData((prevData) => {
+    //   const updatedData = { ...prevData, ...localData };
+    //   return updatedData;
+    // });
+    //
+    setIsReady(true); // Marca que los datos están listos para enviarse
+    registerUser(formData);
+  };
+  // useEffect(() => {
+  //   if (isReady) {
+  //     registerUser(formData);
+  //     setIsReady(false); // Resetea la bandera para evitar reenvíos
+  //   }
+  // }, [formData, isReady, registerUser]);
+  //
   return (
     <>
       <label>
@@ -62,13 +92,16 @@ function StepThree({ formData, setFormData, prevStep, registerUser }: StepThreeP
         <input
           type="date"
           name="birth_day"
-          value={localData.birth_day}
+          value={formData.birth_day}
           placeholder="Fecha de nacimiento"
           onChange={handleChange}
           required
         />
+        {errors.birth_day?.[0] && (
+          <span className="error-auth">{errors.birth_day[0]}</span>
+        )}
       </label>
-      <button type="submit" disabled={!isValid} onClick={userRegist}>
+      <button type="submit" disabled={!isFormValid} onClick={userRegist}>
         Registrarse
       </button>
       <button className="prev-step" onClick={prevStep}>
@@ -77,6 +110,5 @@ function StepThree({ formData, setFormData, prevStep, registerUser }: StepThreeP
     </>
   );
 }
-
 
 export default StepThree;

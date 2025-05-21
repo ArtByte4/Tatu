@@ -1,16 +1,16 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { SignupStepOnewSchema } from "../../validation/registerValidation.ts";
-
-interface FormData {
-  user_handle: string;
-  email_address: string;
-  first_name: string;
-  last_name: string;
-  phonenumber: string;
-  password_hash: string;
-  birth_day: string;
-}
-
+//
+// interface FormData {
+//   user_handle: string;
+//   email_address: string;
+//   first_name: string;
+//   last_name: string;
+//   phonenumber: string;
+//   password_hash: string;
+//   birth_day: string;
+// }
+//
 interface LocalData {
   first_name: string;
   last_name: string;
