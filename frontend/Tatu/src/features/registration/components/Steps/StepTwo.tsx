@@ -1,6 +1,5 @@
 import { useState, useEffect, ChangeEvent } from "react";
 
-
 interface FormData {
   user_handle: string;
   email_address: string;
@@ -18,14 +17,11 @@ interface LocalData {
 }
 
 interface StepTwoProps {
-  formData: FormData; 
+  formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   nexStep: () => void;
   prevStep: () => void;
 }
-
-
-
 
 function StepTwo({ formData, setFormData, nexStep, prevStep }: StepTwoProps) {
   const [localData, setLocalData] = useState<LocalData>({

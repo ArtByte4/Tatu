@@ -13,6 +13,7 @@ function Autform() {
   useEffect(() => {
     if (state?.message === "OK" && state?.userData && state?.userId) {
       loginToStore(state.userData.user_handle, state.userId);
+      console.log(state.userData);
       navigate("/");
     }
   }, [state]);
@@ -48,7 +49,9 @@ function Autform() {
               className={state?.errors?.password_hash?.[0] && "input-error"}
             />
             {state?.errors?.password_hash?.[0] && (
-              <span className="error-auth">{state.errors.password_hash[0]}</span>
+              <span className="error-auth">
+                {state.errors.password_hash[0]}
+              </span>
             )}
           </label>
 

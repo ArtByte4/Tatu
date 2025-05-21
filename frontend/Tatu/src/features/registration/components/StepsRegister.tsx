@@ -4,7 +4,7 @@ import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
 import axios from "axios";
-import { useAuth } from '../../auth/hooks/useAuth';
+import { useAuth } from "../../auth/hooks/useAuth";
 
 interface FormData {
   user_handle: string;
@@ -16,10 +16,8 @@ interface FormData {
   birth_day: string;
 }
 
-
 function StepsRegister() {
-
-  const {  performLogin } = useAuth();
+  const { performLogin } = useAuth();
   const steps = [StepOne, StepTwo, StepThree];
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
@@ -33,7 +31,10 @@ function StepsRegister() {
   });
   const registerUser = async (updatedData: FormData) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/users", updatedData);
+      const response = await axios.post(
+        "http://localhost:3000/api/users",
+        updatedData,
+      );
       console.log("Usuario registrado:", response.data);
       if (!updatedData.user_handle || !updatedData.password_hash) {
         console.error("Campos faltantes para login automático.");
@@ -43,7 +44,6 @@ function StepsRegister() {
         user_handle: updatedData.user_handle,
         password_hash: updatedData.password_hash,
       });
-
     } catch (error) {
       console.error("Error al registrar usuario:", error);
     }
