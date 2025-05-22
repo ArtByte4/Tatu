@@ -1,22 +1,18 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { SignupStepThreeSchema } from "../../validation/registerValidation.ts";
 //
-// interface FormData {
-//   user_handle: string;
-//   email_address: string;
-//   first_name: string;
-//   last_name: string;
-//   phonenumber: string;
-//   password_hash: string;
-//   birth_day: string;
-// }
-//
-interface LocalData {
+interface FormData {
+  user_handle: string;
+  email_address: string;
+  first_name: string;
+  last_name: string;
+  phonenumber: string;
+  password_hash: string;
   birth_day: string;
 }
 
 interface StepThreeProps {
-  formData: LocalData;
+  formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   prevStep: () => void;
   registerUser: (data: FormData) => void; // Cambiado a FormData
@@ -26,7 +22,8 @@ function StepThree({
   formData,
   setFormData,
   prevStep,
-  registerUser,
+  isShow,
+  // registerUser,
 }: StepThreeProps) {
   const [errors, setErrors] = useState<
     | {
@@ -76,7 +73,7 @@ function StepThree({
     // });
     //
     setIsReady(true); // Marca que los datos están listos para enviarse
-    registerUser(formData);
+    // registerUser(formData);
   };
   // useEffect(() => {
   //   if (isReady) {
@@ -86,7 +83,7 @@ function StepThree({
   // }, [formData, isReady, registerUser]);
   //
   return (
-    <>
+    <div className={isShow ? "step-visible" : "step-oculto"}>
       <label>
         <span>Fecha de cumpleaños</span>
         <input
@@ -107,7 +104,7 @@ function StepThree({
       <button className="prev-step" onClick={prevStep}>
         Atras
       </button>
-    </>
+    </div>
   );
 }
 

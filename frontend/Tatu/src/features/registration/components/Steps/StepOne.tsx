@@ -1,29 +1,23 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { SignupStepOnewSchema } from "../../validation/registerValidation.ts";
 //
-// interface FormData {
-//   user_handle: string;
-//   email_address: string;
-//   first_name: string;
-//   last_name: string;
-//   phonenumber: string;
-//   password_hash: string;
-//   birth_day: string;
-// }
-//
-interface LocalData {
+interface FormData {
+  user_handle: string;
+  email_address: string;
   first_name: string;
   last_name: string;
-  email_address: string;
+  phonenumber: string;
+  password_hash: string;
+  birth_day: string;
 }
 
 interface StepOneProps {
-  formData: LocalData;
-  setFormData: React.Dispatch<React.SetStateAction<LocalData>>;
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   nexStep: () => void;
 }
 
-function StepOne({ formData, setFormData, nexStep }: StepOneProps) {
+function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
   const [errors, setErrors] = useState<
     | {
         first_name: string[];
@@ -65,9 +59,9 @@ function StepOne({ formData, setFormData, nexStep }: StepOneProps) {
 
   const handleNext = () => {
     const validatedFields = SignupStepOnewSchema.safeParse({
-      first_name: formData.first_name ?? [],
-      last_name: formData.last_name ?? [],
-      email_address: formData.email_address ?? [],
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email_address: formData.email_address,
     });
     // setFormData((prevData) => ({ ...prevData, ...localData }));
 
@@ -85,7 +79,7 @@ function StepOne({ formData, setFormData, nexStep }: StepOneProps) {
   };
 
   return (
-    <>
+    <div className={isShow ? "step-visible" : "step-oculto"}>
       <label>
         <span>Nombres</span>
 
@@ -130,13 +124,14 @@ function StepOne({ formData, setFormData, nexStep }: StepOneProps) {
         )}
       </label>
       <button
+        type="button"
         className={isFormValid ? "next-step" : "next-step-invalid"}
         disabled={!isFormValid}
         onClick={handleNext}
       >
         Siguiente
       </button>
-    </>
+    </div>
   );
 }
 

@@ -14,6 +14,7 @@ function Autform() {
     if (state?.message === "OK" && state?.userData && state?.userId) {
       loginToStore(state.userData.user_handle, state.userId);
       console.log(state.userData);
+
       navigate("/");
     }
   }, [state]);

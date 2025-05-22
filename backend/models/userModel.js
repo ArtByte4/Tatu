@@ -34,6 +34,26 @@ export const getUserByUserHandle = async (user_handle) => {
   }
 };
 
+export const getUserByEmail = async (email_address) => {
+  const query = "SELECT * FROM users WHERE email_address = ?";
+  try {
+    const [user] = await connection.query(query, email_address);
+    return user[0];
+  } catch (err) {
+    console.log("Error en la consulta por email", err);
+  }
+};
+
+export const getUserByPhone = async (phonenumber) => {
+  const query = "SELECT * FROM users WHERE phonenumber = ?";
+  try {
+    const [user] = await connection.query(query, phonenumber);
+    return user[0];
+  } catch (err) {
+    console.log("Error en la consulta por teléfono", err);
+  }
+};
+
 export const getUserProfile = async (user_handle) => {
   const query =
     "select u.user_id, u.user_handle, p.image, p.bio, u.first_name from users u join profile p on p.user_id = u.user_id where user_handle = ?";

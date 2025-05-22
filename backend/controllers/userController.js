@@ -5,6 +5,8 @@ import {
   addUser,
   getUserProfile,
   uploadPhotoUser,
+  getUserByEmail,
+  getUserByPhone,
 } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
@@ -58,7 +60,7 @@ export const createUser = async (req, res) => {
       password_hash,
       birth_day,
     } = req.body;
-    // console.log(req.body);
+    console.log(req.body);
 
     if (
       !user_handle ||
@@ -74,22 +76,29 @@ export const createUser = async (req, res) => {
         .json({ message: "Todos los campos son necesarios" });
     }
 
-    const isNewUser = await getUserByUserHandle(user_handle);
-    if (isNewUser.user_handle === user_handle) {
+    const user_ha = await getUserByUserHandle(user_handle);
+    const user_em = await getUserByEmail(email_address);
+    const user_tl = await getUserByPhone(phonenumber);
+
+    if (user_ha && user_ha.user_handle === user_handle) {
+      console.log("Payload ================", user_handle, user_ha.user_handle);
       return res.status(401).json({
         message: "Este nombre de usuario ya está en uso.",
         field: "user_handle",
       });
     }
-
-    if (isNewUser.email_address === email_address) {
-      return res.status(402).json({
+    if (user_em && user_em.email_address === email_address) {
+      console.log(
+        "No wey ==============",
+        user_em.email_address,
+        email_address
+      );
+      return res.status(401).json({
         message: "Este correo electronico ya está en uso.",
         field: "email_address",
       });
     }
-
-    if (isNewUser.phonenumber === phonenumber) {
+    if (user_tl && user_tl.phonenumber === phonenumber) {
       return res.status(402).json({
         message: "Este número de celular ya esta en uso.",
         field: "phonenumber",
@@ -117,7 +126,7 @@ export const createUser = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error al registrar usuario backend", error });
+      .json({ message: `Error al registrar usuario backend ${error}`, error });
   }
 };
 
@@ -145,7 +154,7 @@ export const loginUser = async (req, res) => {
     // Comparar contraseñas
     const isValidPassword = await comparePassword(
       password_hash,
-      user.password_hash,
+      user.password_hash
     );
 
     if (!isValidPassword) {
@@ -158,7 +167,7 @@ export const loginUser = async (req, res) => {
       SECRET_JWT_KEY,
       {
         expiresIn: "1h",
-      },
+      }
     );
 
     const refreshToken = jwt.sign({ id: user.user_id }, REFRESH_JWT_KEY, {

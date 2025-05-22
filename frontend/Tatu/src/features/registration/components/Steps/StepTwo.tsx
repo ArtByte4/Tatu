@@ -1,30 +1,29 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { SignupStepTwoSchema } from "../../validation/registerValidation.ts";
 //
-// interface FormData {
-//   user_handle: string;
-//   email_address: string;
-//   first_name: string;
-//   last_name: string;
-//   phonenumber: string;
-//   password_hash: string;
-//   birth_day: string;
-// }
-
-interface LocalData {
-  phonenumber: string;
+interface FormData {
   user_handle: string;
+  email_address: string;
+  first_name: string;
+  last_name: string;
+  phonenumber: string;
   password_hash: string;
+  birth_day: string;
 }
-
 interface StepTwoProps {
-  formData: LocalData;
+  formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   nexStep: () => void;
   prevStep: () => void;
 }
 
-function StepTwo({ formData, setFormData, nexStep, prevStep }: StepTwoProps) {
+function StepTwo({
+  formData,
+  setFormData,
+  nexStep,
+  prevStep,
+  isShow,
+}: StepTwoProps) {
   const [errors, setErrors] = useState<
     | {
         phonenumber: string[];
@@ -67,9 +66,9 @@ function StepTwo({ formData, setFormData, nexStep, prevStep }: StepTwoProps) {
   const handleNext = () => {
     // setFormData({ ...formData, ...localData });
     const validatedFields = SignupStepTwoSchema.safeParse({
-      phonenumber: formData.phonenumber ?? [],
-      user_handle: formData.user_handle ?? [],
-      password_hash: formData.password_hash ?? [],
+      phonenumber: formData.phonenumber,
+      user_handle: formData.user_handle,
+      password_hash: formData.password_hash,
     });
     if (!validatedFields.success) {
       const fieldErrors = validatedFields.error.flatten().fieldErrors;
@@ -85,7 +84,7 @@ function StepTwo({ formData, setFormData, nexStep, prevStep }: StepTwoProps) {
   };
 
   return (
-    <>
+    <div className={isShow ? "step-visible" : "step-oculto"}>
       <label>
         <span>Número de teléfono</span>
         <input
@@ -126,16 +125,17 @@ function StepTwo({ formData, setFormData, nexStep, prevStep }: StepTwoProps) {
         )}
       </label>
       <button
+        type="button"
         className={isFormValid ? "next-step" : "next-step-invalid"}
         disabled={!isFormValid}
         onClick={handleNext}
       >
         Siguiente
       </button>
-      <button className="prev-step" onClick={prevStep}>
+      <button className="prev-step" onClick={prevStep} type="button">
         Atras
       </button>
-    </>
+    </div>
   );
 }
 

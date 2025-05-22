@@ -1,205 +1,218 @@
 .bg-autform {
-    min-height: 100vh;
-    /* min-width: 100vw; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    /* background-image: url('../../../public/img/bg-autform.jpg');
+  min-height: 100vh;
+  /* min-width: 100vw; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* background-image: url('../../../public/img/bg-autform.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; */
-    margin: 40px 0;
+  margin: 40px 0;
 }
 
 .bg-autform::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    /* background: rgb(59,255,131);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* background: rgb(59,255,131);
     background: radial-gradient(circle, rgba(59,255,131, 0.8) 0%, rgba(3,13,51,1) 100%); */
-    background-color: var(--negro);
+  background-color: var(--negro);
 }
-.container-autform{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    gap: 12px;
-    width: min(90%, 1200px);
+.container-autform {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  gap: 12px;
+  width: min(90%, 1200px);
 }
-.form-autform{
-    margin: 0 auto;
-    color: white;
-    text-align: center;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 1px solid #ffffff25;
-    padding: 30px;
-    border-radius: var(--border-radius-estandar);
-    width: min(90%, 400px);
-    gap: 20px;
-}
-
-.form-autform img{
-    max-width: 155px;
+.form-autform {
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #ffffff25;
+  padding: 30px;
+  border-radius: var(--border-radius-estandar);
+  width: min(90%, 400px);
+  gap: 20px;
 }
 
-.form-autform input[type="text"], .form-autform input[type="password"], .form-autform input[type="email"]{
-    /* width: min(100%, 90%); */
-    width: 100%;
-    padding: 12px;
-    background-color: rgba(128, 128, 128, 0.164);
-    border-radius: .375rem;
-    outline: none;
-    color: var(--blanco);
-    margin-top: 8px;
-}
-.form-autform input[type="date"]{
-    width: 100%;
-    padding: 12px;
-    background-color: rgba(128, 128, 128, 0.164);
-    border-radius: var(--border-radius-estandar);
-    outline: none;
-    color: var(--blanco);
-    margin-top: 8px;
-}
-.form-autform button[type="submit"]{
-    width: min(100%, 90%);
-    padding: 10px;
-    background-color: var(--morado);
-    border-radius: .375rem;
-    outline: none;
-    color: var(--blanco);
-    cursor: pointer;
+.form-autform img {
+  max-width: 155px;
 }
 
-
-.form-autform input[type="submit"]:hover{
-    background-color: #4901ad;
+.form-autform input[type="text"],
+.form-autform input[type="password"],
+.form-autform input[type="email"] {
+  /* width: min(100%, 90%); */
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(128, 128, 128, 0.164);
+  border-radius: 0.375rem;
+  outline: none;
+  color: var(--blanco);
+  margin-top: 8px;
 }
-.form-autform label{
-    text-align: left;
-    width: min(100%, 90%);
-    margin-bottom: .5rem;
+.form-autform input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(128, 128, 128, 0.164);
+  border-radius: var(--border-radius-estandar);
+  outline: none;
+  color: var(--blanco);
+  margin-top: 8px;
 }
-
-.form-autform p{
-    font-size: 24px;
-    margin-bottom: 24px;
-    font-weight: bold;
-}
-
-
-.next-step{
-    width: min(100%, 90%);
-    padding: 10px;
-    background-color: var(--morado);
-    border-radius: 10px;
-    outline: none;
-    color: var(--blanco);
-    cursor: pointer;
-    margin: 10px;
-}
-
-.next-step-invalid{
-    width: min(100%, 90%);
-    padding: 10px;
-    background-color: #30056d62;
-    border-radius: 10px;
-    outline: none;
-    color: var(--blanco);
-    cursor:not-allowed;
-    margin: 10px;
+.form-autform button[type="submit"] {
+  width: min(100%, 90%);
+  padding: 10px;
+  background-color: var(--morado);
+  border-radius: 0.375rem;
+  outline: none;
+  color: var(--blanco);
+  cursor: pointer;
 }
 
-.prev-step{
-    color: var(--morado);
-    background-color: transparent;
-    font-weight: 800;
-    font-size: 15px;
-    cursor: pointer;
+.form-autform input[type="submit"]:hover {
+  background-color: #4901ad;
+}
+.form-autform label {
+  text-align: left;
+  width: min(100%, 90%);
+  margin-bottom: 0.5rem;
 }
 
-
-
-.form-autform a{
-    color: var(--blanco);
-    text-decoration: none;
-    font-weight: 600;
-    margin-bottom: 20px;
+.form-autform p {
+  font-size: 24px;
+  margin-bottom: 24px;
+  font-weight: bold;
 }
 
-.btn-register-authform{
-    margin: 0 auto;
-    color: white;
-    text-align: center;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-    border-radius: var(--border-radius-estandar);
-    width: min(90%, 400px);
-    border: 1px solid #ffffff25;
+.next-step {
+  width: min(100%, 90%);
+  padding: 10px;
+  background-color: var(--morado);
+  border-radius: 10px;
+  outline: none;
+  color: var(--blanco);
+  cursor: pointer;
+  margin: 10px;
 }
 
-.btn-register-authform p{
-    font-size: 14px;
-}
-.btn-register-authform a{
-    color: var(--blanco);
-    text-decoration: none;
-    font-weight: 800;
-}
-
-.error-auth{
-    color: var(--rojo);
-    font-size: 14px;
-    margin-top: 8px;
-    text-align: left;
+.next-step-invalid {
+  width: min(100%, 90%);
+  padding: 10px;
+  background-color: #30056d62;
+  border-radius: 10px;
+  outline: none;
+  color: var(--blanco);
+  cursor: not-allowed;
+  margin: 10px;
 }
 
-.input-error{
-    border: 1px solid var(--rojo);
-    background-color: rgba(236, 4, 4, 0.164);
+.prev-step {
+  color: var(--morado);
+  background-color: transparent;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.form-autform a {
+  color: var(--blanco);
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.btn-register-authform {
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: var(--border-radius-estandar);
+  width: min(90%, 400px);
+  border: 1px solid #ffffff25;
+}
+
+.btn-register-authform p {
+  font-size: 14px;
+}
+.btn-register-authform a {
+  color: var(--blanco);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.error-auth {
+  color: var(--rojo);
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+.input-error {
+  border: 1px solid var(--rojo);
+  background-color: rgba(236, 4, 4, 0.164);
 }
 
 .form-global-error {
-    background-color: rgba(255, 77, 80, 0.069); 
-    border: 1px solid #ff4d4f; 
-    color: #a8071a;
-    width: 90%;
-    padding: 12px 16px;
-    margin: 12px 0;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .form-global-error::before {
-    content: "⚠️";
-    font-size: 16px;
-  }
+  background-color: rgba(255, 77, 80, 0.069);
+  border: 1px solid #ff4d4f;
+  color: #a8071a;
+  width: 90%;
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
+.form-global-error::before {
+  content: "⚠️";
+  font-size: 16px;
+}
+
+.step-visible {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-visible button {
+  margin-top: 20px;
+}
+.step-oculto {
+  display: none;
+}
 
 @media (max-width: 430px) {
-    .bg-autform {
-        margin: 20px 0;
-    }
-    
-    .container-autform{
-        width: min(100%, 1200px);
-    }
+  .bg-autform {
+    margin: 20px 0;
+  }
+
+  .container-autform {
+    width: min(100%, 1200px);
+  }
 }
