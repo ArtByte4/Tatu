@@ -20,7 +20,6 @@ export const signup = async (
       "http://localhost:3000/api/users",
       payload,
     );
-    console.log(payload);
     if (response.status === 201) {
       return {
       message: "Registro exitoso",

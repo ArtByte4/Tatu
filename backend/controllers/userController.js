@@ -76,34 +76,28 @@ export const createUser = async (req, res) => {
         .json({ message: "Todos los campos son necesarios" });
     }
 
-    const user_ha = await getUserByUserHandle(user_handle);
-    const user_em = await getUserByEmail(email_address);
-    const user_tl = await getUserByPhone(phonenumber);
+    // const user_ha = await getUserByUserHandle(user_handle);
+    // const user_em = await getUserByEmail(email_address);
+    // const user_tl = await getUserByPhone(phonenumber);
 
-    if (user_ha && user_ha.user_handle === user_handle) {
-      console.log("Payload ================", user_handle, user_ha.user_handle);
-      return res.status(401).json({
-        message: "Este nombre de usuario ya está en uso.",
-        field: "user_handle",
-      });
-    }
-    if (user_em && user_em.email_address === email_address) {
-      console.log(
-        "No wey ==============",
-        user_em.email_address,
-        email_address
-      );
-      return res.status(401).json({
-        message: "Este correo electronico ya está en uso.",
-        field: "email_address",
-      });
-    }
-    if (user_tl && user_tl.phonenumber === phonenumber) {
-      return res.status(402).json({
-        message: "Este número de celular ya esta en uso.",
-        field: "phonenumber",
-      });
-    }
+    // if (user_ha && user_ha.user_handle === user_handle) {
+    //   return res.status(401).json({
+    //     message: "Este nombre de usuario ya está en uso.",
+    //     field: "user_handle",
+    //   });
+    // }
+    // if (user_em && user_em.email_address === email_address) {
+    //   return res.status(401).json({
+    //     message: "Este correo electronico ya está en uso.",
+    //     field: "email_address",
+    //   });
+    // }
+    // if (user_tl && user_tl.phonenumber === phonenumber) {
+    //   return res.status(402).json({
+    //     message: "Este número de celular ya esta en uso.",
+    //     field: "phonenumber",
+    //   });
+    // }
 
     const role_id = 1;
 
@@ -130,18 +124,15 @@ export const createUser = async (req, res) => {
   }
 };
 
+// ===================================
+// Funcion para validar email_address
+// ===================================
 export const emailValidate = async (req, res) => {
   try {
     const { email_address } = req.body;
 
     const verifiEmail = await getUserByEmail(email_address);
-    console.log(verifiEmail);
     if (verifiEmail && verifiEmail.email_address === email_address) {
-      console.log(
-        "No wey ==============",
-        verifiEmail.email_address,
-        email_address
-      );
       return res.status(401).json({
         message: "Este correo electronico ya está en uso.",
         valid: false,
@@ -156,6 +147,58 @@ export const emailValidate = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Error al validar correo electronico" });
+  }
+};
+
+// =================================
+// Funcion para validar user_handle
+// =================================
+export const userHandleValidate = async (req, res) => {
+  try {
+    const { user_handle } = req.body;
+
+    const verifiUserHandle = await getUserByUserHandle(user_handle);
+    if (verifiUserHandle && verifiUserHandle.user_handle === user_handle) {
+      return res.status(401).json({
+        message: "Este nombre de usuario ya está en uso.",
+        valid: false,
+        field: "user_handle",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Username de usuario valido",
+      valid: true,
+      field: "user_handle",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error al validar username" });
+  }
+};
+
+// =================================
+// Funcion para validar phonenumber
+// =================================
+export const phoneNumberValidate = async (req, res) => {
+  try {
+    const { phonenumber } = req.body;
+
+    const verifiPhoneNumber = await getUserByPhone(phonenumber);
+    if (verifiPhoneNumber && verifiPhoneNumber.phonenumber === phonenumber) {
+      return res.status(401).json({
+        message: "Este número de celular ya esta en uso.",
+        valid: false,
+        field: "phonenumber",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Phonenumber de usuario valido",
+      valid: true,
+      field: "phonenumber",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error al validar phonenumber" });
   }
 };
 

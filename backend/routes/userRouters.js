@@ -9,7 +9,9 @@ import {
   verifyToken,
   getOneProfile,
   updatephotoPefil,
-  emailValidate
+  emailValidate,
+  userHandleValidate,
+  phoneNumberValidate,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -29,7 +31,8 @@ router.post("/users/auth/logout", logOutUser);
 // Validaciones
 
 router.post("/users/register/verification/emailAddreess", emailValidate)
-
+router.post("/users/register/verification/userHandle", userHandleValidate)
+router.post("/users/register/verification/phonenumber", phoneNumberValidate)
 
 
 export default router;

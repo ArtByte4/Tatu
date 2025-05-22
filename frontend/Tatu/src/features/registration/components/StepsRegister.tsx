@@ -5,7 +5,7 @@ import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
 import axios from "axios";
 import { useAuth } from "../../auth/hooks/useAuth";
-import { signup } from "../actions/signup.ts";
+import { signup } from "../actions/signup";
 
 interface FormData {
   user_handle: string;
@@ -15,6 +15,19 @@ interface FormData {
   phonenumber: string;
   password_hash: string;
   birth_day: string;
+}
+
+interface FormState {
+  errors: {
+    [key: string]: string[]; // o string si solo hay un error por campo
+  };
+  formError?: string;
+  message?: string;
+  userData: {
+    user_handle: string;
+    password_hash: string;
+    // rol?: string; // si lo necesitas después
+  };
 }
 
 function StepsRegister() {
@@ -47,7 +60,6 @@ function StepsRegister() {
 
   const [state, action, pending] = useActionState(signup, initialFormState);
   useEffect(() => {
-    console.log(state.message);
     if (state?.message === "Registro exitoso" && state.userData) {
       performLogin({
         user_handle: state.userData.user_handle,

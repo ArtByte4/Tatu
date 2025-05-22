@@ -11,7 +11,7 @@ interface EmailValidationInput {
 }
 
 
-export const StepOneValidation = async (data: EmailValidationInput
+export const emailValidation = async (data: EmailValidationInput
 ): Promise<ResponseValidationStepOne> => {
 
     try {

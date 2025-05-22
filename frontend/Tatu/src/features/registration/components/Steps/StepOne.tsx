@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FocusEvent } from "react";
 import { SignupStepOnewSchema } from "../../validation/registerValidation";
-import { StepOneValidation } from "../../api/StepOneValidation";
+import { emailValidation } from "../../api/StepOneValidation";
 
 interface FormData {
   user_handle: string;
@@ -108,7 +108,7 @@ function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
       return;
     }
 
-    const validationResponse = await StepOneValidation({
+    const validationResponse = await emailValidation({
       email_address: formData.email_address,
     });
 
