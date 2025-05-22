@@ -4,10 +4,10 @@ export interface FormState {
   };
   formError?: string;
   message?: string;
-  userId?: number;
+  // userId?: number;
   userData?: {
     user_handle: string;
     password_hash: string;
-    rol: string;
+    // rol: string;
   };
 }

@@ -1,5 +1,5 @@
-import { useState, useEffect, ChangeEvent } from "react";
-import { SignupStepOnewSchema } from "../../validation/registerValidation.ts";
+import { useState, ChangeEvent } from "react";
+import { SignupStepOnewSchema } from "../../validation/registerValidation";
 //
 interface FormData {
   user_handle: string;
@@ -15,6 +15,7 @@ interface StepOneProps {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   nexStep: () => void;
+  isShow: boolean;
 }
 
 function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
@@ -30,23 +31,7 @@ function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
     last_name: [],
     email_address: [],
   });
-  // const [localData, setLocalData] = useState<LocalData>({
-  //   first_name: formData.first_name || "",
-  //   last_name: formData.last_name || "",
-  //   email_address: formData.email_address || "",
-  // });
-  //
-  // useEffect(() => {
-  //   const { first_name, last_name, email_address } = localData;
-  //   const isFormValid =
-  //     first_name.trim().length > 2 && // Mínimo 3 caracteres en el nombre
-  //     last_name.trim().length > 2 && // Mínimo 3 caracteres en el usuario
-  //     email_address.trim().length >= 8; // emial mínimo 6 caracteres
-  //
-  //   setIsValid(isFormValid);
-  // }, [localData]);
-  //
-  // const [isValid, setIsValid] = useState(false);
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

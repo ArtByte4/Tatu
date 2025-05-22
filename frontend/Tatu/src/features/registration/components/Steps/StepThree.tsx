@@ -15,15 +15,13 @@ interface StepThreeProps {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   prevStep: () => void;
-  registerUser: (data: FormData) => void; // Cambiado a FormData
-}
+  isShow: boolean;}
 
 function StepThree({
   formData,
   setFormData,
   prevStep,
   isShow,
-  // registerUser,
 }: StepThreeProps) {
   const [errors, setErrors] = useState<
     | {

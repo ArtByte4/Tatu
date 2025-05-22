@@ -4,10 +4,6 @@ import { FormState } from "../types/formTypes";
 export const signup = async (
   _state: FormState,
   formData: FormData,
-  performLogin: (params: {
-    user_handle: string;
-    password_hash: string;
-  }) => Promise<void>,
 ): Promise<FormState> => {
   const payload = {
     user_handle: formData.get("user_handle"),
@@ -26,34 +22,15 @@ export const signup = async (
     );
     console.log(payload);
     if (response.status === 201) {
-      // Login automático tras registro exitoso
-      const loginResult = await performLogin({
-         user_handle: payload.user_handle as string,
-         password_hash: payload.password_hash as string,
-       });
-      
-      
-      console.log("RESPONSE: ", response);
-
-      if (loginResult.validation) {
-        return {
-          message: "Registro y login exitosos",
-          userData: {
-            user_handle: loginResult.user,
-            password_hash: payload.password_hash as string,
-            rol: loginResult.rol,
-          },
-          userId: loginResult.id,
-        };
-      } else {
-        return {
-          formError:
-            "Registro exitoso, pero ocurrió un error al iniciar sesión.",
-        };
-      }
+      return {
+      message: "Registro exitoso",
+           userData: {
+             user_handle: payload.user_handle as string,
+             password_hash: payload.password_hash as string,
+           },
+      };
     }
   } catch (error: any) {
-    const status = error.response?.status;
     const backendMsg = error.response?.data?.message;
     const field = error.response?.data?.field;
 

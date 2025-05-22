@@ -15,6 +15,7 @@ interface StepTwoProps {
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   nexStep: () => void;
   prevStep: () => void;
+  isShow: boolean;
 }
 
 function StepTwo({
