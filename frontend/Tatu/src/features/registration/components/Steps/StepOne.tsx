@@ -24,13 +24,26 @@ type ErrorsType = Partial<Record<keyof FormData, string[]>>;
 function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
   const [errors, setErrors] = useState<ErrorsType>({});
 
-  // Actualizar campo y limpiar error de ese campo (optimista)
+  const schemaShape = SignupStepOnewSchema.shape;
+
+  // Validación individual de campo usando el schema shape
+  const validateField = (
+    name: keyof typeof schemaShape,
+    value: string
+  ): string[] => {
+    const fieldSchema = schemaShape[name];
+    const result = fieldSchema.safeParse(value);
+    return result.success
+      ? []
+      : result.error.errors.map((e) => e.message || "Campo inválido");
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Limpiar error en ese campo al cambiar para evitar mostrar errores antiguos
-    setErrors(prev => {
+    // Limpiar error en ese campo
+    setErrors((prev) => {
       if (prev[name as keyof FormData]) {
         const newErrors = { ...prev };
         delete newErrors[name as keyof FormData];
@@ -40,37 +53,32 @@ function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
     });
   };
 
-  // Validar campo localmente al perder foco (onBlur)
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    // Extraer validación para ese campo usando el esquema Zod
-    // Esto es un truco para validar solo un campo del objeto
-    const partialObj = { [name]: value };
+    // Solo validar campos existentes en el esquema
+    if (
+      name === "first_name" ||
+      name === "last_name" ||
+      name === "email_address"
+    ) {
+      const fieldErrors = validateField(name, value);
 
-    // Construir esquema parcial de Zod con solo ese campo
-    // Para no repetir schema, usamos shape y pick
-    const fieldSchema = SignupStepOnewSchema.pick({ [name as keyof FormData]: true });
-
-    const result = fieldSchema.safeParse(partialObj);
-
-    if (!result.success) {
-      // Asignar error en ese campo
-      const fieldErrors = result.error.flatten().fieldErrors;
-      setErrors(prev => ({
-        ...prev,
-        [name]: fieldErrors[name as keyof typeof fieldErrors] ?? ["Error inválido"],
-      }));
-    } else {
-      // Quitar error si validó bien
-      setErrors(prev => {
-        if (prev[name as keyof FormData]) {
-          const newErrors = { ...prev };
-          delete newErrors[name as keyof FormData];
-          return newErrors;
-        }
-        return prev;
-      });
+      if (fieldErrors.length > 0) {
+        setErrors((prev) => ({
+          ...prev,
+          [name]: fieldErrors,
+        }));
+      } else {
+        setErrors((prev) => {
+          if (prev[name as keyof FormData]) {
+            const newErrors = { ...prev };
+            delete newErrors[name as keyof FormData];
+            return newErrors;
+          }
+          return prev;
+        });
+      }
     }
   };
 
@@ -80,9 +88,7 @@ function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
     formData.email_address.trim() !== "" &&
     Object.keys(errors).length === 0;
 
-  // Validación completa y remota al hacer clic en siguiente
   const handleNext = async () => {
-    // Validación local completa
     const validated = SignupStepOnewSchema.safeParse({
       first_name: formData.first_name,
       last_name: formData.last_name,
@@ -93,26 +99,29 @@ function StepOne({ formData, setFormData, nexStep, isShow }: StepOneProps) {
       const fieldErrors = validated.error.flatten().fieldErrors;
       setErrors(
         Object.fromEntries(
-          Object.entries(fieldErrors).map(([k, v]) => [k, v ?? ["Error inválido"]])
+          Object.entries(fieldErrors).map(([k, v]) => [
+            k,
+            v ?? ["Error inválido"],
+          ])
         )
       );
       return;
     }
 
-    // Validación remota de email
     const validationResponse = await StepOneValidation({
       email_address: formData.email_address,
     });
 
     if (!validationResponse.valid) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        email_address: validationResponse.message ? [validationResponse.message] : ["Email inválido"],
+        email_address: validationResponse.message
+          ? [validationResponse.message]
+          : ["Email inválido"],
       }));
       return;
     }
 
-    // Todo ok, limpiar errores y avanzar
     setErrors({});
     nexStep();
   };
