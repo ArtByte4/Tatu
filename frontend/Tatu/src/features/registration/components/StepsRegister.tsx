@@ -47,7 +47,7 @@ function StepsRegister() {
 
   const [state, action, pending] = useActionState(signup, initialFormState);
   useEffect(() => {
-    console.log(state.message)
+    console.log(state.message);
     if (state?.message === "Registro exitoso" && state.userData) {
       performLogin({
         user_handle: state.userData.user_handle,
@@ -59,20 +59,16 @@ function StepsRegister() {
   const nexStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-
   return (
     <div className="bg-autform">
       <div className="container-autform">
-        <form
-          action={action}
-          className="form-autform"
-        >
+        <form action={action} className="form-autform">
           <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
           <p>Crea una cuenta</p>
           {state?.formError && (
             <div className="form-global-error">{state.formError}</div>
           )}
-         
+
           <StepOne
             formData={formData}
             setFormData={setFormData}

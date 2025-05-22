@@ -130,6 +130,35 @@ export const createUser = async (req, res) => {
   }
 };
 
+export const emailValidate = async (req, res) => {
+  try {
+    const { email_address } = req.body;
+
+    const verifiEmail = await getUserByEmail(email_address);
+    console.log(verifiEmail);
+    if (verifiEmail && verifiEmail.email_address === email_address) {
+      console.log(
+        "No wey ==============",
+        verifiEmail.email_address,
+        email_address
+      );
+      return res.status(401).json({
+        message: "Este correo electronico ya está en uso.",
+        valid: false,
+        field: "email_address",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Correo electrónico disponible.",
+      valid: true,
+      field: "email_address",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error al validar correo electronico" });
+  }
+};
+
 // =================================
 // Funcion para logear un usuario
 // =================================

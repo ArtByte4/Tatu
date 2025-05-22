@@ -8,7 +8,8 @@ import {
   refreshToken,
   verifyToken,
   getOneProfile,
-  updatephotoPefil
+  updatephotoPefil,
+  emailValidate
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -23,6 +24,11 @@ router.post("/users", createUser);
 router.post("/users/auth/login", loginUser);
 router.post("/users/auth/refresh", refreshToken);
 router.post("/users/auth/logout", logOutUser);
+
+
+// Validaciones
+
+router.post("/users/register/verification/emailAddreess", emailValidate)
 
 
 
