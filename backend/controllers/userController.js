@@ -1,4 +1,4 @@
-import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "../config.js";
+import { SECRET_JWT_KEY, REFRESH_JWT_KEY, ID_ROL_ADMIN } from "../config.js";
 import {
   getUsers,
   getUserByUserHandle,
@@ -75,30 +75,6 @@ export const createUser = async (req, res) => {
         .status(400)
         .json({ message: "Todos los campos son necesarios" });
     }
-
-    // const user_ha = await getUserByUserHandle(user_handle);
-    // const user_em = await getUserByEmail(email_address);
-    // const user_tl = await getUserByPhone(phonenumber);
-
-    // if (user_ha && user_ha.user_handle === user_handle) {
-    //   return res.status(401).json({
-    //     message: "Este nombre de usuario ya está en uso.",
-    //     field: "user_handle",
-    //   });
-    // }
-    // if (user_em && user_em.email_address === email_address) {
-    //   return res.status(401).json({
-    //     message: "Este correo electronico ya está en uso.",
-    //     field: "email_address",
-    //   });
-    // }
-    // if (user_tl && user_tl.phonenumber === phonenumber) {
-    //   return res.status(402).json({
-    //     message: "Este número de celular ya esta en uso.",
-    //     field: "phonenumber",
-    //   });
-    // }
-
     const role_id = 1;
 
     const hashedPassword = await encryptPassword(password_hash);
@@ -235,17 +211,20 @@ export const loginUser = async (req, res) => {
 
     // JWT
     const token = jwt.sign(
-      { id: user.user_id, username: user.user_handle, rol: user.role_id },
+      { id: user.user_id, role: user.role_id, username: user.user_handle },
       SECRET_JWT_KEY,
       {
         expiresIn: "1h",
       }
     );
 
-    const refreshToken = jwt.sign({ id: user.user_id }, REFRESH_JWT_KEY, {
-      expiresIn: "7d",
-    });
-
+    const refreshToken = jwt.sign(
+      { id: user.user_id, role: user.role_id },
+      REFRESH_JWT_KEY,
+      {
+        expiresIn: "7d",
+      }
+    );
     // Autenticación exitosa
     return res
       .status(200)
@@ -266,6 +245,7 @@ export const loginUser = async (req, res) => {
         message: "Usuario autenticado",
         user: user.user_handle,
         id: user.user_id,
+        role: user.role_id,
       });
   } catch (error) {
     return res
@@ -336,4 +316,27 @@ export const updatephotoPefil = async (req, res) => {
       error,
     });
   }
+};
+
+export const verificarAdmin = (req, res, next) => {
+  const token = req.cookies.access_token;
+
+  if (!token) {
+    return res.status(401).json({ mensaje: "Token no proporcionado", valid: false });
+  }
+
+  jwt.verify(token, SECRET_JWT_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ mensaje: "Token inválido o expirado", valid: false });
+    }
+
+    req.user = decoded;
+   
+    if (decoded.role == ID_ROL_ADMIN) {
+      next();
+    } else {
+      
+      return res.status(401).json({ mensaje: "No autorizado: no es admin",  valid: false  });
+    }
+  });
 };

@@ -5,7 +5,7 @@ interface LoginResponse {
   message: string;
   user: string;
   id: number;
-  rol: number;
+  role: number;
 }
 
 export const loginUser = async (dataUser: {
@@ -17,6 +17,7 @@ export const loginUser = async (dataUser: {
       "/api/users/auth/login",
       dataUser,
     );
+
     return response.data;
   } catch (error) {
     console.error("Error al iniciar sesión:", error);

@@ -12,8 +12,8 @@ function Autform() {
 
   useEffect(() => {
     if (state?.message === "OK" && state?.userData && state?.userId) {
-      loginToStore(state.userData.user_handle, state.userId);
-      console.log(state.userData);
+      loginToStore(state.userData.user_handle, state.userId, state.userData.role_id);
+      console.log(state.userData.role_id);
 
       navigate("/");
     }

@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AuthForm } from "@/features/auth";
 import { StepsRegister } from "@/features/registration";
-import { Explore, Perfil } from "@/pages";
+import { Explore, Perfil, AdminDashboard } from "@/pages";
 import { PrivateRoute } from "@/components/PrivateRoute";
+import { ProtectedRouteAdmin } from "./routes/ProtectedRouterAdmin";
 
 import "./App.css";
 
@@ -32,7 +33,12 @@ function App() {
             </PrivateRoute>
           }
         />
+         {/* Protegida para admin */}
+        <Route element={<ProtectedRouteAdmin />}>
+          <Route path="admin/dashboard" element={<AdminDashboard />} />
+        </Route>
       </Routes>
+      
     </Router>
   );
 }

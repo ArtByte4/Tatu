@@ -25,7 +25,7 @@ export const login = async (
         userData: {
           user_handle: response.user,
           password_hash: validatedFields.data.password_hash,
-          rol: response.rol,
+          role_id: response.role,
         },
         userId: response.id,
       };

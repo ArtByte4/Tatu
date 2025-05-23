@@ -12,6 +12,7 @@ import {
   emailValidate,
   userHandleValidate,
   phoneNumberValidate,
+  verificarAdmin,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -19,6 +20,7 @@ const router = express.Router();
 router.get("/users", verifyToken, getAllUsers);
 router.get("/users/:user_handle", verifyToken, getOneUser);
 router.get("/users/profile/:user_handle", getOneProfile);
+
 
 router.put("/users/profile/:user_handle/photo", updatephotoPefil);
 
@@ -33,6 +35,14 @@ router.post("/users/auth/logout", logOutUser);
 router.post("/users/register/verification/emailAddreess", emailValidate)
 router.post("/users/register/verification/userHandle", userHandleValidate)
 router.post("/users/register/verification/phonenumber", phoneNumberValidate)
+
+
+
+router.post("/admin/dashboard", verificarAdmin, async (req, res ) => {
+  res.json({ mensaje: 'Bienvenido al panel admin', valid: true });
+} )
+
+
 
 
 export default router;
