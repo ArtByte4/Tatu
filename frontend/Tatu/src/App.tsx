@@ -21,7 +21,7 @@ function App() {
           path="/"
           element={
             <PrivateRoute>
-              <Explore />
+              <Explore  />
             </PrivateRoute>
           }
         />

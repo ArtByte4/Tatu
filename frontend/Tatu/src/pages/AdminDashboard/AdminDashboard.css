@@ -1,3 +1,23 @@
 .text-panel{
     color: #fff;
 }
+
+.container_explore_page {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  overflow: hidden;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow: hidden; /* Evita que el Nav tenga scroll */
+}
+
+.main-content {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

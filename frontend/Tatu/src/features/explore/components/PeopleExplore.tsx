@@ -4,19 +4,21 @@ interface User {
   first_name: string;
   last_name: string;
   bio: string;
-  birth_day: string; 
+  birth_day: string;
   follower_count: number;
   gender: string;
   image: string;
   role_id: number;
 }
-
+interface PeopleExploreProps {
+  options: boolean;
+}
 
 import { useEffect } from "react";
 import { useExplore } from "../hooks/useExplore";
 import "../styles/PeopleExplore.css";
 
-function PeopleExplore() {
+function PeopleExplore({ options }: PeopleExploreProps) {
   const { users, loading, handleUsers } = useExplore();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ function PeopleExplore() {
     <div className="container_suggested">
       <div className="content_suggested">
         <div className="title_seccion">
-          <h4>Sugerencias</h4>
+          <h4>{options ? "Administración" : "Sugerencias"}</h4>
         </div>
 
         <div className="main_content">
@@ -48,7 +50,13 @@ function PeopleExplore() {
                     <span className="text">Sugerencia para ti</span>
                   </div>
                 </div>
-                <button className="seguir_suggested">Seguir</button>
+                <button className={options ? 'delete_suggested' : 'seguir_suggested'}>
+                  {options ? "Eliminar" : "Seguir"}
+                </button>
+                {options && (
+                  <button className="gestionar_suggested">Gestionar</button>
+                )}
+                
               </div>
             );
           })}

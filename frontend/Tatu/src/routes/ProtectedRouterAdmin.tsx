@@ -1,4 +1,3 @@
-// src/routes/ProtectedRouteAdmin.tsx
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { getDashborad } from '../features/auth/hooks/useGetDashboard';

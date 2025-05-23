@@ -5,13 +5,18 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
+import { MdAdminPanelSettings } from "react-icons/md";
 import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
 import { MoreOptions } from "./index.js";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
 import { useState, useRef, useEffect } from "react";
 
-function Nav() {
+interface NavProps {
+  optionsAdmin: boolean;
+}
+
+function Nav({ optionsAdmin }: NavProps) {
   const { user, photo } = useAuthStore();
   const [showOptions, setShowOptions] = useState<boolean>(false);
   const optionClick = useRef<HTMLDivElement | null>(null);
@@ -19,8 +24,9 @@ function Nav() {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
-        optionClick.current && 
-        !optionClick.current.contains(e.target as Node)) {
+        optionClick.current &&
+        !optionClick.current.contains(e.target as Node)
+      ) {
         setShowOptions(false);
       }
     };
@@ -75,11 +81,23 @@ function Nav() {
               <span>Crear</span>
             </div>
           </div>
+          {optionsAdmin && (
+           <a href="/admin/dashboard">
+             <div className="item-nav">
+              <div className="item-nav-btn">
+                <MdAdminPanelSettings color="#fff" size={24} />
+                <span>Dasboard</span>
+              </div>
+            </div>
+           </a>
+          )}
           <a href={`/profile/${user?.username}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
-              {!photo && <FaRegUserCircle color="#fff" size={24} />}
-              {photo && <img src={photo} alt="Perfil" className="img-perfil-nav" />}
+                {!photo && <FaRegUserCircle color="#fff" size={24} />}
+                {photo && (
+                  <img src={photo} alt="Perfil" className="img-perfil-nav" />
+                )}
                 <span>Perfil</span>
               </div>
             </div>
@@ -92,7 +110,7 @@ function Nav() {
         <div
           className="item-nav"
           onClick={() => {
-            setShowOptions(prev => !prev);
+            setShowOptions((prev) => !prev);
           }}
         >
           <div className="item-nav-btn">
