@@ -7,6 +7,7 @@ import {
   uploadPhotoUser,
   getUserByEmail,
   getUserByPhone,
+  deleteUser,
 } from "../models/userModel.js";
 import { encryptPassword, comparePassword } from "../services/authService.js";
 import jwt from "jsonwebtoken";
@@ -318,25 +319,48 @@ export const updatephotoPefil = async (req, res) => {
   }
 };
 
+// =========================================
+// Middleware para verificar el token JWT Admin
+// =========================================
+
 export const verificarAdmin = (req, res, next) => {
   const token = req.cookies.access_token;
 
   if (!token) {
-    return res.status(401).json({ mensaje: "Token no proporcionado", valid: false });
+    return res
+      .status(401)
+      .json({ mensaje: "Token no proporcionado", valid: false });
   }
 
   jwt.verify(token, SECRET_JWT_KEY, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ mensaje: "Token inválido o expirado", valid: false });
+      return res
+        .status(403)
+        .json({ mensaje: "Token inválido o expirado", valid: false });
     }
 
     req.user = decoded;
-   
+
     if (decoded.role == ID_ROL_ADMIN) {
       next();
     } else {
-      
-      return res.status(401).json({ mensaje: "No autorizado: no es admin",  valid: false  });
+      return res
+        .status(401)
+        .json({ mensaje: "No autorizado: no es admin", valid: false });
     }
   });
+};
+
+export const deleteUserById = async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const response = await deleteUser(user_id);
+
+    console.log(response);
+    return res.status(200).json({ mensaje: "Usuario eliminado correctamente" });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ mensaje: "Error al eliminar el usuario", error});
+  }
 };

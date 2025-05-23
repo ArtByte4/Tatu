@@ -6,7 +6,6 @@ export const getDashborad = async () => {
   withCredentials: true, // ⬅️ esencial para enviar cookies
 });
 
-    console.log('No mamessss wey', response.data);
     return response.data;
     
   } catch (error: any) {

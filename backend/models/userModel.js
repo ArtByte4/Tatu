@@ -66,6 +66,19 @@ export const getUserProfile = async (user_handle) => {
   }
 };
 
+
+
+export const deleteUser = async (user_id) => {
+  const query = `DELETE FROM users WHERE user_id = ?`
+  try{
+    const [user] = await connection.query(query, [user_id]);
+    console.log(user)
+    return user;
+  }catch (error){
+    console.log('Error al eliminar usuario', error)
+  }
+}
+
 export const addUser = async (userData) => {
   const {
     user_handle,

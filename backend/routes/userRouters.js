@@ -13,6 +13,7 @@ import {
   userHandleValidate,
   phoneNumberValidate,
   verificarAdmin,
+  deleteUserById,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -43,6 +44,7 @@ router.post("/admin/dashboard", verificarAdmin, async (req, res ) => {
 } )
 
 
+router.delete("/admin/dasboard/deleteUser/:user_id", verificarAdmin,  deleteUserById)
 
 
 export default router;

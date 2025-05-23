@@ -16,6 +16,7 @@ interface PeopleExploreProps {
 
 import { useEffect } from "react";
 import { useExplore } from "../hooks/useExplore";
+import { deleteUser } from "../hooks/useDeleteUser";
 import "../styles/PeopleExplore.css";
 
 function PeopleExplore({ options }: PeopleExploreProps) {
@@ -24,6 +25,17 @@ function PeopleExplore({ options }: PeopleExploreProps) {
   useEffect(() => {
     handleUsers(); // Cargar datos al montar el componente
   }, [handleUsers]);
+
+
+  const deleteUserHandler = async (user_id: number) => {
+    try {
+      await deleteUser(user_id);
+      handleUsers()
+    } catch (error) {
+      console.error("Error al eliminar usuario:", error);
+      alert("Error al eliminar usuario");
+    }
+  };
 
   // Mensaje de carga
   if (loading) return <p>Cargando usuarios...</p>;
@@ -50,7 +62,16 @@ function PeopleExplore({ options }: PeopleExploreProps) {
                     <span className="text">Sugerencia para ti</span>
                   </div>
                 </div>
-                <button className={options ? 'delete_suggested' : 'seguir_suggested'}>
+                <button
+                  className={options ? 'delete_suggested' : 'seguir_suggested'}
+                  onClick={() => {
+                    if (options) {
+                      deleteUserHandler(user.user_id);
+                    } else {
+                      console.log("Seguir usuario");
+                    }
+                  }}
+                >
                   {options ? "Eliminar" : "Seguir"}
                 </button>
                 {options && (
