@@ -1,39 +1,6 @@
-import express from "express";
-import cors from "cors";
-// import userRoutes from './routes/userRouters.js';
-// import followerdRoutes from './routes/followersRouters.js'
-import authRoutes from './modules/auth/authRoutes.js'
-import userRoutes from './modules/user/userRoutes.js'
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
+import App from "./app.js";
+import router from "./routes.js";
 
+const app = new App({ port: 3000, routes: router });
 
-const app = express();
-
-const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
-
-// Middleware para poder leer JSON
-// app.use(bodyParser.json());
-app.use(express.json());
-
-app.use(cookieParser())
-
-
-// app.use('/api', userRoutes);
-// app.use('/api', followerdRoutes);
-
-app.use('/api', authRoutes );
-app.use('/api', userRoutes );
-
-
-
-// Se crea un servidor en el puerto 3000
-app.listen(3000, () => {
-  console.log("Servidor corriendo en http://localhost:3000");
-});
+app.start();

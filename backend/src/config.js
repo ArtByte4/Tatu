@@ -7,5 +7,6 @@ export const {
   DB_PORT,
   SECRET_JWT_KEY,
   REFRESH_JWT_KEY,
-  ID_ROL_ADMIN
+  ID_ROL_ADMIN,
+  ORIGIN_URL
 } = process.env;
