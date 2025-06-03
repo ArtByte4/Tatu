@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    /* Lenguaje y entorno */
+    "target": "ES2020",                            // Mejora compatibilidad moderna
+    "lib": ["ES2020"],                             // Define las APIs disponibles
+    "module": "CommonJS",                          // Compatible con Node.js
+    "esModuleInterop": true,                       // Para importar módulos CommonJS
+    "moduleResolution": "node",                    // Resolución estándar de módulos
+    "resolveJsonModule": true,                     // Permite importar archivos JSON
+    "allowSyntheticDefaultImports": true,          // Soporta imports por defecto
+    "forceConsistentCasingInFileNames": true,      // Evita errores por mayúsculas/minúsculas
+
+    /* Strict mode */
+    "strict": true,                                // Activa todas las validaciones estrictas
+    "noImplicitAny": true,                         // Impide tipos 'any' implícitos
+    "strictNullChecks": true,                      // Manejo correcto de null y undefined
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+
+    /* Chequeos adicionales */
+    "noUnusedLocals": true,                        // Limpieza de código no usado
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Output */
+    "outDir": "./dist",                            // Carpeta de salida del compilado
+    "rootDir": "./src",                            // Carpeta raíz del código fuente
+    "sourceMap": true,                             // Para depuración con sourcemaps
+    "removeComments": true,                        // Código más limpio en producción
+    "declaration": true,                           // Genera archivos .d.ts
+
+    /* Helpers y rendimiento */
+    "importHelpers": true,                         // Reduce duplicación de helpers
+    "downlevelIteration": true,                    // Iteradores compatibles con ES5
+
+    /* JSX si es necesario */
+    // "jsx": "react-jsx",                         // Activa si usas React
+    // "jsxImportSource": "react",                // Fuente para JSX si usas react-jsx
+
+    /* Interop */
+    "allowJs": false,                              // JS no permitido (ajústalo si usas JS)
+    "skipLibCheck": true,                          // Omite chequeo de tipos en node_modules
+
+    /* Alias @ */
+    "baseUrl": ".",                                // Ruta base para los imports
+    "paths": {
+      "@/*": ["src/*"]                             // El alias @ apunta a la carpeta src
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
