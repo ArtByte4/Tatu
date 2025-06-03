@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
-import { SECRET_JWT_KEY, REFRESH_JWT_KEY, ID_ROL_ADMIN } from "../config.js";
-import { getUserByUserHandle } from "../models/userModel.js";
-import { comparePassword } from "../services/authService.js";
+import { SECRET_JWT_KEY, REFRESH_JWT_KEY, ID_ROL_ADMIN } from "../../config.js";
+import { getUserByUserHandle } from "../../models/userModel.js";
+// import { comparePassword } from "../services/authService.js";
+import { comparePassword } from "./authService.js";
 
 // Login
 export const loginUser = async (req, res) => {

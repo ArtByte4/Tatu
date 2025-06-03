@@ -1,9 +1,12 @@
 import express from "express";
 import cors from "cors";
-import userRoutes from './routes/userRouters.js';
-import followerdRoutes from './routes/followersRouters.js'
+// import userRoutes from './routes/userRouters.js';
+// import followerdRoutes from './routes/followersRouters.js'
+import authRoutes from './modules/auth/authRoutes.js'
+import userRoutes from './modules/user/userRoutes.js'
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+
 
 const app = express();
 
@@ -22,8 +25,11 @@ app.use(express.json());
 app.use(cookieParser())
 
 
-app.use('/api', userRoutes);
-app.use('/api', followerdRoutes);
+// app.use('/api', userRoutes);
+// app.use('/api', followerdRoutes);
+
+app.use('/api', authRoutes );
+app.use('/api', userRoutes );
 
 
 

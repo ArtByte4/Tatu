@@ -1,3 +1,7 @@
+import { SECRET_JWT_KEY, ID_ROL_ADMIN } from "../../../config.js";
+
+import jwt from "jsonwebtoken";
+
 export const verificarAdmin = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token)

@@ -3,18 +3,15 @@ import {
   getAllUsers,
   createUser,
   getOneUser,
-  loginUser,
-  logOutUser,
-  refreshToken,
-  verifyToken,
   getOneProfile,
   updatephotoPefil,
   emailValidate,
   userHandleValidate,
   phoneNumberValidate,
-  verificarAdmin,
   deleteUserById,
-} from "../controllers/userController.js";
+} from "./userController.js";
+import { verificarAdmin } from "./middlewares/validateAdmin.js";
+import { verifyToken } from "./middlewares/validateToken.js";
 
 const router = express.Router();
 

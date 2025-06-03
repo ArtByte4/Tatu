@@ -7,8 +7,8 @@ import {
   getUserByPhone,
   uploadPhotoUser,
   deleteUser,
-} from "../models/userModel.js";
-import { encryptPassword } from "../services/authService.js";
+} from "../../models/userModel.js";
+import { encryptPassword } from "../auth/authService.js";
 
 // Obtener todos los usuarios
 export const getAllUsers = async (req, res) => {
