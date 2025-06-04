@@ -32,3 +32,6 @@ coverage/
 ### Misc ###
 *.swp
 *.swo
+
+### Tsc Files ###
+*.tsbuildinfo

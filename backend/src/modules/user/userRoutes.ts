@@ -1,4 +1,4 @@
-import express from "express";
+import {Router} from "express";
 import {
   getAllUsers,
   createUser,
@@ -13,7 +13,7 @@ import {
 import { verificarAdmin } from "./middlewares/validateAdmin.js";
 import { verifyToken } from "./middlewares/validateToken.js";
 
-const router = express.Router();
+const router: Router = Router();
 
 router.get("/users", verifyToken, getAllUsers);
 router.get("/users/:user_handle", verifyToken, getOneUser);
@@ -31,7 +31,7 @@ router.post("/users/register/verification/phonenumber", phoneNumberValidate)
 
 
 
-router.post("/admin/dashboard", verificarAdmin, async (req, res ) => {
+router.post("/admin/dashboard", verificarAdmin, async (_req, res ) => {
   res.json({ mensaje: 'Bienvenido al panel admin', valid: true });
 } )
 

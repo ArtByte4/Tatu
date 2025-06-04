@@ -1,4 +1,4 @@
-import {sign, verify} from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "@/config";
 import { getUserByUserHandle } from "../../models/userModel.js";
 import { comparePassword } from "./authService.js";
@@ -81,7 +81,7 @@ export const refreshToken = (req: Request, res: Response): void => {
     return;
   }
 
-  verify(token, REFRESH_JWT_KEY, (err, decoded) => {
+  verify(token, REFRESH_JWT_KEY, (err: Error | null, decoded: any) => {
     if (err || !decoded || typeof decoded !== "object" || !("id" in decoded)) {
       res.status(403).json({ message: "Refresh token inválido" });
       return;
@@ -102,7 +102,7 @@ export const refreshToken = (req: Request, res: Response): void => {
   });
 };
 
-export const logOutUser = (res: Response): Response => {
+export const logOutUser = (_req: Request, res: Response): Response => {
   return res
     .clearCookie("access_token")
     .clearCookie("refresh_token")
