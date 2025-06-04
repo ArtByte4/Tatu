@@ -7,11 +7,12 @@ import {
   getUserByPhone,
   uploadPhotoUser,
   deleteUser,
-} from "../../models/userModel.js";
-import { encryptPassword } from "../auth/authService.js";
+} from "../../models/userModel";
+import { encryptPassword } from "../auth/authService";
+import { Request, Response } from "express";
 
 // Obtener todos los usuarios
-export const getAllUsers = async (req, res) => {
+export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const users = await getUsers();
     res.json(users);
@@ -21,7 +22,7 @@ export const getAllUsers = async (req, res) => {
 };
 
 // Obtener un usuario por handle
-export const getOneUser = async (req, res) => {
+export const getOneUser = async (req: Request, res: Response) => {
   try {
     const user = await getUserByUserHandle(req.params.user_handle);
     res.json(user);
@@ -30,7 +31,7 @@ export const getOneUser = async (req, res) => {
   }
 };
 
-export const getOneProfile = async (req, res) => {
+export const getOneProfile = async (req: Request, res: Response) => {
   try {
     const user = await getUserProfile(req.params.user_handle);
     res.json(user);
@@ -40,7 +41,7 @@ export const getOneProfile = async (req, res) => {
 };
 
 // Registrar usuario
-export const createUser = async (req, res) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const {
       user_handle,
@@ -61,7 +62,7 @@ export const createUser = async (req, res) => {
       !password_hash ||
       !birth_day
     ) {
-      return res
+      res
         .status(400)
         .json({ message: "Todos los campos son necesarios" });
     }
@@ -91,12 +92,12 @@ export const createUser = async (req, res) => {
 };
 
 // Validaciones únicas
-export const emailValidate = async (req, res) => {
+export const emailValidate = async (req: Request, res: Response) => {
   try {
     const { email_address } = req.body;
     const exists = await getUserByEmail(email_address);
     if (exists) {
-      return res
+        res
         .status(401)
         .json({
           message: "Correo ya en uso",
@@ -116,12 +117,12 @@ export const emailValidate = async (req, res) => {
   }
 };
 
-export const userHandleValidate = async (req, res) => {
+export const userHandleValidate = async (req: Request, res: Response) => {
   try {
     const { user_handle } = req.body;
     const exists = await getUserByUserHandle(user_handle);
     if (exists) {
-      return res
+      res
         .status(401)
         .json({
           message: "Username en uso",
@@ -141,12 +142,12 @@ export const userHandleValidate = async (req, res) => {
   }
 };
 
-export const phoneNumberValidate = async (req, res) => {
+export const phoneNumberValidate = async (req: Request, res: Response) => {
   try {
     const { phonenumber } = req.body;
     const exists = await getUserByPhone(phonenumber);
     if (exists) {
-      return res
+      res
         .status(401)
         .json({ message: "Número en uso", valid: false, field: "phonenumber" });
     }
@@ -162,7 +163,7 @@ export const phoneNumberValidate = async (req, res) => {
   }
 };
 
-export const updatephotoPefil = async (req, res) => {
+export const updatephotoPefil = async (req: Request, res: Response) => {
   try {
     const { url, id } = req.body;
     const change = await uploadPhotoUser(url, id);
@@ -172,9 +173,16 @@ export const updatephotoPefil = async (req, res) => {
   }
 };
 
-export const deleteUserById = async (req, res) => {
+export const deleteUserById = async (req: Request, res: Response) => {
   try {
-    await deleteUser(req.params.user_id);
+    const userId = Number(req.params.user_id);
+
+    if (isNaN(userId)) {
+      res.status(400).json({ mensaje: "ID de usuario inválido" });
+      return;
+    }
+
+    await deleteUser(userId);
     res.status(200).json({ mensaje: "Usuario eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al eliminar el usuario", error });

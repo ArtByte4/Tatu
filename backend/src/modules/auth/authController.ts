@@ -7,15 +7,15 @@ import type { Request, Response, NextFunction } from "express";
 interface User {
   user_id: number;
   user_handle: string;
-  email_address: string;
   first_name: string;
   last_name: string;
-  phonenumber: string;
-  created_at: string;
   role_id: number;
-  password_hash: string;
   birth_day: string;
+  email_address: string;
+  phonenumber: string;
+  password_hash: string;
 }
+
 
 export const loginUser = async (req: Request, res: Response, _next: NextFunction)=> {
   try {
@@ -25,12 +25,13 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
       res.status(400).json({ message: "Usuario y contraseña requeridos" });
     }
 
-    const user: User = await getUserByUserHandle(user_handle);
+    const user: User | undefined = await getUserByUserHandle(user_handle as string);
     if (!user) {
       res.status(404).json({ message: "Usuario no encontrado" });
+      return;
     }
 
-    const isValidPassword = await comparePassword(password_hash, user.password_hash);
+    const isValidPassword = await comparePassword(password_hash as string, user.password_hash);
     if (!isValidPassword) {
       res.status(401).json({ message: "Contraseña incorrecta" });
     }

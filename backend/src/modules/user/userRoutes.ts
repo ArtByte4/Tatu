@@ -9,9 +9,9 @@ import {
   userHandleValidate,
   phoneNumberValidate,
   deleteUserById,
-} from "./userController.js";
-import { verificarAdmin } from "./middlewares/validateAdmin.js";
-import { verifyToken } from "./middlewares/validateToken.js";
+} from "./userController";
+import { verificarAdmin } from "./middlewares/validateAdmin";
+import { verifyToken } from "./middlewares/validateToken";
 
 const router: Router = Router();
 
