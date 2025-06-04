@@ -2,7 +2,7 @@ import { sign, verify } from "jsonwebtoken";
 import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "@/config";
 import { getUserByUserHandle } from "../../models/userModel.js";
 import { comparePassword } from "./authService.js";
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 interface User {
   user_id: number;
@@ -17,22 +17,22 @@ interface User {
   birth_day: string;
 }
 
-export const loginUser = async (req: Request, res: Response): Promise<Response> => {
+export const loginUser = async (req: Request, res: Response, _next: NextFunction)=> {
   try {
     const { user_handle, password_hash } = req.body as { user_handle?: string; password_hash?: string };
 
     if (!user_handle || !password_hash) {
-      return res.status(400).json({ message: "Usuario y contraseña requeridos" });
+      res.status(400).json({ message: "Usuario y contraseña requeridos" });
     }
 
-    const user: User | null = await getUserByUserHandle(user_handle);
+    const user: User = await getUserByUserHandle(user_handle);
     if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     const isValidPassword = await comparePassword(password_hash, user.password_hash);
     if (!isValidPassword) {
-      return res.status(401).json({ message: "Contraseña incorrecta" });
+      res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
     const token = sign(
@@ -47,7 +47,7 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
       { expiresIn: "7d" }
     );
 
-    return res
+    res
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
@@ -69,11 +69,11 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
         role: user.role_id,
       });
   } catch (error) {
-    return res.status(500).json({ message: "Error interno del servidor", error });
+    res.status(500).json({ message: "Error interno del servidor", error });
   }
 };
 
-export const refreshToken = (req: Request, res: Response): void => {
+export const refreshToken = (req: Request, res: Response, _next: NextFunction): void => {
   const token = req.cookies?.refresh_token;
 
   if (!token) {
@@ -102,8 +102,8 @@ export const refreshToken = (req: Request, res: Response): void => {
   });
 };
 
-export const logOutUser = (_req: Request, res: Response): Response => {
-  return res
+export const logOutUser = (_req: Request, res: Response, _next: NextFunction) => {
+  res
     .clearCookie("access_token")
     .clearCookie("refresh_token")
     .json({ message: "Logout successful" });
