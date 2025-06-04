@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend para la red social de tatuajes",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon ./src/index.js"
@@ -17,6 +18,10 @@
     "nodemon": "^3.1.9"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.29",
     "body-parser": "^2.2.0",
     "eslint": "^9.24.0",

@@ -1,12 +1,12 @@
 
-import express from "express";
+import {Router} from "express";
 import {
   loginUser,
   logOutUser,
   refreshToken
-} from "./authController.js";
+} from "./authController";
 
-const router = express.Router();
+const router: Router = Router();
 
 
 

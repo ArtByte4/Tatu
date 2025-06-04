@@ -18,7 +18,7 @@ logs/*
 .env
 .env.local
 .env.*.local
-
+env.d.ts
 ### Build Files ###
 dist/
 build/

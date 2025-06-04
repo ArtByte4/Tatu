@@ -3,7 +3,7 @@
     /* Lenguaje y entorno */
     "target": "ES2020",                            // Mejora compatibilidad moderna
     "lib": ["ES2020"],                             // Define las APIs disponibles
-    "module": "CommonJS",                          // Compatible con Node.js
+    "module": "ESNext",                          // Compatible con Node.js
     "esModuleInterop": true,                       // Para importar módulos CommonJS
     "moduleResolution": "node",                    // Resolución estándar de módulos
     "resolveJsonModule": true,                     // Permite importar archivos JSON
@@ -42,7 +42,7 @@
     // "jsxImportSource": "react",                // Fuente para JSX si usas react-jsx
 
     /* Interop */
-    "allowJs": false,                              // JS no permitido (ajústalo si usas JS)
+    "allowJs": true,                              // JS no permitido (ajústalo si usas JS)
     "skipLibCheck": true,                          // Omite chequeo de tipos en node_modules
 
     /* Alias @ */
@@ -52,5 +52,9 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+
+  "typeRoots": ["./node_modules/@types", "./env.d.ts"]
+
+
 }
