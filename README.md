@@ -6,8 +6,9 @@
   <p><strong>Una plataforma social diseñada exclusivamente para la comunidad artística</strong></p>
 </div>
 
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen.svg)](https://nodejs.org)
 [![React Version](https://img.shields.io/badge/react-18.x-blue.svg)](https://reactjs.org)
+[![TypeScript](https://img.shields.io/badge/typescript-%3E%3D5.0.0-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/vite-latest-purple.svg)](https://vitejs.dev)
 [![MySQL](https://img.shields.io/badge/mysql-8.0-blue.svg)](https://www.mysql.com)
 
@@ -25,10 +26,11 @@
 
 ### Prerrequisitos
 
-- Node.js ≥ 18.0.0
+- Node.js ≥ 22.0.0
 - MySQL 8.0 o superior
-- npm ≥ 9.0.0
+- pnpm
 - Git
+- TypeScript ≥ 5.0.0
 - nvm (Node Version Manager)
 
 ### Instalación
@@ -43,14 +45,14 @@ cd Tatu
 ```bash
 cd frontend/tatu
 nvm use
-npm install
+pnpm install
 ```
 
 3. **Configurar el Backend**
 ```bash
 cd ../../backend
 nvm use
-npm install
+pnpm install
 ```
 
 4. **Configurar la Base de Datos**
@@ -64,14 +66,16 @@ Para más detalles sobre la instalación y configuración, consulta nuestra [Doc
 
 ### Frontend
 - React 18
+- TypeScript 5
 - Vite
 - React Router DOM
 - Axios
-- Context API
+- Zustand
 - React Icons
 
 ### Backend
 - Node.js
+- TypeScript
 - Express.js
 - JWT
 - MySQL2
@@ -89,7 +93,16 @@ Para más detalles sobre la instalación y configuración, consulta nuestra [Doc
 ```
 tatu_project/
 ├── frontend/           # Aplicación React con Vite
+│   └── Tatu/
+│       ├── src/
+│       │   ├── features/    # Módulos principales
+│       │   ├── lib/        # Configuraciones y utilidades
+│       │   ├── stores/     # Estado global con Zustand
+│       │   └── pages/      # Páginas principales
 ├── backend/           # Servidor Node.js/Express
+│   └── src/
+│       ├── modules/  # Módulos de la aplicación
+│       └── models/   # Modelos de datos
 └── db/               # Scripts y configuración de BD
 ```
 
@@ -99,15 +112,15 @@ Para una estructura más detallada, consulta nuestra [Documentación](DOCUMENTAC
 
 ### Frontend
 ```bash
-npm run dev      # Inicia el servidor de desarrollo
-npm run build    # Construye para producción
-npm run preview  # Preview de producción
+pnpm run dev      # Inicia el servidor de desarrollo
+pnpm run build    # Construye para producción
+pnpm run preview  # Preview de producción
 ```
 
 ### Backend
 ```bash
-npm run dev      # Inicia el servidor en modo desarrollo
-npm run start    # Inicia el servidor en producción
+pnpm run dev      # Inicia el servidor en modo desarrollo
+pnpm run start    # Inicia el servidor en producción
 ```
 
 Para más información sobre las convenciones de código y commit, consulta [COMMIT_CONVENTION.md](COMMIT_CONVENTION.md).
