@@ -92,73 +92,68 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 // Validaciones únicas
-export const emailValidate = async (req: Request, res: Response) => {
+export const emailValidate = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email_address } = req.body;
     const exists = await getUserByEmail(email_address);
     if (exists) {
-        res
-        .status(401)
-        .json({
-          message: "Correo ya en uso",
-          valid: false,
-          field: "email_address",
-        });
-    }
-    res
-      .status(200)
-      .json({
-        message: "Correo disponible",
-        valid: true,
+      res.status(401).json({
+        message: "Correo ya en uso",
+        valid: false,
         field: "email_address",
       });
-  } catch {
+      return;
+    }
+    res.status(200).json({
+      message: "Correo disponible",
+      valid: true,
+      field: "email_address",
+    });
+  } catch (error) {
     res.status(500).json({ message: "Error al validar email" });
   }
 };
 
-export const userHandleValidate = async (req: Request, res: Response) => {
+export const userHandleValidate = async (req: Request, res: Response): Promise<void> => {
   try {
     const { user_handle } = req.body;
     const exists = await getUserByUserHandle(user_handle);
     if (exists) {
-      res
-        .status(401)
-        .json({
-          message: "Username en uso",
-          valid: false,
-          field: "user_handle",
-        });
-    }
-    res
-      .status(200)
-      .json({
-        message: "Username disponible",
-        valid: true,
+      res.status(401).json({
+        message: "Username en uso",
+        valid: false,
         field: "user_handle",
       });
-  } catch {
+      return;
+    }
+    res.status(200).json({
+      message: "Username disponible",
+      valid: true,
+      field: "user_handle",
+    });
+  } catch (error) {
     res.status(500).json({ message: "Error al validar username" });
   }
 };
 
-export const phoneNumberValidate = async (req: Request, res: Response) => {
+export const phoneNumberValidate = async (req: Request, res: Response): Promise<void> => {
   try {
     const { phonenumber } = req.body;
     const exists = await getUserByPhone(phonenumber);
     if (exists) {
-      res
-        .status(401)
-        .json({ message: "Número en uso", valid: false, field: "phonenumber" });
-    }
-    res
-      .status(200)
-      .json({
-        message: "Número disponible",
-        valid: true,
-        field: "phonenumber",
+      res.status(401).json({ 
+        message: "Número en uso", 
+        valid: false, 
+        field: "phonenumber" 
       });
-  } catch {
+      return;
+    }
+    res.status(200).json({
+      message: "Número disponible",
+      valid: true,
+      field: "phonenumber",
+    });
+  } catch (error) {
     res.status(500).json({ message: "Error al validar número" });
   }
 };

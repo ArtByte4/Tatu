@@ -25,7 +25,7 @@ router.put("/users/profile/:user_handle/photo", updatephotoPefil);
 router.post("/users", createUser);
 
 // Validaciones
-router.post("/users/register/verification/emailAddreess", emailValidate)
+router.post("/users/register/verification/emailAddress", emailValidate)
 router.post("/users/register/verification/userHandle", userHandleValidate)
 router.post("/users/register/verification/phonenumber", phoneNumberValidate)
 

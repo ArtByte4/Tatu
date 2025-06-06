@@ -21,7 +21,10 @@ class App {
       cors({
         credentials: true,
         origin: ORIGIN_URL,
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        exposedHeaders: ["Content-Range", "X-Content-Range"],
+        maxAge: 600
       })
     );
     this.app.use(cookieParser());

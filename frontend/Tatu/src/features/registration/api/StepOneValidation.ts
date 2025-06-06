@@ -16,7 +16,7 @@ export const emailValidation = async (data: EmailValidationInput
 
     try {
         const response = await instance.post<ResponseValidationStepOne>(
-            "/api/users/register/verification/emailAddreess",
+            "/api/users/register/verification/emailAddress",
             data,
         );
         return response.data;
