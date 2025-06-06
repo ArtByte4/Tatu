@@ -7,10 +7,9 @@ Este repositorio contiene el proyecto **Tatu**, una red social desarrollada con 
 ```
 /tatu_project
 │── frontend/
-│   ├── tatu/
-│   │   ├── .nvmrc
-│   │   ├── .gitignore
+│   ├── Tatu/
 │   │   ├── package.json
+│   │   ├── tsconfig.json            # Configuración de TypeScript
 │   │   ├── vite.config.js
 │   │   ├── src/
 │   │   │   ├── features/
@@ -26,13 +25,24 @@ Este repositorio contiene el proyecto **Tatu**, una red social desarrollada con 
 │   │       ├── img/                  # Imágenes estáticas
 │   │       └── fuentes/              # Fuentes personalizadas
 │── backend/
-│   ├── .gitignore
-│   ├── .env
 │   ├── package.json
-│   ├── controllers/                  # Lógica de negocio
-│   ├── models/                       # Modelos de datos
-│   ├── routes/                       # Rutas API
-│   └── services/                     # Servicios (auth, etc)
+│   ├── tsconfig.json                # Configuración de TypeScript
+│   ├── src/
+│   │   ├── app.ts                   # Configuración de la aplicación
+│   │   ├── config.ts                # Variables de configuración
+│   │   ├── db.ts                    # Configuración de base de datos
+│   │   ├── index.ts                 # Punto de entrada
+│   │   ├── routes.ts                # Rutas principales
+│   │   ├── models/                  # Modelos de datos
+│   │   └── modules/                 # Módulos de la aplicación
+│   │       ├── auth/                # Módulo de autenticación
+│   │       │   ├── authController.ts
+│   │       │   ├── authRoutes.ts
+│   │       │   └── authService.ts
+│   │       └── user/                # Módulo de usuarios
+│   │           ├── userController.ts
+│   │           ├── userRoutes.ts
+│   │           └── middlewares/     # Middlewares específicos
 └── db/
     ├── functions/                    # Funciones SQL
     ├── triggers/                     # Triggers de la BD
@@ -42,11 +52,12 @@ Este repositorio contiene el proyecto **Tatu**, una red social desarrollada con 
 
 ## 🚀 Requisitos Previos
 
-- Node.js versión 22 o superior (especificada en `.nvmrc`)
+- Node.js versión 22 o superior
 - MySQL 8.0 o superior
-- nvm (Node Version Manager)
 - Git
-- npm versión 9 o superior
+- pnpm (Package Manager)
+- TypeScript 5.0 o superior
+- ESLint para TypeScript
 
 ## 📌 Instalación y Configuración
 
@@ -61,26 +72,25 @@ cd Tatu
 
 1. Navegar al directorio del frontend:
 ```bash
-cd frontend/tatu
+cd frontend/Tatu
 ```
 
-2. Verificar/instalar la versión correcta de Node.js:
+2. Instalar dependencias usando pnpm:
 ```bash
-nvm install
-nvm use
+pnpm install
 ```
 
-3. Instalar dependencias:
-```bash
-npm install
+3. Configurar variables de entorno:
+Crear archivo `.env.local` en `frontend/Tatu/`:
 ```
-
-4. Configurar variables de entorno:
-Crear archivo `.env.local` en `frontend/tatu/`:
-```
-VITE_API_URL= url_api
+VITE_API_URL=url_api
 VITE_PUBLIC_KEY_IMAGEKIT=public_key 
-ITE_PRIVATE_KEY_IMAGEKIT=private_key
+VITE_PRIVATE_KEY_IMAGEKIT=private_key
+```
+
+4. Compilar TypeScript:
+```bash
+pnpm run build
 ```
 
 ### 3️⃣ Configuración del Backend
@@ -90,9 +100,9 @@ ITE_PRIVATE_KEY_IMAGEKIT=private_key
 cd backend
 ```
 
-2. Instalar dependencias:
+2. Instalar dependencias usando pnpm:
 ```bash
-npm install
+pnpm install
 ```
 
 3. Configurar variables de entorno:
@@ -108,6 +118,11 @@ DB_PORT=3306
 # JWT Configuration
 SECRET_JWT_KEY="tu_clave_secreta"
 JWT_EXPIRES_IN=24h
+
+4. Compilar TypeScript:
+```bash
+pnpm run build
+```
 
 
 ### 4️⃣ Configuración de la Base de Datos
@@ -153,28 +168,45 @@ El servidor estará disponible en: `http://localhost:3000`
 
 ## 🔍 Características Principales
 
+### Tecnologías
+- Frontend construido con React + TypeScript + Vite
+- Backend desarrollado en Node.js + TypeScript + Express
+- Base de datos MySQL con funciones y triggers personalizados
 - Sistema de autenticación JWT
+- Estado global con Context API y stores tipados
+
+### Arquitectura Backend
+- Arquitectura modular por dominios (auth, user, etc.)
+- Cada módulo contiene su propio controlador, rutas y servicios
+- Middlewares específicos por módulo
+- Tipos TypeScript para todos los modelos y respuestas API
+- Sistema de validación de datos con TypeScript
+
+### Características de Usuario
 - Gestión de perfiles de usuario
 - Carga y gestión de imágenes de perfil
 - Sistema de seguidores
 - Exploración de usuarios
 - Sistema de verificación de usuarios
+- Panel de administración
+- Rutas protegidas por rol
 - Diseño responsive
-- Rutas protegidas
-- Estado global con Context API
 
 ## 🛠 Scripts Disponibles
 
 ### Frontend
-- `npm run dev`: Inicia el servidor de desarrollo
-- `npm run build`: Construye la aplicación para producción
-- `npm run preview`: Previsualiza la versión de producción
-- `npm run lint`: Ejecuta el linter
+- `pnpm run dev`: Inicia el servidor de desarrollo
+- `pnpm run build`: Compila TypeScript y construye la aplicación para producción
+- `pnpm run preview`: Previsualiza la versión de producción
+- `pnpm run lint`: Ejecuta ESLint para TypeScript
+- `pnpm run typecheck`: Verifica tipos de TypeScript
 
 ### Backend
-- `npm run dev`: Inicia el servidor en modo desarrollo
-- `npm run start`: Inicia el servidor en modo producción
-- `npm run lint`: Ejecuta el linter
+- `pnpm run dev`: Inicia el servidor en modo desarrollo con ts-node
+- `pnpm run build`: Compila TypeScript para producción
+- `pnpm run start`: Inicia el servidor en modo producción
+- `pnpm run lint`: Ejecuta ESLint para TypeScript
+- `pnpm run typecheck`: Verifica tipos de TypeScript
 
 ## ⚠️ Solución de Problemas Comunes
 
@@ -197,7 +229,35 @@ El servidor estará disponible en: `http://localhost:3000`
    - Verificar la expiración del token
    - Comprobar la clave secreta en el backend
 
-## 📝 Convenciones de Código
+## 📝 Convenciones de Código y Buenas Prácticas
+
+### TypeScript
+- Usar tipos explícitos en lugar de `any`
+- Interfaces para definir formas de objetos
+- Enums para valores constantes
+- Type Guards para narrowing de tipos
+- Genéricos cuando sea apropiado
+- Decoradores para metadatos (cuando sea necesario)
+
+### Arquitectura y Organización
+- Estructura modular por dominios
+- Separación clara de responsabilidades (Controlador/Servicio/Modelo)
+- Middlewares específicos por módulo
+- Rutas tipadas y validadas
+- Manejo centralizado de errores
+
+### Convenciones de Nombrado
+- PascalCase para interfaces, tipos y clases
+- camelCase para variables y funciones
+- UPPER_CASE para constantes
+- Prefijo 'I' para interfaces (ej: IUser)
+- Sufijo 'Type' para tipos (ej: UserType)
+
+### Documentación
+- TSDoc para funciones y clases públicas
+- Comentarios explicativos para lógica compleja
+- README.md en cada módulo importante
+- Tipos exportados documentados
 
 ### Estructura de Commits
 ```
@@ -236,23 +296,37 @@ Tipos de commits:
 - Validar tokens JWT
 - Encriptar contraseñas con bcrypt
 
+## 🔄 Migración y Mantenimiento
 
-## 📦 Dependencias Principales
+### Migración a TypeScript
+- El proyecto ha sido completamente migrado de JavaScript a TypeScript
+- Se mantienen solo archivos de configuración en JavaScript (vite.config.js, eslint.config.js)
+- Todos los componentes React usan TypeScript (.tsx)
+- Backend completamente tipado con TypeScript
 
-### Frontend
-- React 18
-- React Router DOM
-- Axios
-- React Icons
-- Zustand para estado global
+### Control de Calidad
+- ESLint configurado para TypeScript
+- Comprobación estática de tipos
+- Tests unitarios tipados
+- Validación de tipos en tiempo de compilación
 
-### Backend
-- Express.js
-- MySQL2
-- JWT
-- Bcrypt
-- Multer para uploads
-- CORS
+### Mantenimiento
+- Usar `pnpm run typecheck` antes de commits
+- Mantener definiciones de tipos actualizadas
+- Seguir las convenciones de TypeScript
+- Documentar cambios en tipos y interfaces
+
+### Actualizaciones Futuras
+- Mantener dependencias actualizadas con `pnpm update`
+- Revisar compatibilidad de tipos después de actualizaciones
+- Seguir las mejores prácticas de TypeScript
+- Mantener la documentación actualizada
+
+## 📚 Referencias
+
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+- [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/)
+- [Node.js TypeScript Guide](https://nodejs.org/en/learn/getting-started/nodejs-with-typescript)
 
 ---
 

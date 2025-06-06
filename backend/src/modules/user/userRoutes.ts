@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 import {
   getAllUsers,
   createUser,
@@ -31,12 +31,12 @@ router.post("/users/register/verification/phonenumber", phoneNumberValidate)
 
 
 
-router.post("/admin/dashboard", verificarAdmin, async (_req, res ) => {
+router.post("/admin/dashboard", verificarAdmin, async (_req, res) => {
   res.json({ mensaje: 'Bienvenido al panel admin', valid: true });
-} )
+})
 
 
-router.delete("/admin/dasboard/deleteUser/:user_id", verificarAdmin,  deleteUserById)
+router.delete("/admin/dasboard/deleteUser/:user_id", verificarAdmin, deleteUserById)
 
 
 export default router;
