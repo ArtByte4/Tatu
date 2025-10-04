@@ -75,7 +75,7 @@ function StepsRegister() {
     <div className="bg-autform">
       <div className="container-autform">
         <form action={action} className="form-autform">
-          <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
+          <img src="/img/Logo _ ART BYTE_White.png" alt="" />
           <p>Crea una cuenta</p>
           {state?.formError && (
             <div className="form-global-error">{state.formError}</div>

@@ -6,7 +6,6 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
-import logo from "../../../../public/img/Logo _ ART BYTE_White.png";
 import { MoreOptions } from "./index.js";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
@@ -46,7 +45,7 @@ function Nav({ optionsAdmin }: NavProps) {
     <div className="container-item-nav">
       <div className="content-items-nav ">
         <div className="logo-tatu-nav">
-          <img src={logo} alt="Logo" />
+          <img src={"/img/Logo _ ART BYTE_White.png"} alt="Logo" />
         </div>
         <div className="list-items-nav">
           <a href="/">
@@ -82,14 +81,14 @@ function Nav({ optionsAdmin }: NavProps) {
             </div>
           </div>
           {optionsAdmin && (
-           <a href="/admin/dashboard">
-             <div className="item-nav">
-              <div className="item-nav-btn">
-                <MdAdminPanelSettings color="#fff" size={24} />
-                <span>Dasboard</span>
+            <a href="/admin/dashboard">
+              <div className="item-nav">
+                <div className="item-nav-btn">
+                  <MdAdminPanelSettings color="#fff" size={24} />
+                  <span>Dasboard</span>
+                </div>
               </div>
-            </div>
-           </a>
+            </a>
           )}
           <a href={`/profile/${user?.username}`}>
             <div className="item-nav">

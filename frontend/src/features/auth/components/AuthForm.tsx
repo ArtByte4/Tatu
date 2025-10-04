@@ -12,7 +12,11 @@ function Autform() {
 
   useEffect(() => {
     if (state?.message === "OK" && state?.userData && state?.userId) {
-      loginToStore(state.userData.user_handle, state.userId, state.userData.role_id);
+      loginToStore(
+        state.userData.user_handle,
+        state.userId,
+        state.userData.role_id
+      );
 
       navigate("/");
     }
@@ -22,7 +26,7 @@ function Autform() {
     <div className="bg-autform">
       <div className="container-autform">
         <form className="form-autform" action={action}>
-          <img src="../../public/img/Logo _ ART BYTE_White.png" alt="" />
+          <img src="/img/Logo _ ART BYTE_White.png" alt="" />
           <p>Iniciar sesión</p>
           {state?.formError && (
             <div className="form-global-error">{state.formError}</div>
