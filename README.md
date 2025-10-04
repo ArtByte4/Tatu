@@ -38,7 +38,7 @@
 1. **Clonar el repositorio**
 
 ```bash
-git clone https://github.com/[tu-usuario]/Tatu.git
+git clone https://github.com/ArtByte4/Tatu.git
 cd Tatu
 ```
 
@@ -187,3 +187,4 @@ Si tienes problemas o sugerencias:
   <p>Hecho con ❤️ por ArtByte</p>
   <img src="./frontend/public/img/Logo _ART_BYTE.png" alt="ArtByte Logo" width="100"/>
 </div>
+
