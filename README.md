@@ -53,24 +53,20 @@ Este comando instalará las dependencias de todos los proyectos (frontend y back
 
 3. **Configurar variables de entorno**
 
-Crear archivo `.env.local` en `frontend/`:
+Frontend - copiar y editar el archivo de ejemplo:
 
-```
-VITE_API_URL=url_api
-VITE_PUBLIC_KEY_IMAGEKIT=public_key
-VITE_PRIVATE_KEY_IMAGEKIT=private_key
+```bash
+cd frontend
+cp .env.example .env.local
+# Editar .env.local con tus valores
 ```
 
-Crear archivo `.env` en `backend/`:
+Backend - copiar y editar el archivo de ejemplo:
 
-```
-DB_HOST=localhost
-DB_USER=tu_usuario
-DB_PASSWORD="tu_contraseña"
-DB_NAME=tatu_db
-DB_PORT=3306
-SECRET_JWT_KEY="tu_clave_secreta"
-JWT_EXPIRES_IN=24h
+```bash
+cd backend
+cp .env.example .env
+# Editar .env con tus valores
 ```
 
 4. **Configurar la Base de Datos**

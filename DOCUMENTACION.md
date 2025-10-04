@@ -82,30 +82,23 @@ Este comando instalará automáticamente todas las dependencias del frontend y b
 
 #### Frontend
 
-Crear archivo `.env.local` en `frontend/`:
+Copiar el archivo de ejemplo y configurarlo:
 
-```env
-VITE_API_URL=url_api
-VITE_PUBLIC_KEY_IMAGEKIT=public_key
-VITE_PRIVATE_KEY_IMAGEKIT=private_key
+```bash
+cd frontend
+cp .env.example .env.local
 ```
 
 #### Backend
 
-Crear archivo `.env` en `backend/`:
+Copiar el archivo de ejemplo y configurarlo:
 
-```env
-# Database Configuration
-DB_HOST=localhost
-DB_USER=tu_usuario
-DB_PASSWORD="tu_contraseña"
-DB_NAME=tatu_db
-DB_PORT=3306
-
-# JWT Configuration
-SECRET_JWT_KEY="tu_clave_secreta"
-JWT_EXPIRES_IN=24h
+```bash
+cd backend
+cp .env.example .env
 ```
+
+⚠️ **Nota**: Nunca subas archivos `.env` al repositorio. Los archivos `.env.example` sirven como plantilla.
 
 ### 4️⃣ Configuración de la Base de Datos
 
@@ -325,13 +318,24 @@ Tipos de commits:
 
 ## 🔐 Seguridad
 
-- No compartir variables de entorno
-- Mantener dependencias actualizadas: `npm audit`
+### Variables de Entorno
+
+- ✅ **Usar archivos `.env.example`**: Mantener plantillas actualizadas sin valores sensibles
+- ❌ **Nunca commitear archivos `.env`**: Verificar que estén en `.gitignore`
+- 🔑 **Generar claves seguras**: Usar herramientas como `openssl rand -base64 32` para generar SECRET_JWT_KEY
+- 🔒 **Permisos restrictivos**: Configurar permisos apropiados para archivos `.env` (`chmod 600 .env`)
+- 📝 **Documentar variables**: Mantener comentarios descriptivos en `.env.example`
+
+### Otras Prácticas de Seguridad
+
+- Mantener dependencias actualizadas: `pnpm audit`
 - Implementar rate limiting en producción
 - Sanitizar inputs de usuario
 - Usar HTTPS en producción
 - Validar tokens JWT
 - Encriptar contraseñas con bcrypt
+- Implementar CSP (Content Security Policy)
+- Usar helmet.js en Express
 
 ## 🔄 Migración y Mantenimiento
 
