@@ -105,7 +105,7 @@ DB_PORT=3306
 # JWT Configuration
 SECRET_JWT_KEY="tu_clave_secreta"
 JWT_EXPIRES_IN=24h
-````
+```
 
 ### 4️⃣ Configuración de la Base de Datos
 

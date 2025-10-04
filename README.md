@@ -8,8 +8,9 @@ pnpm install:all
 ```
 
 Este comando instalará las dependencias de todos los proyectos (frontend y backend) automáticamente gracias a la configuración de workspace de pnpm.center">
-  <img src="./frontend/public/img/Banner-documentacion.png" alt="Tatu Logo"/>
-  <br>
+<img src="./frontend/public/img/Banner-documentacion.png" alt="Tatu Logo"/>
+<br>
+
   <p><strong>Una plataforma social diseñada exclusivamente para la comunidad artística</strong></p>
 </div>
 
@@ -53,7 +54,7 @@ cd Tatu
 
 ```bash
 nvm use
-pnpm install
+pnpm install:all
 ```
 
 Este comando instalará las dependencias de todos los proyectos (frontend y backend) automáticamente gracias a la configuración de workspace de pnpm.
@@ -61,13 +62,15 @@ Este comando instalará las dependencias de todos los proyectos (frontend y back
 3. **Configurar variables de entorno**
 
 Crear archivo `.env.local` en `frontend/`:
+
 ```
 VITE_API_URL=url_api
-VITE_PUBLIC_KEY_IMAGEKIT=public_key 
+VITE_PUBLIC_KEY_IMAGEKIT=public_key
 VITE_PRIVATE_KEY_IMAGEKIT=private_key
 ```
 
 Crear archivo `.env` en `backend/`:
+
 ```
 DB_HOST=localhost
 DB_USER=tu_usuario
