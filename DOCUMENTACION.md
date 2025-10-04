@@ -67,67 +67,44 @@ git clone https://github.com/[tu-usuario]/Tatu.git
 cd Tatu
 ```
 
-### 2️⃣ Configuración del Frontend
+### 2️⃣ Instalar Dependencias
 
-1. Navegar al directorio del frontend:
-
-```bash
-cd frontend
-```
-
-2. Instalar dependencias usando pnpm:
+Desde la raíz del proyecto:
 
 ```bash
-pnpm install
+nvm use
+pnpm install:all
 ```
 
-3. Configurar variables de entorno:
-   Crear archivo `.env.local` en `frontend/`:
+Este comando instalará automáticamente todas las dependencias del frontend y backend gracias a la configuración de workspace de pnpm.
 
-```
+### 3️⃣ Configuración de Variables de Entorno
+
+#### Frontend
+
+Crear archivo `.env.local` en `frontend/`:
+
+```env
 VITE_API_URL=url_api
 VITE_PUBLIC_KEY_IMAGEKIT=public_key
 VITE_PRIVATE_KEY_IMAGEKIT=private_key
 ```
 
-4. Compilar TypeScript:
+#### Backend
 
-```bash
-pnpm run build
-```
+Crear archivo `.env` en `backend/`:
 
-### 3️⃣ Configuración del Backend
-
-1. Navegar al directorio del backend:
-
-```bash
-cd backend
-```
-
-2. Instalar dependencias usando pnpm:
-
-```bash
-pnpm install
-```
-
-3. Configurar variables de entorno:
-   Crear archivo `.env` en `backend/`:
-
-````
+```env
 # Database Configuration
 DB_HOST=localhost
 DB_USER=tu_usuario
 DB_PASSWORD="tu_contraseña"
-DB_NAME=DB_NAME
+DB_NAME=tatu_db
 DB_PORT=3306
 
 # JWT Configuration
 SECRET_JWT_KEY="tu_clave_secreta"
 JWT_EXPIRES_IN=24h
-
-4. Compilar TypeScript:
-```bash
-pnpm run build
 ````
 
 ### 4️⃣ Configuración de la Base de Datos
@@ -156,11 +133,40 @@ db/functions/*.sql    # Funciones como get_user_age y getComments
 db/triggers/*.sql     # Triggers para perfiles y usuarios
 ```
 
+### 5️⃣ Compilar TypeScript (Opcional)
+
+Si deseas compilar los proyectos:
+
+```bash
+# Frontend
+cd frontend
+pnpm run build
+
+# Backend
+cd ../backend
+pnpm run build
+```
+
 ## 🚀 Ejecución del Proyecto
 
-### Frontend
+### Opción 1: Ejecutar todo desde la raíz (Recomendado)
 
-1. En `frontend/`:
+Desde la raíz del proyecto:
+
+```bash
+pnpm dev
+```
+
+Este comando inicia automáticamente el frontend y el backend simultáneamente.
+
+- Frontend disponible en: `http://localhost:5173`
+- Backend disponible en: `http://localhost:3000`
+
+### Opción 2: Ejecutar individualmente
+
+#### Frontend
+
+En `frontend/`:
 
 ```bash
 pnpm run dev
@@ -168,9 +174,9 @@ pnpm run dev
 
 El frontend estará disponible en: `http://localhost:5173`
 
-### Backend
+#### Backend
 
-1. En `backend/`:
+En `backend/`:
 
 ```bash
 pnpm run dev
@@ -209,7 +215,12 @@ El servidor estará disponible en: `http://localhost:3000`
 
 ## 🛠 Scripts Disponibles
 
-### Frontend
+### Desde la raíz del proyecto
+
+- `pnpm dev`: Inicia frontend y backend simultáneamente en paralelo
+- `pnpm install:all`: Instala dependencias de todos los proyectos del workspace
+
+### Frontend (desde /frontend)
 
 - `pnpm run dev`: Inicia el servidor de desarrollo
 - `pnpm run build`: Compila TypeScript y construye la aplicación para producción
@@ -217,9 +228,9 @@ El servidor estará disponible en: `http://localhost:3000`
 - `pnpm run lint`: Ejecuta ESLint para TypeScript
 - `pnpm run typecheck`: Verifica tipos de TypeScript
 
-### Backend
+### Backend (desde /backend)
 
-- `pnpm run dev`: Inicia el servidor en modo desarrollo con ts-node
+- `pnpm run dev`: Inicia el servidor en modo desarrollo con tsx watch
 - `pnpm run build`: Compila TypeScript para producción
 - `pnpm run start`: Inicia el servidor en modo producción
 - `pnpm run lint`: Ejecuta ESLint para TypeScript

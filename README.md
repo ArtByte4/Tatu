@@ -1,6 +1,13 @@
 # Tatu - Red Social para Artistas 🎨
 
-<div align="center">
+<div### 2️⃣ Instalar dependencias
+
+```bash
+nvm use
+pnpm install:all
+```
+
+Este comando instalará las dependencias de todos los proyectos (frontend y backend) automáticamente gracias a la configuración de workspace de pnpm.center">
   <img src="./frontend/public/img/Banner-documentacion.png" alt="Tatu Logo"/>
   <br>
   <p><strong>Una plataforma social diseñada exclusivamente para la comunidad artística</strong></p>
@@ -42,20 +49,33 @@ git clone https://github.com/[tu-usuario]/Tatu.git
 cd Tatu
 ```
 
-2. **Configurar el Frontend**
+2. **Instalar dependencias**
 
 ```bash
-cd frontend
 nvm use
 pnpm install
 ```
 
-3. **Configurar el Backend**
+Este comando instalará las dependencias de todos los proyectos (frontend y backend) automáticamente gracias a la configuración de workspace de pnpm.
 
-```bash
-cd ../backend
-nvm use
-pnpm install
+3. **Configurar variables de entorno**
+
+Crear archivo `.env.local` en `frontend/`:
+```
+VITE_API_URL=url_api
+VITE_PUBLIC_KEY_IMAGEKIT=public_key 
+VITE_PRIVATE_KEY_IMAGEKIT=private_key
+```
+
+Crear archivo `.env` en `backend/`:
+```
+DB_HOST=localhost
+DB_USER=tu_usuario
+DB_PASSWORD="tu_contraseña"
+DB_NAME=tatu_db
+DB_PORT=3306
+SECRET_JWT_KEY="tu_clave_secreta"
+JWT_EXPIRES_IN=24h
 ```
 
 4. **Configurar la Base de Datos**
@@ -117,7 +137,14 @@ Para una estructura más detallada, consulta nuestra [Documentación](DOCUMENTAC
 
 ## 🚀 Scripts Disponibles
 
-### Frontend
+### Desde la raíz del proyecto
+
+```bash
+pnpm dev          # Inicia frontend y backend simultáneamente en paralelo
+pnpm install:all  # Instala dependencias de todos los proyectos
+```
+
+### Frontend (desde /frontend)
 
 ```bash
 pnpm run dev      # Inicia el servidor de desarrollo
@@ -125,7 +152,7 @@ pnpm run build    # Construye para producción
 pnpm run preview  # Preview de producción
 ```
 
-### Backend
+### Backend (desde /backend)
 
 ```bash
 pnpm run dev      # Inicia el servidor en modo desarrollo
