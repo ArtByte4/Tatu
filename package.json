@@ -1,0 +1,13 @@
+{
+  "name": "tatu-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "install:all": "pnpm install"
+  },
+  "keywords": [],
+  "author": "ArtByte4",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1"
+}
