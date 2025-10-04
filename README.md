@@ -1,7 +1,7 @@
 # Tatu - Red Social para Artistas 🎨
 
 <div align="center">
-  <img src="./frontend/Tatu/public/img/Banner-documentacion.png" alt="Tatu Logo"/>
+  <img src="./frontend/public/img/Banner-documentacion.png" alt="Tatu Logo"/>
   <br>
   <p><strong>Una plataforma social diseñada exclusivamente para la comunidad artística</strong></p>
 </div>
@@ -36,26 +36,30 @@
 ### Instalación
 
 1. **Clonar el repositorio**
+
 ```bash
 git clone https://github.com/[tu-usuario]/Tatu.git
 cd Tatu
 ```
 
 2. **Configurar el Frontend**
+
 ```bash
-cd frontend/tatu
+cd frontend
 nvm use
 pnpm install
 ```
 
 3. **Configurar el Backend**
+
 ```bash
-cd ../../backend
+cd ../backend
 nvm use
 pnpm install
 ```
 
 4. **Configurar la Base de Datos**
+
 - Ejecutar los scripts SQL en `db/script_tatu_db.sql`
 - Configurar el usuario de la base de datos
 - Cargar datos iniciales y funciones
@@ -65,6 +69,7 @@ Para más detalles sobre la instalación y configuración, consulta nuestra [Doc
 ## 🛠️ Tecnologías Utilizadas
 
 ### Frontend
+
 - React 18
 - TypeScript 5
 - Vite
@@ -74,6 +79,7 @@ Para más detalles sobre la instalación y configuración, consulta nuestra [Doc
 - React Icons
 
 ### Backend
+
 - Node.js
 - TypeScript
 - Express.js
@@ -83,6 +89,7 @@ Para más detalles sobre la instalación y configuración, consulta nuestra [Doc
 - Multer
 
 ### Base de Datos
+
 - MySQL 8.0
 - Triggers
 - Stored Procedures
@@ -93,12 +100,12 @@ Para más detalles sobre la instalación y configuración, consulta nuestra [Doc
 ```
 tatu_project/
 ├── frontend/           # Aplicación React con Vite
-│   └── Tatu/
-│       ├── src/
-│       │   ├── features/    # Módulos principales
-│       │   ├── lib/        # Configuraciones y utilidades
-│       │   ├── stores/     # Estado global con Zustand
-│       │   └── pages/      # Páginas principales
+│   ├── src/
+│   │   ├── features/    # Módulos principales
+│   │   ├── lib/        # Configuraciones y utilidades
+│   │   ├── stores/     # Estado global con Zustand
+│   │   └── pages/      # Páginas principales
+│   └── public/         # Recursos estáticos
 ├── backend/           # Servidor Node.js/Express
 │   └── src/
 │       ├── modules/  # Módulos de la aplicación
@@ -111,6 +118,7 @@ Para una estructura más detallada, consulta nuestra [Documentación](DOCUMENTAC
 ## 🚀 Scripts Disponibles
 
 ### Frontend
+
 ```bash
 pnpm run dev      # Inicia el servidor de desarrollo
 pnpm run build    # Construye para producción
@@ -118,6 +126,7 @@ pnpm run preview  # Preview de producción
 ```
 
 ### Backend
+
 ```bash
 pnpm run dev      # Inicia el servidor en modo desarrollo
 pnpm run start    # Inicia el servidor en producción
@@ -135,6 +144,7 @@ Para más información sobre las convenciones de código y commit, consulta [COM
 - Sanitización de inputs
 
 ## 🛡️ Licencia
+
 Este proyecto está licenciado bajo la licencia [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).  
 Artbyte Technology se reserva el derecho exclusivo de uso comercial.
 
@@ -153,7 +163,5 @@ Si tienes problemas o sugerencias:
 
 <div align="center">
   <p>Hecho con ❤️ por ArtByte</p>
-  <img src="./frontend/Tatu/public/img/Logo _ART_BYTE.png" alt="ArtByte Logo" width="100"/>
+  <img src="./frontend/public/img/Logo _ART_BYTE.png" alt="ArtByte Logo" width="100"/>
 </div>
-
-
