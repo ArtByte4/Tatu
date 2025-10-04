@@ -1,13 +1,5 @@
 # Tatu - Red Social para Artistas 🎨
 
-<div### 2️⃣ Instalar dependencias
-
-```bash
-nvm use
-pnpm install:all
-```
-
-Este comando instalará las dependencias de todos los proyectos (frontend y backend) automáticamente gracias a la configuración de workspace de pnpm.center">
 <img src="./frontend/public/img/Banner-documentacion.png" alt="Tatu Logo"/>
 <br>
 
