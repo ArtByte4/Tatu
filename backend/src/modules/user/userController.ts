@@ -10,6 +10,7 @@ import {
 } from "../../models/userModel";
 import { encryptPassword } from "../auth/authService";
 import { Request, Response } from "express";
+import connection from "../../db";
 
 // Obtener todos los usuarios
 export const getAllUsers = async (_req: Request, res: Response) => {
@@ -39,6 +40,56 @@ export const getOneProfile = async (req: Request, res: Response) => {
     console.log("Error al obtener perfil", err);
   }
 };
+
+// Buscar usuarios por nombre de usuario
+export const searchUsers = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.query;
+    
+    if (!username) {
+      return res.status(400).json({ message: 'El nombre de usuario es requerido' });
+    }
+
+    console.log('Buscando usuarios con query:', username); // Debug log
+
+    const query = `
+      SELECT 
+        u.user_handle AS username,
+        u.first_name,
+        u.last_name,
+        u.email_address,
+        i.src AS profile_photo
+      FROM users u
+      LEFT JOIN image i ON i.user_id = u.user_id AND i.src LIKE '%profile%'
+      WHERE LOWER(u.first_name) LIKE LOWER(?) OR LOWER(u.last_name) LIKE LOWER(?)
+      ORDER BY u.first_name, u.last_name
+      LIMIT 10
+    `;
+
+    console.log('Ejecutando query:', query); // Debug log
+    console.log('Con parámetros:', [`%${username}%`, `%${username}%`]); // Debug log
+
+    const [rows] = await connection.query<any[]>(query, [`%${username}%`, `%${username}%`]);
+    
+    console.log('Resultados encontrados:', rows); // Debug log
+    return res.json(rows);
+  } catch (error) {
+    // Log detallado del error
+    console.error('Error detallado al buscar usuarios:', {
+      error,
+      message: error instanceof Error ? error.message : 'Error desconocido',
+      stack: error instanceof Error ? error.stack : undefined
+    });
+    
+    return res.status(500).json({ 
+      message: 'Error interno del servidor',
+      details: error instanceof Error ? error.message : 'Error desconocido'
+    });
+  }
+};
+
+// Proxy para obtener avatar de servicios externos (evita problemas de CORS / OpaqueResponseBlocking)
+// avatar proxy removed — restored to previous behavior (use external avatar URLs directly)
 
 // Registrar usuario
 export const createUser = async (req: Request, res: Response) => {

@@ -169,3 +169,5 @@ export const uploadPhotoUser = async (url: string, id: number): Promise<any> => 
     console.error("No fue posible subir la imagen", error);
   }
 };
+
+

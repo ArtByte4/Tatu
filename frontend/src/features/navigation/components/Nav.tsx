@@ -10,6 +10,7 @@ import { MoreOptions } from "./index.js";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface NavProps {
   optionsAdmin: boolean;
@@ -48,20 +49,22 @@ function Nav({ optionsAdmin }: NavProps) {
           <img src={"/img/Logo _ ART BYTE_White.png"} alt="Logo" />
         </div>
         <div className="list-items-nav">
-          <a href="/">
+          <Link to="/">
             <div className="item-nav">
               <div className="item-nav-btn">
                 <IoHomeSharp color="#fff" size={24} />
                 <span>Inicio</span>
               </div>
             </div>
-          </a>
-          <div className="item-nav">
-            <div className="item-nav-btn">
-              <IoSearch color="#fff" size={24} />
-              <span>Búsqueda</span>
+          </Link>
+          <Link to="/search">
+            <div className="item-nav">
+              <div className="item-nav-btn">
+                <IoSearch color="#fff" size={24} />
+                <span>Búsqueda</span>
+              </div>
             </div>
-          </div>
+          </Link>
           <div className="item-nav">
             <div className="item-nav-btn">
               <MdOutlineExplore color="#fff" size={24} />
@@ -81,16 +84,16 @@ function Nav({ optionsAdmin }: NavProps) {
             </div>
           </div>
           {optionsAdmin && (
-            <a href="/admin/dashboard">
+            <Link to="/admin/dashboard">
               <div className="item-nav">
                 <div className="item-nav-btn">
                   <MdAdminPanelSettings color="#fff" size={24} />
-                  <span>Dasboard</span>
+                  <span>Dashboard</span>
                 </div>
               </div>
-            </a>
+            </Link>
           )}
-          <a href={`/profile/${user?.username}`}>
+          <Link to={`/profile/${user?.username}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
                 {!photo && <FaRegUserCircle color="#fff" size={24} />}
@@ -100,7 +103,7 @@ function Nav({ optionsAdmin }: NavProps) {
                 <span>Perfil</span>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
 

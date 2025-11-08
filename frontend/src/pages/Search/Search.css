@@ -1,0 +1,124 @@
+.search-page {
+  padding: 20px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--negro);
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.main-search-page{
+  justify-content: center;
+}
+.search-input {
+  left: 200px;
+  width: 100%;
+  max-width: 600px;
+  padding: 12px;
+  font-size: 16px;
+  background-color: var(--gris-oscuro);
+  border: 1px solid var(--gris-claro);
+  border-radius: 8px;
+  color: var(--blanco);
+  margin-bottom: 20px;
+}
+
+.search-input::placeholder {
+  color: var(--gris-claro);
+}
+
+.search-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.container-user-suggested {
+  max-width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  /* background-color: var(--gris-oscuro); */
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.img-user-suggested {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  width: 600px;
+  
+}
+
+.img-user-suggested img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name-suggested {
+  color: var(--blanco);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.username {
+  font-weight: bold;
+  color: var(--blanco);
+}
+
+.suggested-text {
+  font-size: 13px;
+  color: var(--gris-claro);
+}
+
+.btn-ver-perfil {
+  color: var(--verde-claro);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  right: inherit;
+}
+
+.btn-seguir:hover {
+  color: var(--blanco);
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--gris-claro);
+}
+
+.error {
+  color: var(--rojo);
+  text-align: center;
+  padding: 20px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  color: var(--gris-claro);
+}

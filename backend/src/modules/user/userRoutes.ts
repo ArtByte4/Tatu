@@ -9,15 +9,17 @@ import {
   userHandleValidate,
   phoneNumberValidate,
   deleteUserById,
+  searchUsers,
 } from "./userController";
 import { verificarAdmin } from "./middlewares/validateAdmin";
 import { verifyToken } from "./middlewares/validateToken";
 
 const router: Router = Router();
 
-router.get("/users", verifyToken, getAllUsers);
-router.get("/users/:user_handle", verifyToken, getOneUser);
+router.get("/users/search", verifyToken, searchUsers);
 router.get("/users/profile/:user_handle", getOneProfile);
+router.get("/users/:user_handle", verifyToken, getOneUser);
+router.get("/users", verifyToken, getAllUsers);
 
 
 router.put("/users/profile/:user_handle/photo", updatephotoPefil);
