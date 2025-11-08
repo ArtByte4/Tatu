@@ -17,7 +17,8 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.13.0",
     "nodemon": "^3.1.9",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -26,6 +27,7 @@
     "@types/express": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.29",
+    "@types/socket.io": "^3.0.2",
     "body-parser": "^2.2.0",
     "eslint": "^9.24.0",
     "ts-node": "^10.9.2",
