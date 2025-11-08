@@ -9,8 +9,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  padding: 60px 0;
+  width: 100%;
+  max-width: 900px;
+  padding: 60px 20px;
+}
+
+@media (max-width: 768px) {
+  .content_perfilUser {
+    padding: 20px 12px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .container_perfilUser {
+    width: 100%;
+    padding: 0;
+  }
 }
 
 .container-img-perfilUser-active-img {
@@ -43,10 +57,18 @@
   opacity: 0.5;
 }
 
-.container-img-perfilUser-active-img img{
+.container-img-perfilUser-active-img img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .container-img-perfilUser img,
+  .container-img-perfilUser-active-img img {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .container-img-perfilUser {
@@ -81,6 +103,26 @@ input[type="file"] {
   gap: 25px;
 }
 
+@media (max-width: 768px) {
+  .seccion_info_perfilUser {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section_container_perfilUser {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 
 .list_describe_perfilUser {
   width: 100%;
@@ -89,14 +131,43 @@ input[type="file"] {
   align-items: center;
   flex-direction: row;
   margin-bottom: 20px;
+}
 
+@media (max-width: 768px) {
+  .list_describe_perfilUser {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .list_describe_perfilUser ul {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 30px; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   list-style: none;
+}
+
+@media (max-width: 768px) {
+  .list_describe_perfilUser ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .list_describe_perfilUser ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .list_describe_perfilUser .item_content {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
 }
 
 .btn-info-account{
@@ -112,10 +183,51 @@ input[type="file"] {
   margin-bottom: 20px;
 }
 
+@media (max-width: 768px) {
+  .items_perfilUser {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 .item {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 30px; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .item > * {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-info-account {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .btn_edit_perfil,
+  .btn-config {
+    margin: 4px 0;
+  }
+
+  .btn_send_message {
+    width: 100%;
+    max-width: 200px;
+    margin: 8px 0;
+  }
 }
 
 .item span{
@@ -149,6 +261,23 @@ input[type="file"] {
 
 .btn_edit_perfil a:hover{
   background-color: rgb(49, 50, 54);
+}
+
+.btn_send_message {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--negro, #000000);
+  background-color: var(--verde-claro, #3bff83);
+  border: none;
+  padding: 3px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.btn_send_message:hover {
+  background-color: var(--verde-oscuro, #00d14d);
 }
 
 .num{

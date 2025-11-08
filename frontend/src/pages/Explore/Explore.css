@@ -5,15 +5,33 @@
 }
 
 .sidebar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    overflow: hidden; /* Evita que el Nav tenga scroll */
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow: hidden; /* Evita que el Nav tenga scroll */
 }
 
 .main-content {
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .container_explore_page {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .main-content {
+    padding-bottom: 60px; /* Space for bottom nav */
+  }
 }

@@ -2,6 +2,7 @@ import cors from "cors";
 import { ORIGIN_URL } from "./config.js";
 import cookieParser from "cookie-parser";
 import express, { Application, Router } from "express";
+import { createServer, Server as HTTPServer } from "http";
 
 
 
@@ -13,10 +14,13 @@ interface AppParams {
 
 class App {
   port;
-  app: Application = express()
+  app: Application = express();
+  httpServer: HTTPServer;
 
   constructor({ port, routes }: AppParams) {
     this.port = port ?? 3000;
+    this.httpServer = createServer(this.app);
+    
     this.app.use(
       cors({
         credentials: true,
@@ -32,8 +36,12 @@ class App {
     this.app.use(routes);
   }
 
+  getHttpServer(): HTTPServer {
+    return this.httpServer;
+  }
+
   start(): void {
-    this.app.listen(this.port, () => {
+    this.httpServer.listen(this.port, () => {
       console.log(`Servidor corriendo en puerto: ${this.port}`);
     });
   }

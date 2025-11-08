@@ -2,7 +2,7 @@ import { TbNut } from "react-icons/tb";
 import { MdPhotoCamera } from "react-icons/md";
 import { useEffect, useRef, useState, ChangeEvent } from "react";
 import "../styles/PerfilUser.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
 
 interface UserProfile {
@@ -15,11 +15,13 @@ interface UserProfile {
 
 function PerfilUser() {
   const { username } = useParams<{username: string}>();
+  const navigate = useNavigate();
   if (!username) {
     return <div className="error">No se ha proporcionado un nombre de usuario</div>;
   }
   const [ownPerfil, setOwnPerfil] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>("");
+  const [profileUser, setProfileUser] = useState<UserProfile | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
@@ -66,6 +68,7 @@ function PerfilUser() {
           setDataFetched(false);
           return;
         }
+        setProfileUser(response);
         setDataFetched(true);
         if (
           user?.id === response.user_id &&
@@ -89,6 +92,12 @@ function PerfilUser() {
       fetchProfileData(); // Solo realiza la petición si se tiene un username
     }
   }, [username]); // Agrega 'setProfile' como dependencia si lo estás usando desde el store
+
+  const handleSendMessage = () => {
+    if (profileUser) {
+      navigate(`/messages?userId=${profileUser.user_id}`);
+    }
+  };
 
   const handleUploadFile = () => {
     if (ownPerfil && fileInputRef.current) {
@@ -145,12 +154,20 @@ function PerfilUser() {
                 <div className="btn-info-account">
                   <span>{`${username}`}</span>
                 </div>
-                <div className="btn_edit_perfil">
-                  <a href="#">Editar perfil</a>
-                </div>
-                <div className="btn-config">
-                  <TbNut fontSize={25} />
-                </div>
+                {ownPerfil ? (
+                  <>
+                    <div className="btn_edit_perfil">
+                      <a href="#">Editar perfil</a>
+                    </div>
+                    <div className="btn-config">
+                      <TbNut fontSize={25} />
+                    </div>
+                  </>
+                ) : (
+                  <button className="btn_send_message" onClick={handleSendMessage}>
+                    Enviar mensaje
+                  </button>
+                )}
               </div>
             </div>
             <div className="list_describe_perfilUser">

@@ -161,3 +161,28 @@ export const getMessageById = async (
   }
 };
 
+// Obtener información básica de un usuario
+export const getUserInfo = async (
+  userId: number
+): Promise<{ user_id: number; first_name: string; last_name: string; image: string } | undefined> => {
+  const query = `
+    SELECT 
+      u.user_id,
+      u.first_name,
+      u.last_name,
+      p.image
+    FROM users u
+    JOIN profile p ON p.user_id = u.user_id
+    WHERE u.user_id = ?
+  `;
+
+  try {
+    const [rows] = await connection.query(query, [userId]);
+    const users = rows as Array<{ user_id: number; first_name: string; last_name: string; image: string }>;
+    return users[0];
+  } catch (err) {
+    console.error("Error al obtener información del usuario:", err);
+    throw err;
+  }
+};
+

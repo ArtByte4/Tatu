@@ -114,10 +114,29 @@ VALUES
 (7, 10),
 (8, 1);
 
+-- Insertar mensajes de prueba para crear conversaciones
+-- Nota: Los mensajes se insertan después de que los usuarios existan (línea 51-61)
+-- Los perfiles se crean automáticamente mediante el trigger after_insert_user_profile
+-- Usuarios referenciados: 1=carlos_r, 2=ana_g, 3=luis_f, 4=tatiana_l
 
+-- Conversación entre usuario 1 (carlos_r) y usuario 2 (ana_g)
+INSERT INTO `tatu_db`.`messages` (`sender_id`, `receiver_id`, `content`, `sent_at`) VALUES
+(1, 2, 'Hola Ana! ¿Cómo estás?', DATE_SUB(NOW(), INTERVAL 2 HOUR)),
+(2, 1, 'Hola Carlos! Muy bien, gracias. ¿Y tú?', DATE_SUB(NOW(), INTERVAL 110 MINUTE)),
+(1, 2, 'Todo bien por aquí. ¿Te gustaría ver algunos de mis diseños?', DATE_SUB(NOW(), INTERVAL 100 MINUTE)),
+(2, 1, '¡Claro! Me encantaría verlos.', DATE_SUB(NOW(), INTERVAL 90 MINUTE)),
+(1, 2, 'Perfecto, te los muestro luego.', DATE_SUB(NOW(), INTERVAL 80 MINUTE));
 
-INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Colombia');
-INSERT INTO `tatu_db`.`country` (country_name) VALUES ('México');
-INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Brasil');
-INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Argentina');
-INSERT INTO `tatu_db`.`country` (country_name) VALUES ('Chile');
+-- Conversación entre usuario 1 (carlos_r) y usuario 3 (luis_f)
+INSERT INTO `tatu_db`.`messages` (`sender_id`, `receiver_id`, `content`, `sent_at`) VALUES
+(3, 1, 'Hola Carlos, vi tu último trabajo. ¡Está increíble!', DATE_SUB(NOW(), INTERVAL 3 HOUR)),
+(1, 3, 'Gracias Luis! Me alegra que te haya gustado.', DATE_SUB(NOW(), INTERVAL 170 MINUTE)),
+(3, 1, '¿Podrías hacerme un diseño similar?', DATE_SUB(NOW(), INTERVAL 160 MINUTE)),
+(1, 3, 'Por supuesto, podemos hablar sobre el diseño que tienes en mente.', DATE_SUB(NOW(), INTERVAL 150 MINUTE));
+
+-- Conversación entre usuario 2 (ana_g) y usuario 4 (tatiana_l)
+INSERT INTO `tatu_db`.`messages` (`sender_id`, `receiver_id`, `content`, `sent_at`) VALUES
+(2, 4, 'Hola Tatiana! ¿Cómo va tu nuevo tatuaje?', DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(4, 2, 'Hola Ana! Va muy bien, ya está casi listo.', DATE_SUB(NOW(), INTERVAL 23 HOUR)),
+(2, 4, '¡Qué emocionante! Debe verse genial.', DATE_SUB(NOW(), INTERVAL 22 HOUR 50 MINUTE)),
+(4, 2, 'Sí, estoy muy contenta con el resultado.', DATE_SUB(NOW(), INTERVAL 22 HOUR 40 MINUTE));

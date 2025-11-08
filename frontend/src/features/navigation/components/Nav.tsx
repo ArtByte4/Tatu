@@ -6,6 +6,7 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { MoreOptions } from "./index.js";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
@@ -48,14 +49,14 @@ function Nav({ optionsAdmin }: NavProps) {
           <img src={"/img/Logo _ ART BYTE_White.png"} alt="Logo" />
         </div>
         <div className="list-items-nav">
-          <a href="/">
+          <Link to="/">
             <div className="item-nav">
               <div className="item-nav-btn">
                 <IoHomeSharp color="#fff" size={24} />
                 <span>Inicio</span>
               </div>
             </div>
-          </a>
+          </Link>
           <div className="item-nav">
             <div className="item-nav-btn">
               <IoSearch color="#fff" size={24} />
@@ -68,12 +69,14 @@ function Nav({ optionsAdmin }: NavProps) {
               <span>Explorar</span>
             </div>
           </div>
-          <div className="item-nav">
-            <div className="item-nav-btn">
-              <LuMessageCircleMore color="#fff" size={24} />
-              <span>Mensajes</span>
+          <Link to="/messages">
+            <div className="item-nav">
+              <div className="item-nav-btn">
+                <LuMessageCircleMore color="#fff" size={24} />
+                <span>Mensajes</span>
+              </div>
             </div>
-          </div>
+          </Link>
           <div className="item-nav">
             <div className="item-nav-btn">
               <FaCirclePlus color="#fff" size={24} />
@@ -81,16 +84,16 @@ function Nav({ optionsAdmin }: NavProps) {
             </div>
           </div>
           {optionsAdmin && (
-            <a href="/admin/dashboard">
+            <Link to="/admin/dashboard">
               <div className="item-nav">
                 <div className="item-nav-btn">
                   <MdAdminPanelSettings color="#fff" size={24} />
                   <span>Dasboard</span>
                 </div>
               </div>
-            </a>
+            </Link>
           )}
-          <a href={`/profile/${user?.username}`}>
+          <Link to={`/profile/${user?.username}`}>
             <div className="item-nav">
               <div className="item-nav-btn">
                 {!photo && <FaRegUserCircle color="#fff" size={24} />}
@@ -100,7 +103,7 @@ function Nav({ optionsAdmin }: NavProps) {
                 <span>Perfil</span>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
 
