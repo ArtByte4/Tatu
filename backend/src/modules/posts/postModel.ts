@@ -33,7 +33,7 @@ export interface CreatePostInput {
   user_id: number;
   post_text: string;
   tattoo_styles_id: number;
-  image_urls?: string[];
+  image_urls: string[];
 }
 
 // Crear un nuevo post
@@ -56,9 +56,8 @@ export const createPost = async (
     const insertResult = result as any;
     const postId = insertResult.insertId;
 
-    // Si hay imágenes, crearlas y relacionarlas
-    if (image_urls && image_urls.length > 0) {
-      for (const imageUrl of image_urls) {
+    // Crear imágenes y relacionarlas (ahora son requeridas)
+    for (const imageUrl of image_urls) {
         // Crear entrada en tabla image
         const imageQuery = `
           INSERT INTO image (src, content, user_id)
@@ -78,7 +77,6 @@ export const createPost = async (
           VALUES (?, ?)
         `;
         await connection.query(postImageQuery, [postId, imageId]);
-      }
     }
 
     return postId;
@@ -228,6 +226,89 @@ export const getPostById = async (postId: number): Promise<Post | undefined> => 
     return posts[0];
   } catch (err) {
     console.error("Error al obtener post:", err);
+    throw err;
+  }
+};
+
+// Eliminar un post y sus relaciones
+export const deletePost = async (postId: number, userId: number): Promise<boolean> => {
+  // Obtener una conexión del pool para la transacción
+  const conn = await connection.getConnection();
+  
+  try {
+    // Iniciar transacción
+    await conn.beginTransaction();
+
+    // Verificar que el post existe y pertenece al usuario
+    const post = await getPostById(postId);
+    if (!post) {
+      await conn.rollback();
+      conn.release();
+      throw new Error("Post no encontrado");
+    }
+    if (post.user_id !== userId) {
+      await conn.rollback();
+      conn.release();
+      throw new Error("No tienes permiso para eliminar este post");
+    }
+
+    console.log(`[deletePost] Iniciando eliminación del post ${postId} del usuario ${userId}`);
+
+    // Obtener las imágenes relacionadas con el post
+    const images = await getPostImages(postId);
+    const imageIds = images.map(img => img.image_id);
+    console.log(`[deletePost] Post tiene ${imageIds.length} imágenes asociadas`);
+
+    // Paso 1: Eliminar relaciones en post_image primero
+    if (imageIds.length > 0) {
+      const deletePostImageQuery = `
+        DELETE FROM post_image WHERE post_id = ?
+      `;
+      const [result] = await conn.query(deletePostImageQuery, [postId]);
+      console.log(`[deletePost] Eliminadas ${(result as any).affectedRows} relaciones en post_image`);
+    }
+
+    // Paso 2: Verificar y eliminar imágenes no usadas por otros posts
+    if (imageIds.length > 0) {
+      for (const imageId of imageIds) {
+        // Verificar si la imagen está siendo usada por otros posts
+        const checkImageQuery = `
+          SELECT COUNT(*) as count FROM post_image WHERE image_id = ?
+        `;
+        const [checkResult] = await conn.query(checkImageQuery, [imageId]);
+        const checkRows = checkResult as any[];
+        const count = checkRows[0].count;
+        
+        // Si no está siendo usada por otros posts, eliminarla
+        if (count === 0) {
+          const deleteImageQuery = `
+            DELETE FROM image WHERE image_id = ?
+          `;
+          await conn.query(deleteImageQuery, [imageId]);
+          console.log(`[deletePost] Imagen ${imageId} eliminada (no usada por otros posts)`);
+        } else {
+          console.log(`[deletePost] Imagen ${imageId} conservada (usada por ${count} otros posts)`);
+        }
+      }
+    }
+
+    // Paso 3: Eliminar el post (los comentarios y likes se eliminan automáticamente por CASCADE)
+    const deletePostQuery = `
+      DELETE FROM posts WHERE post_id = ?
+    `;
+    await conn.query(deletePostQuery, [postId]);
+    console.log(`[deletePost] Post ${postId} eliminado exitosamente`);
+
+    // Confirmar transacción
+    await conn.commit();
+    conn.release();
+
+    return true;
+  } catch (err) {
+    // Hacer rollback en caso de error
+    await conn.rollback();
+    conn.release();
+    console.error("[deletePost] Error al eliminar post:", err);
     throw err;
   }
 };

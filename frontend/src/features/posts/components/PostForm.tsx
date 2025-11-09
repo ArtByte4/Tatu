@@ -23,7 +23,9 @@ export const PostForm: React.FC<PostFormProps> = ({
   const [tattooStyles, setTattooStyles] = useState<TattooStyle[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [selectedPreviewIndex, setSelectedPreviewIndex] = useState<number>(0);
   const [uploading, setUploading] = useState(false);
+  const [imageError, setImageError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
 
@@ -58,12 +60,20 @@ export const PostForm: React.FC<PostFormProps> = ({
     if (files) {
       const fileArray = Array.from(files);
       setSelectedImages((prev) => [...prev, ...fileArray]);
+      setImageError("");
 
       // Crear previews
       fileArray.forEach((file) => {
         const reader = new FileReader();
         reader.onloadend = () => {
-          setImagePreviews((prev) => [...prev, reader.result as string]);
+          setImagePreviews((prev) => {
+            const newPreviews = [...prev, reader.result as string];
+            // Si es la primera imagen, establecerla como seleccionada
+            if (prev.length === 0) {
+              setSelectedPreviewIndex(0);
+            }
+            return newPreviews;
+          });
         };
         reader.readAsDataURL(file);
       });
@@ -72,7 +82,34 @@ export const PostForm: React.FC<PostFormProps> = ({
 
   const removeImage = (index: number) => {
     setSelectedImages((prev) => prev.filter((_, i) => i !== index));
-    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    setImagePreviews((prev) => {
+      const newPreviews = prev.filter((_, i) => i !== index);
+      // Ajustar el índice seleccionado si es necesario
+      if (newPreviews.length === 0) {
+        setSelectedPreviewIndex(0);
+      } else if (selectedPreviewIndex >= newPreviews.length) {
+        setSelectedPreviewIndex(newPreviews.length - 1);
+      } else if (selectedPreviewIndex > index) {
+        setSelectedPreviewIndex(selectedPreviewIndex - 1);
+      }
+      return newPreviews;
+    });
+  };
+
+  const handlePreviewChange = (index: number) => {
+    setSelectedPreviewIndex(index);
+  };
+
+  const handlePreviousImage = () => {
+    setSelectedPreviewIndex((prev) => 
+      prev === 0 ? imagePreviews.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setSelectedPreviewIndex((prev) => 
+      prev === imagePreviews.length - 1 ? 0 : prev + 1
+    );
   };
 
   const uploadImages = async (): Promise<string[]> => {
@@ -160,6 +197,12 @@ export const PostForm: React.FC<PostFormProps> = ({
       return;
     }
 
+    if (selectedImages.length === 0) {
+      setImageError("Debes seleccionar al menos una imagen");
+      return;
+    }
+
+    setImageError("");
     setUploading(true);
 
     try {
@@ -179,6 +222,7 @@ export const PostForm: React.FC<PostFormProps> = ({
         setSelectedStyle(tattooStyles.length > 0 ? tattooStyles[0].tattoo_styles_id : 0);
         setSelectedImages([]);
         setImagePreviews([]);
+        setSelectedPreviewIndex(0);
         onPostCreated();
         onClose();
       }
@@ -195,6 +239,8 @@ export const PostForm: React.FC<PostFormProps> = ({
       setSelectedStyle(tattooStyles.length > 0 ? tattooStyles[0].tattoo_styles_id : 0);
       setSelectedImages([]);
       setImagePreviews([]);
+      setSelectedPreviewIndex(0);
+      setImageError("");
       onClose();
     }
   };
@@ -212,91 +258,139 @@ export const PostForm: React.FC<PostFormProps> = ({
         </div>
 
         <form onSubmit={handleSubmit} className="post-form">
-          <div className="post-form-field">
-            <label htmlFor="post-text">Texto del post</label>
-            <textarea
-              id="post-text"
-              value={postText}
-              onChange={(e) => setPostText(e.target.value)}
-              placeholder="¿Qué estás pensando?"
-              rows={4}
-              required
-            />
-          </div>
-
-          <div className="post-form-field">
-            <label htmlFor="tattoo-style">Estilo de tatuaje</label>
-            <select
-              id="tattoo-style"
-              value={selectedStyle}
-              onChange={(e) => setSelectedStyle(Number(e.target.value))}
-              required
-            >
-              {tattooStyles.map((style) => (
-                <option key={style.tattoo_styles_id} value={style.tattoo_styles_id}>
-                  {style.tattoo_styles_name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="post-form-field">
-            <label htmlFor="post-images">Imágenes (opcional)</label>
-            <div className="post-form-images">
-              <input
-                ref={fileInputRef}
-                type="file"
-                id="post-images"
-                accept="image/*"
-                multiple
-                onChange={handleImageSelect}
-                style={{ display: "none" }}
-              />
-              <button
-                type="button"
-                className="post-form-upload-btn"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                Seleccionar imágenes
-              </button>
-
-              {imagePreviews.length > 0 && (
-                <div className="post-form-preview">
-                  {imagePreviews.map((preview, index) => (
-                    <div key={index} className="post-form-preview-item">
-                      <img src={preview} alt={`Preview ${index + 1}`} />
+          <div className="post-form-content">
+            <div className="post-form-preview-section">
+              {imagePreviews.length > 0 ? (
+                <div className="post-form-large-preview">
+                  <img 
+                    src={imagePreviews[selectedPreviewIndex]} 
+                    alt={`Preview ${selectedPreviewIndex + 1}`} 
+                  />
+                  {imagePreviews.length > 1 && (
+                    <div className="post-form-nav-buttons">
                       <button
                         type="button"
-                        className="post-form-remove-image"
-                        onClick={() => removeImage(index)}
+                        className="post-form-nav-btn post-form-nav-btn-left"
+                        onClick={handlePreviousImage}
+                        aria-label="Imagen anterior"
                       >
-                        ×
+                        ‹
+                      </button>
+                      <button
+                        type="button"
+                        className="post-form-nav-btn post-form-nav-btn-right"
+                        onClick={handleNextImage}
+                        aria-label="Imagen siguiente"
+                      >
+                        ›
                       </button>
                     </div>
-                  ))}
+                  )}
+                </div>
+              ) : (
+                <div className="post-form-empty-preview">
+                  <p>Selecciona imágenes para previsualizarlas aquí</p>
                 </div>
               )}
             </div>
-          </div>
 
-          {error && <div className="post-form-error">{error}</div>}
+            <div className="post-form-fields-section">
+              <div className="post-form-field">
+                <label htmlFor="post-text">Texto del post</label>
+                <textarea
+                  id="post-text"
+                  value={postText}
+                  onChange={(e) => setPostText(e.target.value)}
+                  placeholder="¿Qué estás pensando?"
+                  rows={4}
+                  required
+                />
+              </div>
 
-          <div className="post-form-actions">
-            <button
-              type="button"
-              className="post-form-cancel"
-              onClick={handleClose}
-              disabled={loading || uploading}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="post-form-submit"
-              disabled={loading || uploading || !postText.trim()}
-            >
-              {uploading ? "Subiendo..." : loading ? "Creando..." : "Publicar"}
-            </button>
+              <div className="post-form-field">
+                <label htmlFor="tattoo-style">Estilo de tatuaje</label>
+                <select
+                  id="tattoo-style"
+                  value={selectedStyle}
+                  onChange={(e) => setSelectedStyle(Number(e.target.value))}
+                  required
+                >
+                  {tattooStyles.map((style) => (
+                    <option key={style.tattoo_styles_id} value={style.tattoo_styles_id}>
+                      {style.tattoo_styles_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="post-form-field">
+                <label htmlFor="post-images">Imágenes</label>
+                <div className="post-form-images">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    id="post-images"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageSelect}
+                    style={{ display: "none" }}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="post-form-upload-btn"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    Seleccionar imágenes
+                  </button>
+
+                  {imagePreviews.length > 1 && (
+                    <div className="post-form-preview">
+                      {imagePreviews.map((preview, index) => (
+                        <div 
+                          key={index} 
+                          className={`post-form-preview-item ${index === selectedPreviewIndex ? 'active' : ''}`}
+                          onClick={() => handlePreviewChange(index)}
+                        >
+                          <img src={preview} alt={`Preview ${index + 1}`} />
+                          <button
+                            type="button"
+                            className="post-form-remove-image"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeImage(index);
+                            }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {error && <div className="post-form-error">{error}</div>}
+              {imageError && <div className="post-form-error">{imageError}</div>}
+
+              <div className="post-form-actions">
+                <button
+                  type="button"
+                  className="post-form-cancel"
+                  onClick={handleClose}
+                  disabled={loading || uploading}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="post-form-submit"
+                  disabled={loading || uploading || !postText.trim() || selectedImages.length === 0}
+                >
+                  {uploading ? "Subiendo..." : loading ? "Creando..." : "Publicar"}
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>

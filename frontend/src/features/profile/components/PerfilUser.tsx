@@ -204,7 +204,15 @@ function PerfilUser() {
           </div>
         </div>
         <div className="posts-section-perfil">
-          <PostGrid posts={posts} />
+          <PostGrid 
+            posts={posts} 
+            isOwnProfile={ownPerfil}
+            onPostDeleted={() => {
+              if (profileUser) {
+                fetchUserPosts(profileUser.user_id);
+              }
+            }}
+          />
         </div>
       </div>
     </div>

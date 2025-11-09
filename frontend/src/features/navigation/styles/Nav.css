@@ -67,6 +67,12 @@
   margin-top: auto;
 }
 
+@media (max-width: 1024px) {
+  .item-nav-btn span {
+    display: none;
+  }
+}
+
 /* Mobile Styles - Bottom Navigation */
 @media (max-width: 768px) {
   .container-item-nav {

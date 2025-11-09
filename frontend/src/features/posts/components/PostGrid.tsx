@@ -8,9 +8,11 @@ import "./../styles/PostGrid.css";
 
 interface PostGridProps {
   posts: Post[];
+  isOwnProfile?: boolean;
+  onPostDeleted?: () => void;
 }
 
-export const PostGrid: React.FC<PostGridProps> = ({ posts }) => {
+export const PostGrid: React.FC<PostGridProps> = ({ posts, isOwnProfile = false, onPostDeleted }) => {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,6 +24,13 @@ export const PostGrid: React.FC<PostGridProps> = ({ posts }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedPost(null);
+  };
+
+  const handlePostDeleted = () => {
+    if (onPostDeleted) {
+      onPostDeleted();
+    }
+    handleCloseModal();
   };
 
   if (posts.length === 0) {
@@ -86,6 +95,8 @@ export const PostGrid: React.FC<PostGridProps> = ({ posts }) => {
         post={selectedPost}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        isOwnProfile={isOwnProfile}
+        onPostDeleted={handlePostDeleted}
       />
     </>
   );

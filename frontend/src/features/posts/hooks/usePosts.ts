@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { getAllPosts, getUserPosts, Post } from "../api/postApi";
+import { getAllPosts, getUserPosts, deletePost as deletePostApi, Post } from "../api/postApi";
 
 interface UsePostsState {
   posts: Post[];
@@ -7,6 +7,7 @@ interface UsePostsState {
   error: string | null;
   fetchPosts: () => Promise<void>;
   fetchUserPosts: (userId: number) => Promise<void>;
+  deletePost: (postId: number) => Promise<void>;
 }
 
 export const usePosts = (): UsePostsState => {
@@ -53,12 +54,26 @@ export const usePosts = (): UsePostsState => {
     }
   }, []);
 
+  const deletePost = useCallback(async (postId: number): Promise<void> => {
+    setError(null);
+    try {
+      await deletePostApi(postId);
+      // Remover el post de la lista local
+      setPosts((prevPosts) => prevPosts.filter((post) => post.post_id !== postId));
+    } catch (err) {
+      console.error("Error al eliminar post:", err);
+      setError("Error al eliminar el post");
+      throw err;
+    }
+  }, []);
+
   return {
     posts,
     loading,
     error,
     fetchPosts,
     fetchUserPosts,
+    deletePost,
   };
 };
 

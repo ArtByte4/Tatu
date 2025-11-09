@@ -6,6 +6,7 @@ import {
   getPostImages,
   getTattooStyles,
   getPostById,
+  deletePost,
 } from "./postModel";
 import { CustomRequest } from "../user/middlewares/validateToken";
 
@@ -28,11 +29,16 @@ export const createPostHandler = async (
       return;
     }
 
+    if (!image_urls || !Array.isArray(image_urls) || image_urls.length === 0) {
+      res.status(400).json({ error: "El post debe tener al menos una imagen" });
+      return;
+    }
+
     const postId = await createPost({
       user_id: user.id,
       post_text,
       tattoo_styles_id,
-      image_urls: image_urls || [],
+      image_urls,
     });
 
     // Obtener el post creado con toda su información
@@ -118,6 +124,38 @@ export const getTattooStylesHandler = async (
   } catch (err) {
     console.error("Error al obtener estilos de tatuaje:", err);
     res.status(500).json({ error: "Error al obtener estilos de tatuaje" });
+  }
+};
+
+// Eliminar un post
+export const deletePostHandler = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const user = req.user as { id: number };
+    if (!user || !user.id) {
+      res.status(401).json({ error: "Usuario no autenticado" });
+      return;
+    }
+
+    const postId = parseInt(req.params.postId);
+    if (isNaN(postId)) {
+      res.status(400).json({ error: "ID de post inválido" });
+      return;
+    }
+
+    await deletePost(postId, user.id);
+    res.status(200).json({ message: "Post eliminado correctamente" });
+  } catch (err: any) {
+    console.error("Error al eliminar post:", err);
+    if (err.message === "Post no encontrado") {
+      res.status(404).json({ error: "Post no encontrado" });
+    } else if (err.message === "No tienes permiso para eliminar este post") {
+      res.status(403).json({ error: "No tienes permiso para eliminar este post" });
+    } else {
+      res.status(500).json({ error: "Error al eliminar post" });
+    }
   }
 };
 

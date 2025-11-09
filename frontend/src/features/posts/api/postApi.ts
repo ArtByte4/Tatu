@@ -34,7 +34,7 @@ export interface TattooStyle {
 export interface CreatePostData {
   post_text: string;
   tattoo_styles_id: number;
-  image_urls?: string[];
+  image_urls: string[];
 }
 
 // Crear un nuevo post
@@ -102,6 +102,16 @@ export const getTattooStyles = async (): Promise<TattooStyle[]> => {
     return response.data;
   } catch (error: unknown) {
     console.error("Error al obtener estilos de tatuaje:", error);
+    throw error;
+  }
+};
+
+// Eliminar un post
+export const deletePost = async (postId: number): Promise<void> => {
+  try {
+    await instance.delete(`/api/posts/${postId}`);
+  } catch (error: unknown) {
+    console.error("Error al eliminar post:", error);
     throw error;
   }
 };

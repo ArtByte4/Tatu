@@ -1,4 +1,7 @@
+import { useState, useEffect } from "react";
 import { Post } from "../api/postApi";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { CommentsModal } from "./CommentsModal";
 import "./../styles/PostCard.css";
 
 interface PostCardProps {
@@ -6,6 +9,15 @@ interface PostCardProps {
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
+  const [currentPost, setCurrentPost] = useState<Post>(post);
+
+  useEffect(() => {
+    // Resetear el índice cuando cambia el post
+    setCurrentImageIndex(0);
+    setCurrentPost(post);
+  }, [post.post_id, post]);
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -36,6 +48,21 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
     ? `${post.first_name} ${post.last_name}`
     : post.user_handle || "Usuario";
 
+  const images = post.images || [];
+  const hasMultipleImages = images.length > 1;
+
+  const nextImage = () => {
+    if (currentImageIndex < images.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
+
+  const prevImage = () => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
+
   return (
     <div className="post-card">
       <div className="post-card-header">
@@ -47,7 +74,9 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           />
           <div className="post-card-user-info">
             <span className="post-card-username">
+              <a href={`/profile/${post.user_handle}`} className="link-post-card">
               {post.user_handle || "usuario"}
+              </a>
             </span>
             <span className="post-card-time">{formatDate(post.created_at)}</span>
           </div>
@@ -57,26 +86,57 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         )}
       </div>
 
-      {post.images && post.images.length > 0 && (
+      {images.length > 0 && (
         <div className="post-card-images">
-          {post.images.length === 1 ? (
+          {images.length === 1 ? (
             <img
-              src={post.images[0].src}
+              src={images[0].src}
               alt="Post"
               className="post-card-single-image"
             />
           ) : (
-            <div className="post-card-image-grid">
-              {post.images.slice(0, 4).map((image, index) => (
-                <div key={image.image_id} className="post-card-grid-item">
-                  <img src={image.src} alt={`Post ${index + 1}`} />
-                  {index === 3 && post.images && post.images.length > 4 && (
-                    <div className="post-card-more-images">
-                      +{post.images.length - 4}
+            <div className="post-card-carousel">
+              <div className="post-card-carousel-wrapper">
+                <img
+                  src={images[currentImageIndex].src}
+                  alt={`Post ${currentImageIndex + 1}`}
+                  className="post-card-carousel-image"
+                />
+                {hasMultipleImages && (
+                  <>
+                    {currentImageIndex > 0 && (
+                      <button
+                        className="post-card-nav-btn post-card-nav-left"
+                        onClick={prevImage}
+                        aria-label="Imagen anterior"
+                      >
+                        <MdChevronLeft />
+                      </button>
+                    )}
+                    {currentImageIndex < images.length - 1 && (
+                      <button
+                        className="post-card-nav-btn post-card-nav-right"
+                        onClick={nextImage}
+                        aria-label="Imagen siguiente"
+                      >
+                        <MdChevronRight />
+                      </button>
+                    )}
+                    <div className="post-card-indicators">
+                      {images.map((_, index) => (
+                        <span
+                          key={index}
+                          className={`post-card-dot ${
+                            index === currentImageIndex ? "active" : ""
+                          }`}
+                          onClick={() => setCurrentImageIndex(index)}
+                          aria-label={`Ir a imagen ${index + 1}`}
+                        />
+                      ))}
                     </div>
-                  )}
-                </div>
-              ))}
+                  </>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -88,18 +148,31 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       <div className="post-card-stats">
         <div className="post-card-stat">
-          <span className="post-card-stat-number">{post.num_likes}</span>
+          <span className="post-card-stat-number">{currentPost.num_likes}</span>
           <span className="post-card-stat-label">Me gusta</span>
         </div>
-        <div className="post-card-stat">
-          <span className="post-card-stat-number">{post.num_comments}</span>
+        <div
+          className="post-card-stat post-card-stat-clickable"
+          onClick={() => setIsCommentsModalOpen(true)}
+          style={{ cursor: "pointer" }}
+        >
+          <span className="post-card-stat-number">{currentPost.num_comments}</span>
           <span className="post-card-stat-label">Comentarios</span>
         </div>
         <div className="post-card-stat">
-          <span className="post-card-stat-number">{post.num_repost}</span>
+          <span className="post-card-stat-number">{currentPost.num_repost}</span>
           <span className="post-card-stat-label">Compartidos</span>
         </div>
       </div>
+
+      <CommentsModal
+        post={currentPost}
+        isOpen={isCommentsModalOpen}
+        onClose={() => setIsCommentsModalOpen(false)}
+        onCommentCountChange={(newCount) => {
+          setCurrentPost({ ...currentPost, num_comments: newCount });
+        }}
+      />
     </div>
   );
 };

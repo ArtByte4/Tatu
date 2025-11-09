@@ -2,22 +2,31 @@ import { useState, useEffect } from "react";
 import { Post } from "../api/postApi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
-import { MdClose, MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { MdClose, MdChevronLeft, MdChevronRight, MdDelete } from "react-icons/md";
+import { usePosts } from "../hooks/usePosts";
+import { CommentsModal } from "./CommentsModal";
 import "./../styles/PostModal.css";
 
 interface PostModalProps {
   post: Post | null;
   isOpen: boolean;
   onClose: () => void;
+  isOwnProfile?: boolean;
+  onPostDeleted?: () => void;
 }
 
-export const PostModal: React.FC<PostModalProps> = ({ post, isOpen, onClose }) => {
+export const PostModal: React.FC<PostModalProps> = ({ post, isOpen, onClose, isOwnProfile = false, onPostDeleted }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
+  const [currentPost, setCurrentPost] = useState<Post | null>(post);
+  const { deletePost } = usePosts();
 
   useEffect(() => {
     if (post && post.images) {
       setCurrentImageIndex(0);
     }
+    setCurrentPost(post);
   }, [post]);
 
   useEffect(() => {
@@ -85,6 +94,28 @@ export const PostModal: React.FC<PostModalProps> = ({ post, isOpen, onClose }) =
       prevImage();
     } else if (e.key === "ArrowRight" && hasMultipleImages) {
       nextImage();
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!post) return;
+
+    const confirmed = window.confirm("¿Estás seguro de que quieres eliminar este post? Esta acción no se puede deshacer.");
+    if (!confirmed) return;
+
+    setIsDeleting(true);
+    try {
+      await deletePost(post.post_id);
+      if (onPostDeleted) {
+        onPostDeleted();
+      } else {
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error al eliminar post:", error);
+      alert("Error al eliminar el post. Por favor, intenta de nuevo.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -170,6 +201,17 @@ export const PostModal: React.FC<PostModalProps> = ({ post, isOpen, onClose }) =
                   )}
                 </div>
               </div>
+              {isOwnProfile && (
+                <button
+                  className="post-modal-delete"
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  aria-label="Eliminar post"
+                  title="Eliminar post"
+                >
+                  <MdDelete />
+                </button>
+              )}
             </div>
 
             {/* Contenido del post */}
@@ -182,15 +224,19 @@ export const PostModal: React.FC<PostModalProps> = ({ post, isOpen, onClose }) =
               <div className="post-modal-stats">
                 <div className="post-modal-stat-item">
                   <AiFillHeart className="post-modal-stat-icon" />
-                  <span>{post.num_likes || 0} me gusta</span>
+                  <span>{currentPost?.num_likes || 0} me gusta</span>
                 </div>
-                <div className="post-modal-stat-item">
+                <div
+                  className="post-modal-stat-item post-modal-stat-clickable"
+                  onClick={() => setIsCommentsModalOpen(true)}
+                  style={{ cursor: "pointer" }}
+                >
                   <FaRegComment className="post-modal-stat-icon" />
-                  <span>{post.num_comments || 0} comentarios</span>
+                  <span>{currentPost?.num_comments || 0} comentarios</span>
                 </div>
-                {post.num_repost > 0 && (
+                {currentPost && currentPost.num_repost > 0 && (
                   <div className="post-modal-stat-item">
-                    <span>{post.num_repost} compartidos</span>
+                    <span>{currentPost.num_repost} compartidos</span>
                   </div>
                 )}
               </div>
@@ -200,11 +246,24 @@ export const PostModal: React.FC<PostModalProps> = ({ post, isOpen, onClose }) =
                 {formatDate(post.created_at)}
               </div>
             </div>
+            </div>
           </div>
         </div>
+
+        {currentPost && (
+          <CommentsModal
+            post={currentPost}
+            isOpen={isCommentsModalOpen}
+            onClose={() => setIsCommentsModalOpen(false)}
+            onCommentCountChange={(newCount) => {
+              if (currentPost) {
+                setCurrentPost({ ...currentPost, num_comments: newCount });
+              }
+            }}
+          />
+        )}
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 
