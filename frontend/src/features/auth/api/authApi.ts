@@ -24,3 +24,17 @@ export const loginUser = async (dataUser: {
     throw error;
   }
 };
+
+// Refrescar token de acceso
+export const refreshAccessToken = async (): Promise<boolean> => {
+  try {
+    const response = await instance.post<{ message: string }>(
+      "/api/users/auth/refresh"
+    );
+    console.log("✅ Token refrescado:", response.data.message);
+    return true;
+  } catch (error) {
+    console.error("❌ Error al refrescar token:", error);
+    return false;
+  }
+};

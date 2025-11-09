@@ -21,6 +21,12 @@ class App {
     this.port = port ?? 3000;
     this.httpServer = createServer(this.app);
     
+    // Logging de configuración CORS para diagnóstico
+    console.log("🌐 Configuración CORS:", {
+      origin: ORIGIN_URL,
+      credentials: true,
+    });
+    
     this.app.use(
       cors({
         credentials: true,

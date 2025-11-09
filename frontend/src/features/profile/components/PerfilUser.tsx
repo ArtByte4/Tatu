@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, ChangeEvent } from "react";
 import "../styles/PerfilUser.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
+import { PostGrid, usePosts } from "@/features/posts";
 
 interface UserProfile {
   user_id: number;
@@ -35,6 +36,8 @@ function PerfilUser() {
     handleGetProfile,
     handleUploadPhotoProfile,
   } = useProfile();
+  
+  const { posts, fetchUserPosts } = usePosts();
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -81,6 +84,8 @@ function PerfilUser() {
               .substring(response.image.split("?")[0].lastIndexOf("/") + 1)
           );
         }
+        // Cargar posts del usuario
+        await fetchUserPosts(response.user_id);
       } catch (error) {
         console.error("Error al obtener los datos del perfil", error);
       } finally {
@@ -91,7 +96,7 @@ function PerfilUser() {
     if (username) {
       fetchProfileData(); // Solo realiza la petición si se tiene un username
     }
-  }, [username]); // Agrega 'setProfile' como dependencia si lo estás usando desde el store
+  }, [username, fetchUserPosts]); // Agrega 'setProfile' como dependencia si lo estás usando desde el store
 
   const handleSendMessage = () => {
     if (profileUser) {
@@ -174,7 +179,7 @@ function PerfilUser() {
               <ul>
                 <li>
                   <div className="item_content">
-                    <span className="num">0</span>
+                    <span className="num">{posts.length}</span>
                     <span className="describe_item">Publicaciones</span>
                   </div>
                 </li>
@@ -197,6 +202,9 @@ function PerfilUser() {
               </ul>
             </div>
           </div>
+        </div>
+        <div className="posts-section-perfil">
+          <PostGrid posts={posts} />
         </div>
       </div>
     </div>
