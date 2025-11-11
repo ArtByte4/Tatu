@@ -8,6 +8,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { MoreOptions } from "./index.js";
+import { PostForm } from "@/features/posts/components/PostForm";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
 import { useState, useRef, useEffect } from "react";
@@ -19,6 +20,7 @@ interface NavProps {
 function Nav({ optionsAdmin }: NavProps) {
   const { user, photo } = useAuthStore();
   const [showOptions, setShowOptions] = useState<boolean>(false);
+  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
   const optionClick = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ function Nav({ optionsAdmin }: NavProps) {
               </div>
             </div>
           </Link>
-          <div className="item-nav">
+          <div className="item-nav" onClick={() => setIsPostFormOpen(true)}>
             <div className="item-nav-btn">
               <FaCirclePlus color="#fff" size={24} />
               <span>Crear</span>
@@ -121,6 +123,12 @@ function Nav({ optionsAdmin }: NavProps) {
           </div>
         </div>
       </div>
+      {/* Formulario modal para crear publicación desde la barra de navegación */}
+      <PostForm
+        isOpen={isPostFormOpen}
+        onClose={() => setIsPostFormOpen(false)}
+        onPostCreated={() => setIsPostFormOpen(false)}
+      />
     </div>
   );
 }

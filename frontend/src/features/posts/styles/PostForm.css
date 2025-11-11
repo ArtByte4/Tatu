@@ -1,3 +1,7 @@
+/* Input oculto para selección de imágenes */
+.post-form-hidden-input {
+  display: none;
+}
 .post-form-overlay {
   position: fixed;
   top: 0;

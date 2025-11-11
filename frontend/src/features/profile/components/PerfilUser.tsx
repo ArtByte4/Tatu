@@ -5,6 +5,7 @@ import "../styles/PerfilUser.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { useProfile } from "../hooks/useProfile";
 import { PostGrid, usePosts } from "@/features/posts";
+import { PostForm } from "@/features/posts/components/PostForm";
 
 interface UserProfile {
   user_id: number;
@@ -16,6 +17,7 @@ interface UserProfile {
 
 function PerfilUser() {
   const { username } = useParams<{username: string}>();
+  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
   const navigate = useNavigate();
   if (!username) {
     return <div className="error">No se ha proporcionado un nombre de usuario</div>;
@@ -24,7 +26,7 @@ function PerfilUser() {
   const [fileName, setFileName] = useState<string>("");
   const [profileUser, setProfileUser] = useState<UserProfile | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
+  const PRIVATE_KEY_IMAGEKIT = (import.meta as any).env.VITE_PRIVATE_KEY_IMAGEKIT;
 
   const {
     user,
@@ -66,12 +68,13 @@ function PerfilUser() {
     const fetchProfileData = async () => {
       setLoading(true);
       try {
-        const response: UserProfile = await handleGetProfile(username);
-        if(response.user_handle != username){
+        const response = await handleGetProfile(username);
+        // Validar si la respuesta es un error
+        if (!response || typeof response !== "object" || !("user_id" in response)) {
           setDataFetched(false);
           return;
         }
-        setProfileUser(response);
+        setProfileUser(response as UserProfile);
         setDataFetched(true);
         if (
           user?.id === response.user_id &&
@@ -89,7 +92,7 @@ function PerfilUser() {
       } catch (error) {
         console.error("Error al obtener los datos del perfil", error);
       } finally {
-        setLoading(false); // Una vez que la carga finaliza, desactiva el estado de loading
+        setLoading(false);
       }
     };
 
@@ -134,8 +137,8 @@ function PerfilUser() {
                 : "container-img-perfilUser-active-img"
             }
           >
-            <button onClick={handleUploadFile}>
-              <img src={`${profile.image}?${new Date().getTime()}`} alt="" />
+            <button onClick={handleUploadFile} title="Subir foto de perfil">
+              <img src={`${profileUser?.image ?? ''}?${new Date().getTime()}`} alt="Foto de perfil" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
@@ -150,6 +153,8 @@ function PerfilUser() {
                 name="photo-perfil"
                 ref={fileInputRef}
                 onChange={handleFileChange}
+                title="Seleccionar foto de perfil"
+                placeholder="Seleccionar foto de perfil"
               />
             </form>
           </div>
@@ -214,6 +219,24 @@ function PerfilUser() {
             }}
           />
         </div>
+        {/* Botón flotante para crear publicación */}
+        {ownPerfil && (
+            <button
+              className="floating-create-post-btn"
+              onClick={() => setIsPostFormOpen(true)}
+            >
+              + crear publicación
+            </button>
+        )}
+        {/* Formulario modal para crear publicación */}
+        <PostForm
+          isOpen={isPostFormOpen}
+          onClose={() => setIsPostFormOpen(false)}
+          onPostCreated={() => {
+            setIsPostFormOpen(false);
+            if (profileUser) fetchUserPosts(profileUser.user_id);
+          }}
+        />
       </div>
     </div>
   );
