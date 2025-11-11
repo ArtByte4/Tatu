@@ -122,3 +122,107 @@
   padding: 20px;
   color: var(--gris-claro);
 }
+
+/* Cards y grid para resultados */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.results-grid {
+  width: 100%;
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.user-card {
+  justify-content: space-between;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.user-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+
+.card-left {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.avatar {
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  object-fit:cover;
+  border: 2px solid rgba(255,255,255,0.04);
+}
+
+.user-info .name {
+  font-weight:700;
+  color:var(--blanco);
+}
+.user-info .handle {
+  color:var(--gris-claro);
+  font-size:13px;
+}
+
+.card-actions {
+  display:flex;
+  align-items:center;
+}
+
+.btn {
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--verde-claro), #38b2a6);
+  color: #06281f;
+}
+
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  color: var(--blanco);
+}
+
+.section-title {
+  width: 100%;
+  padding: 16px 0;
+  color: var(--blanco);
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.profile-highlight {
+  width: 100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top: 8px;
+  padding: 14px;
+}
+.profile-left { display:flex; align-items:center; gap:12px; }
+.profile-avatar { width:72px; height:72px; border-radius:50%; object-fit:cover; }
+.profile-name { font-weight:800; color:var(--blanco); }
+.profile-handle { color:var(--gris-claro); font-size:13px; }
+
+.no-results-graphic { width:100%; justify-content:center; flex-direction:column; text-align:center; padding:24px; gap:10px; }
+.no-results-emoji { font-size:34px; }
+
+@media (max-width: 700px) {
+  .results-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .search-input { max-width: 100%; }
+}

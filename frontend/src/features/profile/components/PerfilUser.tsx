@@ -113,21 +113,13 @@ function PerfilUser() {
     <div className="container_perfilUser">
       <div className="content_perfilUser">
         <div className="seccion_info_perfilUser">
-          <div
-            className={
-              fileName === "user_default2.png" && ownPerfil
-                ? "container-img-perfilUser"
-                : "container-img-perfilUser-active-img"
-            }
-          >
+          <div className={ownPerfil ? "container-img-perfilUser" : "container-img-perfilUser-active-img"}>
             <button onClick={handleUploadFile}>
               <img src={`${profile.image}?${new Date().getTime()}`} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
-                display={
-                  fileName == "user_default2.png" && ownPerfil ? "flex" : "none"
-                }
+                style={{ display: ownPerfil ? 'flex' : 'none' }}
               />
             </button>
             <form action="">

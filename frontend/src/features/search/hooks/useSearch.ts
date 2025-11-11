@@ -16,6 +16,7 @@ export const useSearch = () => {
       setLoading(true);
       setError(null);
       const results = await searchUsers(username);
+      console.log('Search results:', JSON.stringify(results, null, 2));  // Mostrar estructura completa
       setSearchResults(results);
     } catch (err) {
       setError('Error al buscar usuarios');
