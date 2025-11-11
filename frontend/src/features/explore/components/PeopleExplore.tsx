@@ -40,6 +40,9 @@ function PeopleExplore({ options }: PeopleExploreProps) {
   // Mensaje de carga
   if (loading) return <p>Cargando usuarios...</p>;
 
+  // Limitar a 7 usuarios solo en modo sugerencias
+  const displayedUsers = options ? users : users.slice(0, 7);
+
   return (
     <div className="container_suggested">
       <div className="content_suggested">
@@ -48,7 +51,7 @@ function PeopleExplore({ options }: PeopleExploreProps) {
         </div>
 
         <div className="main_content">
-          {users.map((user: User) => {
+          {displayedUsers.map((user: User) => {
             return (
               <div className="card_item_suggested" key={user.user_handle}>
                 <div className="card_user">

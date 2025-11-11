@@ -1,0 +1,190 @@
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.post-grid-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.post-grid-item:hover {
+  opacity: 0.9;
+}
+
+.post-grid-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-grid-item:hover .post-grid-image {
+  transform: scale(1.08);
+}
+
+.post-grid-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.post-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(1px);
+}
+
+.post-grid-item:hover .post-grid-overlay {
+  opacity: 1;
+}
+
+.post-grid-stats {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.post-grid-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.post-grid-stat-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-grid-multiple-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.post-grid-multiple-icon {
+  font-size: 0.9rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-grid-empty {
+  padding: 80px 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.post-grid-empty p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+/* Desktop optimizations */
+@media (min-width: 769px) {
+  .post-grid {
+    gap: 1px;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .post-grid-item {
+    border: 1px solid transparent;
+  }
+  
+  .post-grid-item:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Large desktop - Instagram style */
+@media (min-width: 1264px) {
+  .post-grid {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    max-width: 100%;
+  }
+  
+  .post-grid-stats {
+    gap: 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  
+  .post-grid-stats {
+    gap: 16px;
+    font-size: 0.9rem;
+  }
+  
+  .post-grid-multiple-indicator {
+    top: 6px;
+    right: 6px;
+    padding: 3px 6px;
+    font-size: 0.7rem;
+  }
+}
+
+

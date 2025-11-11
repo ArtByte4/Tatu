@@ -2,7 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AuthForm } from "@/features/auth";
 import { StepsRegister } from "@/features/registration";
+<<<<<<< HEAD
 import { Explore, Perfil, AdminDashboard, Search } from "@/pages";
+=======
+import { Explore, Perfil, AdminDashboard, Messages } from "@/pages";
+>>>>>>> 2de2b63d46b9eca10e9530e961891d93d550467d
 import { PrivateRoute } from "@/components/PrivateRoute";
 import { ProtectedRouteAdmin } from "./routes/ProtectedRouterAdmin";
 
@@ -34,10 +38,17 @@ function App() {
           }
         />
         <Route
+<<<<<<< HEAD
           path="/search"
           element={
             <PrivateRoute>
               <Search />
+=======
+          path="/messages"
+          element={
+            <PrivateRoute>
+              <Messages />
+>>>>>>> 2de2b63d46b9eca10e9530e961891d93d550467d
             </PrivateRoute>
           }
         />

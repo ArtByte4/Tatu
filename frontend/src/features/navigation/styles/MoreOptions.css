@@ -1,18 +1,27 @@
 
 
 .options {
-    width: 300px;
-    padding: 15px;
-    background-color: rgb(39, 39, 39);
-    border-radius: var(--border-radius-extra);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    position: fixed;
-    bottom: 12%;
-    overflow: visible;
+  width: 300px;
+  padding: 15px;
+  background-color: rgb(39, 39, 39);
+  border-radius: var(--border-radius-extra);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  position: fixed;
+  bottom: 12%;
+  overflow: visible;
+  z-index: 1001;
+}
+
+@media (max-width: 768px) {
+  .options {
+    width: calc(100% - 24px);
+    max-width: 300px;
+    bottom: 80px; /* Above bottom nav */
+  }
 }
 
 .container-options{

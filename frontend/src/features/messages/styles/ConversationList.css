@@ -1,0 +1,115 @@
+.conversation-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--negro, #000000);
+  border-right: 1px solid #ffffff36;
+}
+
+.conversation-list-header {
+  padding: 1rem;
+  border-bottom: 1px solid #ffffff36;
+}
+
+.conversation-list-header h2 {
+  margin: 0;
+  font-size: var(--font-size-title, 32px);
+  font-weight: 800;
+  color: var(--blanco, #e5e5e5);
+}
+
+.conversation-list-loading,
+.conversation-list-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--blanco, #e5e5e5);
+}
+
+.conversation-list-items {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #ffffff36;
+}
+
+.conversation-item:hover {
+  background-color: #1a1a1ab8;
+}
+
+.conversation-item.active {
+  background-color: rgba(95, 0, 229, 0.3);
+  border-left: 3px solid var(--morado, #5f00e5);
+}
+
+.conversation-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.conversation-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.conversation-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.conversation-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.conversation-name {
+  font-weight: 800;
+  color: var(--blanco, #e5e5e5);
+  font-size: 0.95rem;
+}
+
+.conversation-time {
+  font-size: 0.75rem;
+  color: var(--blanco, #e5e5e5);
+  opacity: 0.7;
+}
+
+.conversation-preview {
+  font-size: 0.85rem;
+  color: var(--blanco, #e5e5e5);
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .conversation-list-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .conversation-item {
+    padding: 0.75rem;
+  }
+
+  .conversation-avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.75rem;
+  }
+}
+
