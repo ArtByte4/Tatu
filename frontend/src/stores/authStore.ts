@@ -28,7 +28,7 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: true,
           user: {
             username: user_handle,
-            rol: role_id,
+            rol: Number(role_id), // Asegurar que sea número
             id: user_id,
           },
         }),

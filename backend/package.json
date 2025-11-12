@@ -6,7 +6,8 @@
   "exports": "./dist/index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "npx tsx watch src/index.ts"
+    "dev": "npx tsx watch src/index.ts",
+    "create-admin": "npx tsx scripts/createAdminUser.ts"
   },
   "author": "Michael Castro",
   "dependencies": {

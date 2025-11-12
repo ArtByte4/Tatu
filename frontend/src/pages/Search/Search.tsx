@@ -36,7 +36,7 @@ function Search() {
   return (
     <div className="container_search_page">
       <div className="sidebar">
-        <Nav optionsAdmin={user?.rol == 3} />
+        <Nav optionsAdmin={Number(user?.rol) === 3} />
       </div>
       <div className="main-content">
         <div className="search-content">

@@ -207,3 +207,111 @@ export const searchUsers = async (query: string): Promise<UserWithProfile[] | un
     return undefined;
   }
 };
+
+// Obtener usuario por ID
+export const getUserById = async (user_id: number): Promise<UserWithProfile | undefined> => {
+  const query = `
+    SELECT  
+      u.user_id,
+      u.user_handle, 
+      u.first_name, 
+      u.last_name, 
+      u.role_id, 
+      u.birth_day,
+      u.email_address,
+      u.phonenumber,
+      u.created_at,
+      p.gender, 
+      p.image, 
+      p.bio, 
+      p.follower_count 
+    FROM users u
+    LEFT JOIN profile p ON p.user_id = u.user_id
+    WHERE u.user_id = ?
+  `;
+  try {
+    const [rows] = await connection.query(query, [user_id]);
+    const users = rows as UserWithProfile[];
+    return users[0];
+  } catch (err) {
+    console.error("Error en la consulta por ID", err);
+    return undefined;
+  }
+};
+
+// Actualizar usuario
+interface UpdateUserInput {
+  user_id: number;
+  user_handle?: string;
+  email_address?: string;
+  first_name?: string;
+  last_name?: string;
+  phonenumber?: string;
+  birth_day?: string;
+  password_hash?: string;
+}
+
+export const updateUser = async (userData: UpdateUserInput): Promise<any> => {
+  const { user_id, ...fields } = userData;
+  
+  // Construir query dinámicamente
+  const updateFields: string[] = [];
+  const values: any[] = [];
+  
+  if (fields.user_handle !== undefined) {
+    updateFields.push("user_handle = ?");
+    values.push(fields.user_handle);
+  }
+  if (fields.email_address !== undefined) {
+    updateFields.push("email_address = ?");
+    values.push(fields.email_address);
+  }
+  if (fields.first_name !== undefined) {
+    updateFields.push("first_name = ?");
+    values.push(fields.first_name);
+  }
+  if (fields.last_name !== undefined) {
+    updateFields.push("last_name = ?");
+    values.push(fields.last_name);
+  }
+  if (fields.phonenumber !== undefined) {
+    updateFields.push("phonenumber = ?");
+    values.push(fields.phonenumber);
+  }
+  if (fields.birth_day !== undefined) {
+    updateFields.push("birth_day = ?");
+    values.push(fields.birth_day);
+  }
+  if (fields.password_hash !== undefined) {
+    updateFields.push("password_hash = ?");
+    values.push(fields.password_hash);
+  }
+  
+  if (updateFields.length === 0) {
+    throw new Error("No hay campos para actualizar");
+  }
+  
+  values.push(user_id);
+  
+  const query = `UPDATE users SET ${updateFields.join(", ")} WHERE user_id = ?`;
+  
+  try {
+    const [result] = await connection.query(query, values);
+    return result;
+  } catch (err) {
+    console.error("Error al actualizar usuario", err);
+    throw err;
+  }
+};
+
+// Actualizar rol de usuario
+export const updateUserRole = async (user_id: number, role_id: number): Promise<any> => {
+  const query = "UPDATE users SET role_id = ? WHERE user_id = ?";
+  try {
+    const [result] = await connection.query(query, [role_id, user_id]);
+    return result;
+  } catch (err) {
+    console.error("Error al actualizar rol de usuario", err);
+    throw err;
+  }
+};

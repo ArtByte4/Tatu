@@ -7,7 +7,7 @@ function Perfil() {
   return (
     <div className="container_explore_page">
       <div className="sidebar">
-        <Nav optionsAdmin={user?.rol == 3}/>
+        <Nav optionsAdmin={Number(user?.rol) === 3}/>
       </div>
       <div className="main-content">
           <PerfilUser />

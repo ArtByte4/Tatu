@@ -22,6 +22,89 @@
   overflow-x: hidden;
 }
 
+.admin-dashboard {
+  padding: 20px;
+  background: #0f0f0f;
+  min-height: 100vh;
+}
+
+.admin-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #2a2a2a;
+}
+
+.admin-dashboard-header h1 {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.admin-dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-export-excel {
+  padding: 12px 24px;
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-export-excel:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-create-user {
+  padding: 12px 24px;
+  background: #4a9eff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-create-user:hover {
+  background: #3a8eef;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+}
+
+.admin-error-message {
+  background: #e74c3c;
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 @media (max-width: 768px) {
   .container_explore_page {
     grid-template-columns: 1fr;
@@ -37,5 +120,31 @@
 
   .main-content {
     padding-bottom: 60px; /* Space for bottom nav */
+  }
+
+  .admin-dashboard {
+    padding: 15px;
+  }
+
+  .admin-dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .admin-dashboard-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-dashboard-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .btn-export-excel,
+  .btn-create-user {
+    width: 100%;
+    justify-content: center;
   }
 }

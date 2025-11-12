@@ -43,7 +43,7 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
     );
 
     const refreshToken = sign(
-      { id: user.user_id, role: user.role_id },
+      { id: user.user_id, role: user.role_id, username: user.user_handle },
       REFRESH_JWT_KEY,
       { expiresIn: "7d" }
     );
@@ -88,9 +88,20 @@ export const refreshToken = (req: Request, res: Response, _next: NextFunction): 
       return;
     }
 
-    const newAccessToken = sign({ id: (decoded as { id: number }).id }, SECRET_JWT_KEY, {
-      expiresIn: "1h",
-    });
+    const decodedPayload = decoded as { id: number; role?: number; username?: string };
+    
+    // Incluir role y username en el nuevo access token si están disponibles
+    const newAccessToken = sign(
+      { 
+        id: decodedPayload.id, 
+        role: decodedPayload.role || 1, // Default a usuario si no hay role
+        username: decodedPayload.username || ""
+      }, 
+      SECRET_JWT_KEY, 
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.cookie("access_token", newAccessToken, {
       httpOnly: true,

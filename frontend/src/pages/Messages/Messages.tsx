@@ -45,7 +45,7 @@ const MessagesContent: React.FC = () => {
   return (
     <div className="container_messages_page">
       <div className="sidebar">
-        <Nav optionsAdmin={user?.rol === 3} />
+        <Nav optionsAdmin={Number(user?.rol) === 3} />
       </div>
       <div className="messages-page">
         <div className="messages-container">

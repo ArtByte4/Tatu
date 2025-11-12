@@ -1,0 +1,212 @@
+.user-table-container {
+  width: 100%;
+  padding: 20px;
+  background: #1a1a1a;
+  border-radius: 8px;
+}
+
+.user-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.user-table-search {
+  flex: 1;
+  max-width: 400px;
+  padding: 10px 15px;
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.user-table-search:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.user-table-info {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.user-table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid #3a3a3a;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1a1a1a;
+}
+
+.user-table thead {
+  background: #2a2a2a;
+}
+
+.user-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #3a3a3a;
+}
+
+.user-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.user-table th.sortable:hover {
+  background: #333;
+}
+
+.user-table td {
+  padding: 12px 15px;
+  color: #ddd;
+  font-size: 14px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.user-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.user-table tbody tr:hover {
+  background: #252525;
+}
+
+.user-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.user-table .no-data {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+  font-style: italic;
+}
+
+.role-select {
+  padding: 6px 10px;
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.role-select:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btn-edit {
+  background: #4a9eff;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: #3a8eef;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+}
+
+.user-table-loading {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+  font-size: 16px;
+}
+
+.user-table-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #3a3a3a;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #333;
+  border-color: #4a9eff;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #aaa;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .user-table-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .user-table-search {
+    max-width: 100%;
+  }
+
+  .user-table-wrapper {
+    overflow-x: scroll;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+
+

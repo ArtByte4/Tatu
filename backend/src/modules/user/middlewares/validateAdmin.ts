@@ -27,10 +27,16 @@ export const verificarAdmin = (req: CustomRequest, res: Response, next: NextFunc
     // Asegura que decoded sea JwtPayload antes de acceder a decoded.role
     const payload = decoded as JwtPayload;
 
-    if (payload.role === ID_ROL_ADMIN) {
+    // Comparar role como número
+    const userRole = Number(payload.role);
+    const adminRole = Number(ID_ROL_ADMIN);
+
+    if (userRole === adminRole) {
+      // Logging de acción de admin (sin información sensible)
+      console.log(`[ADMIN ACTION] User ID: ${payload.id} - Path: ${req.path} - Method: ${req.method}`);
       next();
     } else {
-      res.status(401).json({ mensaje: "No autorizado: no es admin", valid: false });
+      res.status(403).json({ mensaje: "No autorizado: no es admin", valid: false });
     }
   });
 };

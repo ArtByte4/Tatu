@@ -10,6 +10,9 @@ import {
   phoneNumberValidate,
   deleteUserById,
   searchUsersHandler,
+  getUserByIdHandler,
+  updateUserHandler,
+  updateUserRoleHandler,
 } from "./userController";
 import { verificarAdmin } from "./middlewares/validateAdmin";
 import { verifyToken } from "./middlewares/validateToken";
@@ -33,12 +36,25 @@ router.post("/users/register/verification/phonenumber", phoneNumberValidate)
 
 
 
-router.post("/admin/dashboard", verificarAdmin, async (_req, res) => {
-  res.json({ mensaje: 'Bienvenido al panel admin', valid: true });
-})
+// Rutas de administración
+router.post("/admin/dashboard", verificarAdmin, async (req, res) => {
+  const user = (req as any).user;
+  res.json({ 
+    mensaje: 'Bienvenido al panel admin', 
+    valid: true,
+    user_id: user?.id,
+    role: user?.role,
+    username: user?.username
+  });
+});
 
-
-router.delete("/admin/dasboard/deleteUser/:user_id", verificarAdmin, deleteUserById)
+// CRUD de usuarios para admin
+router.get("/admin/users", verificarAdmin, getAllUsers);
+router.get("/admin/users/:user_id", verificarAdmin, getUserByIdHandler);
+router.post("/admin/users", verificarAdmin, createUser);
+router.put("/admin/users/:user_id", verificarAdmin, updateUserHandler);
+router.put("/admin/users/:user_id/role", verificarAdmin, updateUserRoleHandler);
+router.delete("/admin/users/:user_id", verificarAdmin, deleteUserById);
 
 
 export default router;
