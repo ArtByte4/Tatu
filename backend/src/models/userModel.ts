@@ -169,3 +169,41 @@ export const uploadPhotoUser = async (url: string, id: number): Promise<any> => 
     console.error("No fue posible subir la imagen", error);
   }
 };
+
+// Buscar usuarios por query (handle, nombre, apellido, bio)
+export const searchUsers = async (query: string): Promise<UserWithProfile[] | undefined> => {
+  const searchTerm = `%${query}%`;
+  const searchQuery = `
+    SELECT  
+      u.user_id,
+      u.user_handle, 
+      u.first_name, 
+      u.last_name, 
+      u.role_id, 
+      u.birth_day, 
+      p.gender, 
+      p.image, 
+      p.bio, 
+      p.follower_count 
+    FROM users u
+    JOIN profile p ON p.user_id = u.user_id
+    WHERE 
+      u.user_handle LIKE ? OR
+      u.first_name LIKE ? OR
+      u.last_name LIKE ? OR
+      p.bio LIKE ?
+    ORDER BY u.user_handle ASC
+  `;
+  try {
+    const [users] = await connection.query(searchQuery, [
+      searchTerm,
+      searchTerm,
+      searchTerm,
+      searchTerm,
+    ]);
+    return users as UserWithProfile[];
+  } catch (err) {
+    console.error("Error en la búsqueda de usuarios", err);
+    return undefined;
+  }
+};

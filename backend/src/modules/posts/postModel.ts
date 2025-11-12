@@ -87,8 +87,8 @@ export const createPost = async (
 };
 
 // Obtener todos los posts con información del usuario y estilo
-export const getAllPosts = async (): Promise<Post[]> => {
-  const query = `
+export const getAllPosts = async (tattoo_style_id?: number): Promise<Post[]> => {
+  let query = `
     SELECT 
       p.post_id,
       p.user_id,
@@ -107,11 +107,19 @@ export const getAllPosts = async (): Promise<Post[]> => {
     JOIN users u ON p.user_id = u.user_id
     LEFT JOIN profile pr ON p.user_id = pr.user_id
     JOIN tattoo_styles ts ON p.tattoo_styles_id = ts.tattoo_styles_id
-    ORDER BY p.created_at DESC
   `;
 
+  const params: number[] = [];
+
+  if (tattoo_style_id !== undefined) {
+    query += ` WHERE p.tattoo_styles_id = ?`;
+    params.push(tattoo_style_id);
+  }
+
+  query += ` ORDER BY p.created_at DESC`;
+
   try {
-    const [rows] = await connection.query(query);
+    const [rows] = await connection.query(query, params.length > 0 ? params : undefined);
     return rows as Post[];
   } catch (err) {
     console.error("Error al obtener posts:", err);

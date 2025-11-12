@@ -7,6 +7,7 @@ import {
   getUserByPhone,
   uploadPhotoUser,
   deleteUser,
+  searchUsers,
 } from "../../models/userModel";
 import { encryptPassword } from "../auth/authService";
 import { Request, Response } from "express";
@@ -181,5 +182,29 @@ export const deleteUserById = async (req: Request, res: Response) => {
     res.status(200).json({ mensaje: "Usuario eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al eliminar el usuario", error });
+  }
+};
+
+// Buscar usuarios
+export const searchUsersHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const query = req.query.q as string;
+
+    if (!query || query.trim().length === 0) {
+      res.status(400).json({ error: "El parámetro de búsqueda 'q' es requerido" });
+      return;
+    }
+
+    const users = await searchUsers(query.trim());
+    
+    if (users === undefined) {
+      res.status(500).json({ error: "Error al buscar usuarios" });
+      return;
+    }
+
+    res.json(users);
+  } catch (err) {
+    console.error("Error al buscar usuarios:", err);
+    res.status(500).json({ error: "Error al buscar usuarios" });
   }
 };

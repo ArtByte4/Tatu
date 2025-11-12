@@ -57,12 +57,14 @@ function Nav({ optionsAdmin }: NavProps) {
               </div>
             </div>
           </Link>
-          <div className="item-nav">
-            <div className="item-nav-btn">
-              <IoSearch color="#fff" size={24} />
-              <span>Búsqueda</span>
+          <Link to="/search">
+            <div className="item-nav">
+              <div className="item-nav-btn">
+                <IoSearch color="#fff" size={24} />
+                <span>Búsqueda</span>
+              </div>
             </div>
-          </div>
+          </Link>
           <div className="item-nav">
             <div className="item-nav-btn">
               <MdOutlineExplore color="#fff" size={24} />

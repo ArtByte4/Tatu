@@ -61,7 +61,17 @@ export const getAllPostsHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const posts = await getAllPosts();
+    // Leer query parameter opcional para filtrar por estilo
+    const styleParam = req.query.style as string | undefined;
+    const tattoo_style_id = styleParam ? parseInt(styleParam, 10) : undefined;
+
+    // Validar que el style_id sea un número válido si se proporciona
+    if (styleParam && (isNaN(tattoo_style_id!) || tattoo_style_id! <= 0)) {
+      res.status(400).json({ error: "ID de estilo de tatuaje inválido" });
+      return;
+    }
+
+    const posts = await getAllPosts(tattoo_style_id);
 
     // Obtener imágenes para cada post
     const postsWithImages = await Promise.all(
