@@ -38,7 +38,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
   // Scroll automático al último mensaje
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView?.({ behavior: "smooth" });
   }, [conversationMessages]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

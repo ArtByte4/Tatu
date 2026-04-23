@@ -18,8 +18,13 @@ export const useSearch = () => {
       const results = await searchUsers(username);
       console.log('Search results:', JSON.stringify(results, null, 2));  // Mostrar estructura completa
       setSearchResults(results);
-    } catch (err) {
-      setError('Error al buscar usuarios');
+    } catch (err: any) {
+      // Manejo específico de errores de autenticación
+      if (err.response?.status === 401) {
+        setError('Sesión expirada. Por favor, vuelve a iniciar sesión.');
+      } else {
+        setError('Error al buscar usuarios. Por favor, intenta de nuevo.');
+      }
       setSearchResults([]);
     } finally {
       setLoading(false);
