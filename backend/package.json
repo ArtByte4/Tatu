@@ -6,8 +6,13 @@
   "exports": "./dist/index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "npx tsx watch src/index.ts",
-    "create-admin": "npx tsx scripts/createAdminUser.ts"
+    "dev": "tsx watch src/index.ts",
+    "create-admin": "tsx scripts/createAdminUser.ts",
+    "test:unit": "tsx ./node_modules/mocha/bin/mocha.js \"tests/unit/**/*.test.ts\"",
+    "test:bdd": "tsx ./node_modules/@cucumber/cucumber/bin/cucumber-js tests/bdd/features/**/*.feature --import tests/bdd/steps/**/*.ts",
+    "test:e2e": "tsx ./node_modules/@cucumber/cucumber/bin/cucumber-js tests/e2e/features/**/*.feature --import tests/e2e/steps/**/*.ts",
+    "test:perf": "artillery run tests/perf/health.yml",
+    "test:all": "pnpm run test:unit && pnpm run test:bdd"
   },
   "author": "Michael Castro",
   "dependencies": {
@@ -22,16 +27,25 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^12.7.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/chai": "^5.2.3",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.15.29",
     "@types/socket.io": "^3.0.2",
+    "@types/supertest": "^7.2.0",
+    "artillery": "^2.0.30",
     "body-parser": "^2.2.0",
+    "chai": "^6.2.2",
     "eslint": "^9.24.0",
+    "mocha": "^11.7.5",
+    "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.3"
   }
 }

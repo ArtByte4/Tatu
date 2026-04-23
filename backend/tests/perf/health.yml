@@ -1,0 +1,10 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 20
+      arrivalRate: 5
+scenarios:
+  - name: "Healthcheck load"
+    flow:
+      - get:
+          url: "/api/health"

@@ -1,6 +1,6 @@
-import { sign, verify } from "jsonwebtoken";
+﻿import { sign, verify } from "jsonwebtoken";
 import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "@/config";
-import { getUserByUserHandle } from "../../models/userModel.js";
+import { getUserByEmail, getUserByUserHandle } from "../../models/userModel.js";
 import { comparePassword } from "./authService.js";
 import type { Request, Response, NextFunction } from "express";
 
@@ -22,10 +22,15 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
     const { user_handle, password_hash } = req.body as { user_handle?: string; password_hash?: string };
 
     if (!user_handle || !password_hash) {
-      res.status(400).json({ message: "Usuario y contraseña requeridos" });
+      res.status(400).json({ message: "Usuario y contraseÃ±a requeridos" });
+      return;
     }
 
-    const user: User | undefined = await getUserByUserHandle(user_handle as string);
+    const credential = (user_handle as string).trim();
+    const user: User | undefined = credential.includes("@")
+      ? await getUserByEmail(credential)
+      : await getUserByUserHandle(credential);
+
     if (!user) {
       res.status(404).json({ message: "Usuario no encontrado" });
       return;
@@ -33,7 +38,8 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
 
     const isValidPassword = await comparePassword(password_hash as string, user.password_hash);
     if (!isValidPassword) {
-      res.status(401).json({ message: "Contraseña incorrecta" });
+      res.status(401).json({ message: "ContraseÃ±a incorrecta" });
+      return;
     }
 
     const token = sign(
@@ -84,13 +90,13 @@ export const refreshToken = (req: Request, res: Response, _next: NextFunction): 
 
   verify(token, REFRESH_JWT_KEY, (err: Error | null, decoded: any) => {
     if (err || !decoded || typeof decoded !== "object" || !("id" in decoded)) {
-      res.status(403).json({ message: "Refresh token inválido" });
+      res.status(403).json({ message: "Refresh token invÃ¡lido" });
       return;
     }
 
     const decodedPayload = decoded as { id: number; role?: number; username?: string };
     
-    // Incluir role y username en el nuevo access token si están disponibles
+    // Incluir role y username en el nuevo access token si estÃ¡n disponibles
     const newAccessToken = sign(
       { 
         id: decodedPayload.id, 
@@ -120,3 +126,4 @@ export const logOutUser = (_req: Request, res: Response, _next: NextFunction) =>
     .clearCookie("refresh_token")
     .json({ message: "Logout successful" });
 };
+

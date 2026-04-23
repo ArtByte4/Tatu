@@ -27,11 +27,11 @@ export const PostForm: React.FC<PostFormProps> = ({
   const [uploading, setUploading] = useState(false);
   const [imageError, setImageError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const PRIVATE_KEY_IMAGEKIT = import.meta.env.VITE_PRIVATE_KEY_IMAGEKIT;
+  const PRIVATE_KEY_IMAGEKIT = (import.meta as any).env.VITE_PRIVATE_KEY_IMAGEKIT;
 
   // Validar variable de entorno al montar el componente (solo en desarrollo)
   useEffect(() => {
-    if (import.meta.env.DEV && (!PRIVATE_KEY_IMAGEKIT || PRIVATE_KEY_IMAGEKIT.trim() === '')) {
+  if ((import.meta as any).env.DEV && (!PRIVATE_KEY_IMAGEKIT || PRIVATE_KEY_IMAGEKIT.trim() === '')) {
       console.warn("⚠️ ADVERTENCIA: VITE_PRIVATE_KEY_IMAGEKIT no está definida. Las subidas de imágenes fallarán.");
       console.warn("Por favor, verifica que la variable esté definida en tu archivo .env o .env.local");
     }
@@ -333,7 +333,7 @@ export const PostForm: React.FC<PostFormProps> = ({
                     accept="image/*"
                     multiple
                     onChange={handleImageSelect}
-                    style={{ display: "none" }}
+                    className="post-form-hidden-input"
                     required
                   />
                   <button
