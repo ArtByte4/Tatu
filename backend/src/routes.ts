@@ -6,6 +6,10 @@ import postRoutes from './modules/posts/postRoutes';
 
 const router: Router = Router();
 
+router.get('/api/health', (_req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 router.use('/api', authRoutes);
 router.use('/api', userRoutes);
 router.use('/api', messageRoutes);
