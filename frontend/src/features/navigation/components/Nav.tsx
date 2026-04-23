@@ -6,12 +6,12 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { MoreOptions } from "./index.js";
 import { PostForm } from "@/features/posts/components/PostForm";
 import "../styles/Nav.css";
 import { useAuthStore } from "@/stores";
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface NavProps {
   optionsAdmin: boolean;
@@ -81,7 +81,7 @@ function Nav({ optionsAdmin }: NavProps) {
               </div>
             </div>
           </Link>
-          <div className="item-nav" onClick={() => setIsPostFormOpen(true)}>
+          <div className="item-nav">
             <div className="item-nav-btn">
               <FaCirclePlus color="#fff" size={24} />
               <span>Crear</span>
@@ -92,7 +92,7 @@ function Nav({ optionsAdmin }: NavProps) {
               <div className="item-nav">
                 <div className="item-nav-btn">
                   <MdAdminPanelSettings color="#fff" size={24} />
-                  <span>Dasboard</span>
+                  <span>Dashboard</span>
                 </div>
               </div>
             </Link>

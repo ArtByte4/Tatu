@@ -34,7 +34,15 @@ function App() {
           }
         />
         <Route
-          path="/messages"
+          path="/search"
+          element={
+            <PrivateRoute>
+              <Search />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/Messages"
           element={
             <PrivateRoute>
               <Messages />

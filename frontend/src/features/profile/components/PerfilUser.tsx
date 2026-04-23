@@ -137,14 +137,12 @@ function PerfilUser() {
                 : "container-img-perfilUser-active-img"
             }
           >
-            <button onClick={handleUploadFile} title="Subir foto de perfil">
-              <img src={`${profileUser?.image ?? ''}?${new Date().getTime()}`} alt="Foto de perfil" />
+            <button onClick={handleUploadFile}>
+              <img src={`${profile.image}?${new Date().getTime()}`} alt="" />
               <MdPhotoCamera
                 className="img-photo"
                 color="#fff"
-                display={
-                  fileName == "user_default2.png" && ownPerfil ? "flex" : "none"
-                }
+                style={{ display: ownPerfil ? 'flex' : 'none' }}
               />
             </button>
             <form action="">
