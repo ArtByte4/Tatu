@@ -20,7 +20,8 @@
     "mysql2": "^3.13.0",
     "nodemon": "^3.1.9",
     "reflect-metadata": "^0.2.2",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
