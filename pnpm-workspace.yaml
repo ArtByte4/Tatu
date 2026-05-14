@@ -2,10 +2,6 @@ packages:
   - backend
   - frontend
 
-allowBuilds:
-  bcrypt: false
-  esbuild: false
-
 onlyBuiltDependencies:
   - bcrypt
   - esbuild
