@@ -1,8 +1,8 @@
-[phases.install]
-cmds = ["cd frontend && pnpm install --no-frozen-lockfile"]
+[build]
+rootDirectory = "frontend"
 
-[phases.build]
-cmds = ["cd frontend && pnpm run build"]
+[phases.setup]
+nixPkgs = ["nodejs_18"]
 
 [start]
-cmd = "cd frontend && pnpm run preview"
+cmd = "npm run start"
