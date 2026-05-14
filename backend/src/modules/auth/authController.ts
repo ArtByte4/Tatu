@@ -28,13 +28,15 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
       return;
     }
 
-    const user: User | undefined = await getUserByUserHandle(user_handle);
+    const user = await getUserByUserHandle(user_handle);
+
     if (!user) {
       res.status(404).json({ message: "Usuario no encontrado" });
       return;
     }
 
     const isValidPassword = await comparePassword(password_hash, user.password_hash);
+
     if (!isValidPassword) {
       res.status(401).json({ message: "Contraseña incorrecta" });
       return;
@@ -52,17 +54,19 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
       { expiresIn: "7d" }
     );
 
+    const isProd = process.env.NODE_ENV === "production";
+
     res
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: true,
+        secure: isProd,
         sameSite: "none",
         maxAge: 3600000,
       })
       .cookie("refresh_token", refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: isProd,
         sameSite: "none",
         maxAge: 604800000,
       })
@@ -73,6 +77,7 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
         id: user.user_id,
         role: user.role_id,
       });
+
   } catch (error) {
     res.status(500).json({ message: "Error interno del servidor", error });
   }
@@ -92,7 +97,7 @@ export const refreshToken = (req: Request, res: Response, _next: NextFunction): 
       return;
     }
 
-    const decodedPayload = decoded as {
+    const payload = decoded as {
       id: number;
       role?: number;
       username?: string;
@@ -100,17 +105,19 @@ export const refreshToken = (req: Request, res: Response, _next: NextFunction): 
 
     const newAccessToken = sign(
       {
-        id: decodedPayload.id,
-        role: decodedPayload.role || 1,
-        username: decodedPayload.username || ""
+        id: payload.id,
+        role: payload.role || 1,
+        username: payload.username || ""
       },
       SECRET_JWT_KEY,
       { expiresIn: "1h" }
     );
 
+    const isProd = process.env.NODE_ENV === "production";
+
     res.cookie("access_token", newAccessToken, {
       httpOnly: true,
-      secure: true,
+      secure: isProd,
       sameSite: "none",
       maxAge: 3600000,
     });
