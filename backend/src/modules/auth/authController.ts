@@ -4,7 +4,7 @@ import { getUserByUserHandle } from "../../models/userModel.js";
 import { comparePassword } from "./authService.js";
 import type { Request, Response, NextFunction } from "express";
 
-interface User {
+export interface User{
   user_id: number;
   user_handle: string;
   first_name: string;
