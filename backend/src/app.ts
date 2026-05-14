@@ -27,16 +27,13 @@ class App {
       credentials: true,
     });
     
-    this.app.use(
-      cors({
-        credentials: true,
-        origin: ORIGIN_URL,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        exposedHeaders: ["Content-Range", "X-Content-Range"],
-        maxAge: 600
-      })
-    );
+    this.app.use(cors({
+  origin: "https://frontend-production-5d70e.up.railway.app",
+  credentials: true,
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+}));
+
+this.app.options("*", cors());
     this.app.use(cookieParser());
     this.app.use(express.json());
     this.app.use(routes);
