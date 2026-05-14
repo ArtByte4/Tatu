@@ -1,5 +1,5 @@
 import { sign, verify } from "jsonwebtoken";
-import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "@/config";
+import { SECRET_JWT_KEY, REFRESH_JWT_KEY } from "../../config";
 import { getUserByUserHandle } from "../../models/userModel.js";
 import { comparePassword } from "./authService.js";
 import type { Request, Response, NextFunction } from "express";
