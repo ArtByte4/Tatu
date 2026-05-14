@@ -1,5 +1,6 @@
-(process as any).loadEnvFile?.();
-
+if (process.env.NODE_ENV !== "production") {
+  (process as any).loadEnvFile?.();
+}
 // Utilidad para asegurar que las variables no sean undefined
 function requireEnv(name: string): string {
   const value = process.env[name];
