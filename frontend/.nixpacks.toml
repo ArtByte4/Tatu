@@ -1,0 +1,8 @@
+[phases.install]
+cmds = ["cd frontend && pnpm install --no-frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd frontend && pnpm run build"]
+
+[start]
+cmd = "cd frontend && pnpm run preview"
