@@ -1,9 +1,10 @@
 {
+    
   "compilerOptions": {
     /* Lenguaje y entorno */
     "target": "ES2020",                            // Mejora compatibilidad moderna
     "lib": ["ES2020"],                             // Define las APIs disponibles
-    "module": "ESNext",                          // Compatible con Node.js
+    "module": "CommonJS",                          // Compatible con Node.js
     "esModuleInterop": true,                       // Para importar módulos CommonJS
     "moduleResolution": "node",                    // Resolución estándar de módulos
     "resolveJsonModule": true,                     // Permite importar archivos JSON
