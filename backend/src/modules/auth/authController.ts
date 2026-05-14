@@ -16,24 +16,28 @@ interface User {
   password_hash: string;
 }
 
-
-export const loginUser = async (req: Request, res: Response, _next: NextFunction)=> {
+export const loginUser = async (req: Request, res: Response, _next: NextFunction) => {
   try {
-    const { user_handle, password_hash } = req.body as { user_handle?: string; password_hash?: string };
+    const { user_handle, password_hash } = req.body as {
+      user_handle?: string;
+      password_hash?: string;
+    };
 
     if (!user_handle || !password_hash) {
       res.status(400).json({ message: "Usuario y contraseña requeridos" });
+      return;
     }
 
-    const user: User | undefined = await getUserByUserHandle(user_handle as string);
+    const user: User | undefined = await getUserByUserHandle(user_handle);
     if (!user) {
       res.status(404).json({ message: "Usuario no encontrado" });
       return;
     }
 
-    const isValidPassword = await comparePassword(password_hash as string, user.password_hash);
+    const isValidPassword = await comparePassword(password_hash, user.password_hash);
     if (!isValidPassword) {
       res.status(401).json({ message: "Contraseña incorrecta" });
+      return;
     }
 
     const token = sign(
@@ -52,14 +56,14 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
         maxAge: 3600000,
       })
       .cookie("refresh_token", refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        secure: true,
+        sameSite: "none",
         maxAge: 604800000,
       })
       .json({
@@ -88,25 +92,26 @@ export const refreshToken = (req: Request, res: Response, _next: NextFunction): 
       return;
     }
 
-    const decodedPayload = decoded as { id: number; role?: number; username?: string };
-    
-    // Incluir role y username en el nuevo access token si están disponibles
+    const decodedPayload = decoded as {
+      id: number;
+      role?: number;
+      username?: string;
+    };
+
     const newAccessToken = sign(
-      { 
-        id: decodedPayload.id, 
-        role: decodedPayload.role || 1, // Default a usuario si no hay role
-        username: decodedPayload.username || ""
-      }, 
-      SECRET_JWT_KEY, 
       {
-        expiresIn: "1h",
-      }
+        id: decodedPayload.id,
+        role: decodedPayload.role || 1,
+        username: decodedPayload.username || ""
+      },
+      SECRET_JWT_KEY,
+      { expiresIn: "1h" }
     );
 
     res.cookie("access_token", newAccessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: 3600000,
     });
 
