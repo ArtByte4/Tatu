@@ -125,7 +125,7 @@ export const getUserPostsHandler = async (
 
 // Obtener estilos de tatuaje
 export const getTattooStylesHandler = async (
-  req: CustomRequest,
+  _req: CustomRequest,
   res: Response
 ): Promise<void> => {
   try {
