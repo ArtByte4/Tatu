@@ -45,6 +45,7 @@
     "allowJs": true,                              // JS no permitido (ajústalo si usas JS)
     "skipLibCheck": true,                          // Omite chequeo de tipos en node_modules
 
+    "typeRoots": ["./node_modules/@types", "./env.d.ts"],
     /* Alias @ */
     "baseUrl": ".",                                // Ruta base para los imports
     "paths": {
@@ -54,7 +55,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
 
-  "typeRoots": ["./node_modules/@types", "./env.d.ts"]
+  
 
 
 }
