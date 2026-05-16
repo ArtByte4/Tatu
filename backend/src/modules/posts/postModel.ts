@@ -42,13 +42,36 @@ export const createPost = async (
 ): Promise<number> => {
   const { user_id, post_text, tattoo_styles_id, image_urls } = postData;
 
-  const query = `
+  if (!Array.isArray(image_urls) || image_urls.length === 0) {
+    throw new Error("image_urls debe contener al menos una URL de imagen");
+  }
+
+  const invalidImageUrl = image_urls.find(
+    (url) => typeof url !== "string" || !url.trim() || url.length > 255
+  );
+
+  if (invalidImageUrl) {
+    throw new Error(
+      "Cada image_url debe ser una cadena válida de máximo 255 caracteres"
+    );
+  }
+
+  const postQuery = `
     INSERT INTO posts (user_id, post_text, tattoo_styles_id)
     VALUES (?, ?, ?)
   `;
 
+  const connectionPool = await connection.getConnection();
   try {
-    const [result] = await connection.query(query, [
+    await connectionPool.beginTransaction();
+
+    console.log("[postModel.createPost] creando post", {
+      user_id,
+      tattoo_styles_id,
+      image_urls_count: image_urls.length,
+    });
+
+    const [result] = await connectionPool.query(postQuery, [
       user_id,
       post_text,
       tattoo_styles_id,
@@ -56,33 +79,43 @@ export const createPost = async (
     const insertResult = result as any;
     const postId = insertResult.insertId;
 
-    // Crear imágenes y relacionarlas (ahora son requeridas)
     for (const imageUrl of image_urls) {
-        // Crear entrada en tabla image
-        const imageQuery = `
+      const imageQuery = `
           INSERT INTO image (src, content, user_id)
           VALUES (?, ?, ?)
         `;
-        const [imageResult] = await connection.query(imageQuery, [
-          imageUrl,
-          post_text.substring(0, 500), // Primeros 500 caracteres del post como content
-          user_id,
-        ]);
-        const imageInsertResult = imageResult as any;
-        const imageId = imageInsertResult.insertId;
+      console.log("[postModel.createPost] creando imagen", {
+        imageUrl: imageUrl.substring(0, 120),
+        contentSnippet: post_text.substring(0, 100),
+      });
 
-        // Relacionar imagen con post
-        const postImageQuery = `
+      const [imageResult] = await connectionPool.query(imageQuery, [
+        imageUrl,
+        post_text.substring(0, 500),
+        user_id,
+      ]);
+      const imageInsertResult = imageResult as any;
+      const imageId = imageInsertResult.insertId;
+
+      const postImageQuery = `
           INSERT INTO post_image (post_id, image_id)
           VALUES (?, ?)
         `;
-        await connection.query(postImageQuery, [postId, imageId]);
+      await connectionPool.query(postImageQuery, [postId, imageId]);
     }
 
+    await connectionPool.commit();
     return postId;
   } catch (err) {
-    console.error("Error al crear post:", err);
+    await connectionPool.rollback();
+    console.error("Error al crear post en modelo:", err, {
+      user_id,
+      tattoo_styles_id,
+      image_urls_count: image_urls.length,
+    });
     throw err;
+  } finally {
+    connectionPool.release();
   }
 };
 

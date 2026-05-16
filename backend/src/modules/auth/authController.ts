@@ -61,13 +61,13 @@ export const loginUser = async (req: Request, res: Response, _next: NextFunction
       .cookie("access_token", token, {
         httpOnly: true,
         secure: isProd,
-        sameSite: "none",
+        sameSite: isProd ? "none" : "lax",
         maxAge: 3600000,
       })
       .cookie("refresh_token", refreshToken, {
         httpOnly: true,
         secure: isProd,
-        sameSite: "none",
+        sameSite: isProd ? "none" : "lax",
         maxAge: 604800000,
       })
       .json({
@@ -118,7 +118,7 @@ export const refreshToken = (req: Request, res: Response, _next: NextFunction): 
     res.cookie("access_token", newAccessToken, {
       httpOnly: true,
       secure: isProd,
-      sameSite: "none",
+      sameSite: isProd ? "none" : "lax",
       maxAge: 3600000,
     });
 

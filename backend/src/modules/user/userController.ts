@@ -186,7 +186,7 @@ export const emailValidate = async (req: Request, res: Response): Promise<void> 
     const { email_address } = req.body;
     const exists = await getUserByEmail(email_address);
     if (exists) {
-      res.status(401).json({
+      res.status(409).json({
         message: "Correo ya en uso",
         valid: false,
         field: "email_address",
@@ -208,7 +208,7 @@ export const userHandleValidate = async (req: Request, res: Response): Promise<v
     const { user_handle } = req.body;
     const exists = await getUserByUserHandle(user_handle);
     if (exists) {
-      res.status(401).json({
+      res.status(409).json({
         message: "Username en uso",
         valid: false,
         field: "user_handle",
@@ -230,7 +230,7 @@ export const phoneNumberValidate = async (req: Request, res: Response): Promise<
     const { phonenumber } = req.body;
     const exists = await getUserByPhone(phonenumber);
     if (exists) {
-      res.status(401).json({ 
+      res.status(409).json({ 
         message: "Número en uso", 
         valid: false, 
         field: "phonenumber" 
